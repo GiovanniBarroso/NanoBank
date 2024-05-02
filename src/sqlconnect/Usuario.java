@@ -95,8 +95,8 @@ public class Usuario {
 		this.iban = iban;
 	}
 
-	
-	
+
+
 	@Override
 	public String toString() {
 		return "Usuario{" +
@@ -108,6 +108,6 @@ public class Usuario {
 				", email='" + email + '\'' +
 				", iban='" + iban + '\'' +
 				'}';
-		
+
 	}
 }

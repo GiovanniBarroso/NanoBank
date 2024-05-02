@@ -7,34 +7,40 @@ import java.awt.event.*;
 public class RegistroUsuario extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private JTextField txtDNI;
 	private JTextField txtNombre;
-	private JTextField txtApellido;
-	private JTextField txtCorreo;
+	private JTextField txtTelefono;
+	private JTextField txtEmail;
+	private JTextField txtIBAN;
 	private JPasswordField txtContraseña;
 	private JButton btnRegistrar;
-
-
-
+	private JButton btnMostrarContraseña;
+	private boolean mostrarContraseña = false;
 
 	public RegistroUsuario() {
 		setBackground(Color.ORANGE);
-		setLayout(new GridLayout(6, 2, 10, 10));
+		setLayout(new GridLayout(9, 2, 10, 10));
+
+		JLabel lblDNI = new JLabel("DNI:");
+		txtDNI = new JTextField();
 
 		JLabel lblNombre = new JLabel("Nombre:");
 		txtNombre = new JTextField();
 
-		JLabel lblApellido = new JLabel("Apellido:");
-		txtApellido = new JTextField();
+		JLabel lblTelefono = new JLabel("Número de Teléfono:");
+		txtTelefono = new JTextField();
 
-		JLabel lblCorreo = new JLabel("Correo:");
-		txtCorreo = new JTextField();
+		JLabel lblEmail = new JLabel("Email:");
+		txtEmail = new JTextField();
+
+		JLabel lblIBAN = new JLabel("IBAN:");
+		txtIBAN = new JTextField();
 
 		JLabel lblContraseña = new JLabel("Contraseña:");
 		txtContraseña = new JPasswordField();
 
-		btnRegistrar = new JButton("Registrar");
-
-
+		btnRegistrar = new JButton("Registrarse");
+		btnMostrarContraseña = new JButton("Mostrar Contraseña");
 
 		// Action listener para el botón de registro
 		btnRegistrar.addActionListener(new ActionListener() {
@@ -44,41 +50,48 @@ public class RegistroUsuario extends JPanel {
 			}
 		});
 
-
-
+		// Action listener para el botón de mostrar contraseña
+		btnMostrarContraseña.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mostrarContraseña = !mostrarContraseña;
+				if (mostrarContraseña) {
+					txtContraseña.setEchoChar((char) 0);
+				} else {
+					txtContraseña.setEchoChar('*');
+				}
+			}
+		});
 
 		// Añadir componentes al JPanel
+		add(lblDNI);
+		add(txtDNI);
 		add(lblNombre);
 		add(txtNombre);
-		add(lblApellido);
-		add(txtApellido);
-		add(lblCorreo);
-		add(txtCorreo);
+		add(lblTelefono);
+		add(txtTelefono);
+		add(lblEmail);
+		add(txtEmail);
+		add(lblIBAN);
+		add(txtIBAN);
 		add(lblContraseña);
 		add(txtContraseña);
-		add(new JLabel()); // Espacio en blanco para alinear el botón de registro
+		add(btnMostrarContraseña);
 		add(btnRegistrar);
 	}
 
 
 
-
 	// Método para registrar un nuevo usuario
 	private void registrarUsuario() {
-
+		String DNI = txtDNI.getText();
 		String nombre = txtNombre.getText();
-		String apellido = txtApellido.getText();
-		String correo = txtCorreo.getText();
+		String telefono = txtTelefono.getText();
+		String email = txtEmail.getText();
+		String iban = txtIBAN.getText();
 		String contraseña = new String(txtContraseña.getPassword());
 
-
-		//Mostramos por consola resultado del registro para verificar los datos
-		System.out.println("Nuevo usuario registrado:");
-		System.out.println("Nombre: " + nombre);
-		System.out.println("Apellido: " + apellido);
-		System.out.println("Correo: " + correo);
-		System.out.println("Contraseña: " + contraseña + "\n");
-
+		// Mostrar por consola el resultado del registro para verificar los datos
+		System.out.println("¡Enhorabuena, tu perfil con nombre " + nombre + " ha sido registrado!");
 
 		// Cerrar la ventana actual de registro
 		SwingUtilities.getWindowAncestor(this).dispose();
@@ -87,11 +100,15 @@ public class RegistroUsuario extends JPanel {
 		SwingUtilities.invokeLater(() -> new IniciarSesion());
 	}
 
+
+
 	// Método para limpiar los campos de entrada
 	public void limpiarCampos() {
+		txtDNI.setText("");
 		txtNombre.setText("");
-		txtApellido.setText("");
-		txtCorreo.setText("");
+		txtTelefono.setText("");
+		txtEmail.setText("");
+		txtIBAN.setText("");
 		txtContraseña.setText("");
 	}
 }

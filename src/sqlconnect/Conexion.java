@@ -15,6 +15,9 @@ public class Conexion {
 	//usuario y contraseña de acceso a la BD
 	private static final String USUARIO = "root";
 	private static final String PASSWORD = "";
+
+
+
 	public Connection conectar() {
 		Connection conexion = null;
 
@@ -35,6 +38,9 @@ public class Conexion {
 		return conexion;
 	}
 
+
+
+
 	public void cerrarConexion(Connection conection){
 		try {
 			//Cierre de la conexión
@@ -44,6 +50,9 @@ public class Conexion {
 
 		}
 	}
+
+
+
 
 	public void insertData() throws SQLException{
 		Connection conexion = conectar();
@@ -66,6 +75,9 @@ public class Conexion {
 		}
 	}
 
+
+
+
 	public void getData() throws SQLException{
 		Connection conexion = conectar();
 
@@ -76,8 +88,8 @@ public class Conexion {
 				String consultasSeleccion = "SELECT * FROM producto";
 				System.out.println(consultasSeleccion);
 				Statement consul = conexion.createStatement();
-				
-				
+
+
 				//Ejecución de la consulta
 				if(consul.execute(consultasSeleccion)) {
 					ResultSet resultset = consul.getResultSet();
@@ -100,5 +112,4 @@ public class Conexion {
 			}
 		}
 	}
-
 }
