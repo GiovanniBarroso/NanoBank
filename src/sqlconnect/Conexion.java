@@ -49,16 +49,16 @@ public class Conexion {
 
 		}
 	}
-	
-	
-	
+
+
+
 	// Método para registrar un usuario en la base de datos
 	public void addUser(int dni, String contraseña, String nombre, int telefono, String email, String iban) throws SQLException {
-	    Connection conexion = conectar();
-	    Statement statement = conexion.createStatement();
-	    String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (" + dni + ", '" + contraseña + "', '" + nombre + "', " + telefono + ", '" + email + "', '" + iban + "')";
-	    statement.executeUpdate(sql);
-	    statement.close();
+		Connection conexion = conectar();
+		Statement statement = conexion.createStatement();
+		String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (" + dni + ", '" + contraseña + "', '" + nombre + "', " + telefono + ", '" + email + "', '" + iban + "')";
+		statement.executeUpdate(sql);
+		statement.close();
 	}
 
 
@@ -89,38 +89,28 @@ public class Conexion {
 
 
 
-	public void getData() throws SQLException{
+	public boolean validarCredenciales(String usuario, String contraseña) throws SQLException {
 		Connection conexion = conectar();
+		boolean usuarioValido = false;
 
-		if(conexion!=null) {
-			try {
+		try {
+			String consultaLogin = "SELECT * FROM Usuario WHERE nombre = ? AND contraseña = ?";
+			PreparedStatement statement = conexion.prepareStatement(consultaLogin);
+			statement.setString(1, usuario);
+			statement.setString(2, contraseña);
 
-				//Datos a consultar
-				String consultasSeleccion = "SELECT * FROM producto";
-				System.out.println(consultasSeleccion);
-				Statement consul = conexion.createStatement();
+			ResultSet resultado = statement.executeQuery();
+			usuarioValido = resultado.next();
 
-
-				//Ejecución de la consulta
-				if(consul.execute(consultasSeleccion)) {
-					ResultSet resultset = consul.getResultSet();
-					while(resultset.next()) {
-						Usuario Usuario = new Usuario (resultset.getInt("dni"),
-								resultset.getString("Contraseña"), resultset.getString("Nombre"), resultset.getInt("numTelefono"),
-								resultset.getString("email"),resultset.getString("iban"));
-						System.out.println(Usuario.toString());
-
-					}
-
-					System.out.println("Datos recuperados correctamente");
-				}
-				//Cierre del Statement
-				consul.close();
-
-			}finally {
-				//Cierre de la conexión
-				cerrarConexion(conexion);
-			}
+			// Cerrar recursos
+			resultado.close();
+			statement.close();
+		} finally {
+			cerrarConexion(conexion);
 		}
+
+		return usuarioValido;
 	}
+
+
 }

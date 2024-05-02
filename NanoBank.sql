@@ -15,9 +15,9 @@ CREATE TABLE IF NOT EXISTS Usuario(
 
 -- Insertamos datos del usuario ADMIN (Giovanni) si no existe ya
 INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) 
-SELECT * FROM (SELECT '30269762', 'admin', 'Giovanni', '644126909', 'giovanni.baralv@gmail.com', 'ES62 2100 8434 7525 1401 1100') AS temp
+SELECT * FROM (SELECT '30269762', 'admin123', 'Giovanni', '644126909', 'giovanni.baralv@gmail.com', 'ES62 2100 8434 7525 1401 1100') AS temp
 WHERE NOT EXISTS (
-    SELECT * FROM Usuario WHERE dni = '30269762' AND contraseña = 'admin'
+    SELECT * FROM Usuario WHERE dni = '30269762' AND contraseña = 'admin123'
 );
 
 

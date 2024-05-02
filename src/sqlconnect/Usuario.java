@@ -2,8 +2,8 @@ package sqlconnect;
 
 public class Usuario {
 
-	//Declaramos atributos
 
+	//Declaramos atributos
 	private int dni;
 	private String Contraseña;
 	private String Nombre;
@@ -12,10 +12,9 @@ public class Usuario {
 	private String iban;
 
 
-
 	//Constructor
 	public Usuario(int dni, String contraseña, String nombre, int numTelefono, String email, String iban) {
-		
+
 		this.dni = dni;
 		this.Contraseña = contraseña;
 		this.Nombre = nombre;
@@ -26,9 +25,7 @@ public class Usuario {
 
 
 
-
-
-
+	//Metodos getter and setter
 	public int getDni() {
 		return dni;
 	}
