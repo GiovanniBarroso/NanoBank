@@ -6,8 +6,11 @@ import java.awt.GridLayout;
 
 public class Menu extends JPanel {
 
-    public Menu() {
-        setLayout(new GridLayout(3, 1)); // Organización de los componentes en 3 filas
+   
+	private static final long serialVersionUID = 1L;
+
+	public Menu() {
+        setLayout(new GridLayout(3, 1));
 
         JButton loginButton = new JButton("Iniciar Sesión");
         JButton checkBalanceButton = new JButton("Ver Saldo");
