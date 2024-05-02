@@ -21,6 +21,7 @@ public class RegistroUsuario extends JPanel {
     private JPasswordField txtContraseña;
     private JButton btnRegistrar;
     private JButton btnMostrarContraseña;
+    private JButton btnVolver; 
     private boolean mostrarContraseña = false;
 
 
@@ -34,31 +35,44 @@ public class RegistroUsuario extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10);
 
         JLabel lblDNI = new JLabel("DNI:");
+        lblDNI.setFont(new Font("Impact", Font.PLAIN, 20));
         txtDNI = new JTextField(20);
         txtDNI.setHorizontalAlignment(JTextField.CENTER);
+        txtDNI.setFont(new Font("Arial", Font.PLAIN, 16)); 
 
         JLabel lblNombre = new JLabel("Nombre:");
+        lblNombre.setFont(new Font("Impact", Font.PLAIN, 20)); 
         txtNombre = new JTextField(20);
         txtNombre.setHorizontalAlignment(JTextField.CENTER);
+        txtNombre.setFont(new Font("Arial", Font.PLAIN, 16)); 
 
         JLabel lblTelefono = new JLabel("Número de Teléfono:");
+        lblTelefono.setFont(new Font("Impact", Font.PLAIN, 20)); 
         txtTelefono = new JTextField(20);
         txtTelefono.setHorizontalAlignment(JTextField.CENTER);
+        txtTelefono.setFont(new Font("Arial", Font.PLAIN, 16)); 
 
         JLabel lblEmail = new JLabel("Email:");
+        lblEmail.setFont(new Font("Impact", Font.PLAIN, 20)); 
         txtEmail = new JTextField(20);
         txtEmail.setHorizontalAlignment(JTextField.CENTER);
+        txtEmail.setFont(new Font("Arial", Font.PLAIN, 16)); 
 
         JLabel lblIBAN = new JLabel("IBAN:");
+        lblIBAN.setFont(new Font("Impact", Font.PLAIN, 20)); 
         txtIBAN = new JTextField(20);
         txtIBAN.setHorizontalAlignment(JTextField.CENTER);
+        txtIBAN.setFont(new Font("Arial", Font.PLAIN, 16)); 
 
         JLabel lblContraseña = new JLabel("Contraseña:");
+        lblContraseña.setFont(new Font("Impact", Font.PLAIN, 20)); 
         txtContraseña = new JPasswordField(20);
         txtContraseña.setHorizontalAlignment(JTextField.CENTER);
+        txtContraseña.setFont(new Font("Arial", Font.PLAIN, 16)); 
 
         btnRegistrar = new JButton("Registrarse");
         btnMostrarContraseña = new JButton("Mostrar Contraseña");
+        btnVolver = new JButton("Volver atrás"); 
 
         // DNI
         gbc.gridx = 0;
@@ -110,6 +124,10 @@ public class RegistroUsuario extends JPanel {
         // Botón Mostrar Contraseña
         gbc.gridy++;
         add(btnMostrarContraseña, gbc);
+        
+        // Botón Volver a IniciarSesion
+        gbc.gridy++;
+        add(btnVolver, gbc);
 
         // Acción del botón Registrar
         btnRegistrar.addActionListener(new ActionListener() {
@@ -127,6 +145,13 @@ public class RegistroUsuario extends JPanel {
                 } else {
                     txtContraseña.setEchoChar('*');
                 }
+            }
+        });
+        
+        // Acción del botón Volver a IniciarSesion
+        btnVolver.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                volverAIniciarSesion();
             }
         });
     }
@@ -178,7 +203,7 @@ public class RegistroUsuario extends JPanel {
             JOptionPane.showMessageDialog(this, "Usuario añadido con éxito.");
 
             // Mostrar por consola el resultado del registro para verificar los datos
-            System.out.println("¡Enhorabuena, tu perfil con nombre " + nombre + " ha sido registrado!");
+            System.out.println("¡Enhorabuena, tu perfil con nombre " + nombre + " ha sido registrado!\n");
             limpiarCampos();
 
             // Cerrar la ventana actual de registro
@@ -189,6 +214,15 @@ public class RegistroUsuario extends JPanel {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
+    }
+    
+    // Método para volver a IniciarSesion
+    private void volverAIniciarSesion() {
+        // Cerrar la ventana actual de registro
+        SwingUtilities.getWindowAncestor(this).dispose();
+        
+        // Abrir una nueva instancia de la clase IniciarSesion
+        SwingUtilities.invokeLater(() -> new IniciarSesion());
     }
     
  // Método para limpiar los campos de entrada
