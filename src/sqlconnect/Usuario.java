@@ -3,37 +3,30 @@ package sqlconnect;
 public class Usuario {
 
 	//Declaramos atributos
-	private int id;
+
 	private int dni;
 	private String Contraseña;
 	private String Nombre;
-	private int numTelefono;
+	private int telefono;
 	private String email;
 	private String iban;
 
 
 
 	//Constructor
-	public Usuario(int id, int dni, String contraseña, String nombre, int numTelefono, String email, String iban) {
-		this.id = id;
+	public Usuario(int dni, String contraseña, String nombre, int numTelefono, String email, String iban) {
+		
 		this.dni = dni;
 		this.Contraseña = contraseña;
 		this.Nombre = nombre;
-		this.numTelefono = numTelefono;
+		this.telefono = numTelefono;
 		this.email = email;
 		this.iban = iban;
 	}
 
 
 
-	public int getId() {
-		return id;
-	}
 
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 
 	public int getDni() {
@@ -67,12 +60,12 @@ public class Usuario {
 
 
 	public int getNumTelefono() {
-		return numTelefono;
+		return telefono;
 	}
 
 
 	public void setNumTelefono(int numTelefono) {
-		this.numTelefono = numTelefono;
+		this.telefono = numTelefono;
 	}
 
 
@@ -100,11 +93,10 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario{" +
-				"id=" + id +
 				", dni=" + dni +
 				", Contraseña='" + Contraseña + '\'' +
 				", Nombre='" + Nombre + '\'' +
-				", numTelefono=" + numTelefono +
+				", numTelefono=" + telefono +
 				", email='" + email + '\'' +
 				", iban='" + iban + '\'' +
 				'}';

@@ -1,6 +1,5 @@
 package sqlconnect;
 
-import sqlconnect.Usuario;
 import java.sql.*;
 
 public class Conexion {
@@ -24,14 +23,14 @@ public class Conexion {
 		try {
 			Class.forName(DRIVER);
 			conexion = DriverManager.getConnection(URL, USUARIO, PASSWORD);
-			System.out.println("Conexión OK");
+			System.out.println("Conexión con la base de datos establecida");
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error al cargar el controlador");
 			e.printStackTrace();
 
 		} catch (SQLException e) {
-			System.out.println("Error en la conexión");
+			System.out.println("Error en la conexión con la base de datos");
 			e.printStackTrace();
 		}
 
@@ -50,6 +49,18 @@ public class Conexion {
 
 		}
 	}
+	
+	
+	
+	// Método para registrar un usuario en la base de datos
+	public void addUser(int dni, String contraseña, String nombre, int telefono, String email, String iban) throws SQLException {
+	    Connection conexion = conectar();
+	    Statement statement = conexion.createStatement();
+	    String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (" + dni + ", '" + contraseña + "', '" + nombre + "', " + telefono + ", '" + email + "', '" + iban + "')";
+	    statement.executeUpdate(sql);
+	    statement.close();
+	}
+
 
 
 
@@ -94,7 +105,7 @@ public class Conexion {
 				if(consul.execute(consultasSeleccion)) {
 					ResultSet resultset = consul.getResultSet();
 					while(resultset.next()) {
-						Usuario Usuario = new Usuario (resultset.getInt("id"), resultset.getInt("dni"),
+						Usuario Usuario = new Usuario (resultset.getInt("dni"),
 								resultset.getString("Contraseña"), resultset.getString("Nombre"), resultset.getInt("numTelefono"),
 								resultset.getString("email"),resultset.getString("iban"));
 						System.out.println(Usuario.toString());

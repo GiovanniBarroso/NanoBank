@@ -1,8 +1,12 @@
 package states;
 
 import javax.swing.*;
+
+import sqlconnect.Conexion;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 public class RegistroUsuario extends JPanel {
 
@@ -45,7 +49,7 @@ public class RegistroUsuario extends JPanel {
 		// Action listener para el botón de registro
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				registrarUsuario();
+				saveUser();
 				limpiarCampos();
 			}
 		});
@@ -78,27 +82,39 @@ public class RegistroUsuario extends JPanel {
 		add(btnMostrarContraseña);
 		add(btnRegistrar);
 	}
+	
+	private void saveUser() {
+	    // Obtener los datos de los campos de entrada
+	    String DNI = txtDNI.getText();
+	    String nombre = txtNombre.getText();
+	    String telefono = txtTelefono.getText();
+	    String email = txtEmail.getText();
+	    String iban = txtIBAN.getText();
+	    String contraseña = new String(txtContraseña.getPassword());
 
+	    // Crear una instancia de Conexion para realizar la inserción en la base de datos
+	    Conexion conexionDB = new Conexion();
+	    try {
+	        // Llamar al método addUser de la clase Conexion para agregar un nuevo usuario
+	        conexionDB.addUser(Integer.parseInt(DNI), contraseña, nombre, Integer.parseInt(telefono), email, iban);
+	        JOptionPane.showMessageDialog(this, "Usuario añadido con éxito.");
+	        
+	     // Mostrar por consola el resultado del registro para verificar los datos
+			System.out.println("¡Enhorabuena, tu perfil con nombre " + nombre + " ha sido registrado!");
+			
+			// Cerrar la ventana actual de registro
+			SwingUtilities.getWindowAncestor(this).dispose();
 
-
-	// Método para registrar un nuevo usuario
-	private void registrarUsuario() {
-		String DNI = txtDNI.getText();
-		String nombre = txtNombre.getText();
-		String telefono = txtTelefono.getText();
-		String email = txtEmail.getText();
-		String iban = txtIBAN.getText();
-		String contraseña = new String(txtContraseña.getPassword());
-
-		// Mostrar por consola el resultado del registro para verificar los datos
-		System.out.println("¡Enhorabuena, tu perfil con nombre " + nombre + " ha sido registrado!");
-
-		// Cerrar la ventana actual de registro
-		SwingUtilities.getWindowAncestor(this).dispose();
-
-		// Abrir una nueva instancia de la clase IniciarSesion
-		SwingUtilities.invokeLater(() -> new IniciarSesion());
-	}
+			// Abrir una nueva instancia de la clase IniciarSesion
+			SwingUtilities.invokeLater(() -> new IniciarSesion());
+			
+			
+	    } catch (SQLException ex) {
+	        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+	    } 
+	       
+	    }
+	
 
 
 
