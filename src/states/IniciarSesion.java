@@ -154,22 +154,26 @@ public class IniciarSesion extends JFrame {
 
 
 
-	private void iniciarSesion(String usuario, String contraseña) {
-		try {
-			Conexion conexion = new Conexion();
-			if (conexion.validarCredenciales(usuario, contraseña)) {
-				getContentPane().removeAll();
-				getContentPane().add(new Menu());
-				revalidate();
-				repaint();
-			} else {
-				JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error de conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+	
+	private void iniciarSesion(String dni, String contraseña) {
+	    try {
+	        Conexion conexion = new Conexion();
+	        if (conexion.validarCredenciales(dni, contraseña)) {
+	            String nombreUsuario = conexion.obtenerNombrePorDNI(dni);
+	            getContentPane().removeAll();
+	            getContentPane().add(new Menu(nombreUsuario)); 
+	            revalidate();
+	            repaint();
+	        } else {
+	            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(this, "Error de conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+	    }
 	}
+
+
 
 
 

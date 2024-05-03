@@ -53,17 +53,17 @@ public class Conexion {
 
 
 	public void addUser(String dni, String contraseña, String nombre, int telefono, String email, String iban) throws SQLException {
-	    Connection conexion = conectar();
-	    String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (?, ?, ?, ?, ?, ?)";
-	    try (PreparedStatement statement = conexion.prepareStatement(sql)) {
-	        statement.setString(1, dni);
-	        statement.setString(2, contraseña);
-	        statement.setString(3, nombre);
-	        statement.setInt(4, telefono);
-	        statement.setString(5, email);
-	        statement.setString(6, iban);
-	        statement.executeUpdate();
-	    }
+		Connection conexion = conectar();
+		String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (?, ?, ?, ?, ?, ?)";
+		try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+			statement.setString(1, dni);
+			statement.setString(2, contraseña);
+			statement.setString(3, nombre);
+			statement.setInt(4, telefono);
+			statement.setString(5, email);
+			statement.setString(6, iban);
+			statement.executeUpdate();
+		}
 	}
 
 
@@ -100,7 +100,7 @@ public class Conexion {
 		boolean usuarioValido = false;
 
 		try {
-			String consultaLogin = "SELECT * FROM Usuario WHERE DNI = ? AND contraseña = ?";
+			String consultaLogin = "SELECT * FROM Usuario WHERE dni = ? AND contraseña = ?";
 			PreparedStatement statement = conexion.prepareStatement(consultaLogin);
 			statement.setString(1, usuario);
 			statement.setString(2, contraseña);
@@ -118,5 +118,25 @@ public class Conexion {
 		return usuarioValido;
 	}
 
+
+
+	public String obtenerNombrePorDNI(String dni) throws SQLException {
+		String nombre = null;
+		Connection conexion = conectar();
+		try {
+			String consulta = "SELECT nombre FROM Usuario WHERE dni = ?";
+			PreparedStatement statement = conexion.prepareStatement(consulta);
+			statement.setString(1, dni);
+			ResultSet resultado = statement.executeQuery();
+			if (resultado.next()) {
+				nombre = resultado.getString("nombre");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cerrarConexion(conexion);
+		}
+		return nombre;
+	}
 
 }

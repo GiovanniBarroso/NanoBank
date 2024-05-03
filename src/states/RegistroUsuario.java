@@ -207,7 +207,7 @@ public class RegistroUsuario extends JPanel {
 		try {
 			// Llamar al método addUser de la clase Conexion para agregar un nuevo usuario
 			conexionDB.addUser(DNI, contraseña, nombre, Integer.parseInt(telefono), email, iban);
-			JOptionPane.showMessageDialog(this, "Usuario añadido con éxito.");
+			JOptionPane.showMessageDialog(this, "¡ Cuenta creada correctamente !");
 
 			// Mostrar por consola el resultado del registro para verificar los datos
 			System.out.println("¡Enhorabuena, tu perfil con nombre " + nombre + " ha sido registrado!\n");
