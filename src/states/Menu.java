@@ -14,6 +14,7 @@ public class Menu extends JPanel {
 	public Menu(String nombreUsuario, double saldo) {
 
 		this.nombreUsuario = nombreUsuario;
+		this.saldo = saldo;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); 
 		setBackground(Color.ORANGE); 

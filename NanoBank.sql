@@ -24,7 +24,8 @@ cuentaDestino VARCHAR (50) NOT NULL,
 nombreDestino VARCHAR (100) NOT NULL,
 cantidad FLOAT (20,5) NOT NULL,
 concepto VARCHAR (250) NOT NULL,
-FOREIGN KEY (id_transaciones) REFERENCES Usuario(id_usuario)
+id_usuario INT,
+FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 );
 
 
@@ -38,3 +39,4 @@ WHERE NOT EXISTS (
 
 
 SELECT * FROM Usuario;
+SELECT * FROM Transaciones;

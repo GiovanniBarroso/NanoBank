@@ -150,8 +150,8 @@ public class Conexion {
 		return nombre;
 	}
 
-	
-	
+
+
 
 	public double obtenerSaldoPorDNI (String dni) throws SQLException {
 		double saldo = 0;
