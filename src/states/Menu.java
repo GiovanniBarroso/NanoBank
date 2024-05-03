@@ -23,6 +23,7 @@ public class Menu extends JPanel {
         topPanel.add(Box.createVerticalGlue());
         
         
+        
         JLabel welcomeLabel = new JLabel("¡Bienvenido " + nombreUsuario + "!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24)); 
         welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -30,6 +31,8 @@ public class Menu extends JPanel {
         topPanel.add(Box.createVerticalGlue()); 
         add(topPanel); 
 
+        
+        
         // Panel para mostrar el saldo
         JPanel saldoPanel = new JPanel();
         saldoPanel.setLayout(new BoxLayout(saldoPanel, BoxLayout.Y_AXIS));
@@ -40,6 +43,7 @@ public class Menu extends JPanel {
         saldoPanel.add(Box.createVerticalGlue()); 
         
         
+        
         JLabel saldoLabel = new JLabel("Saldo: €" + saldo);
         saldoLabel.setFont(new Font("Arial", Font.PLAIN, 24)); 
         saldoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -47,9 +51,13 @@ public class Menu extends JPanel {
         saldoPanel.add(Box.createVerticalGlue()); 
         add(saldoPanel); 
 
+        
+        
         // Espacio entre el panel de saldo y los botones
         add(Box.createRigidArea(new Dimension(0, 50)));
 
+        
+        
         // Creamos los botones y los agregamos directamente al JPanel principal
         add(createButton("TRANSFERENCIA"));
         add(Box.createRigidArea(new Dimension(0, 20)));
@@ -69,6 +77,8 @@ public class Menu extends JPanel {
         add(createButton("¿NECESITAS AYUDA?"));
     }
 
+    
+    
     private JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
