@@ -52,14 +52,20 @@ public class Conexion {
 
 
 
-	// Método para registrar un usuario en la base de datos
-	public void addUser(int dni, String contraseña, String nombre, int telefono, String email, String iban) throws SQLException {
-		Connection conexion = conectar();
-		Statement statement = conexion.createStatement();
-		String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (" + dni + ", '" + contraseña + "', '" + nombre + "', " + telefono + ", '" + email + "', '" + iban + "')";
-		statement.executeUpdate(sql);
-		statement.close();
+	public void addUser(String dni, String contraseña, String nombre, int telefono, String email, String iban) throws SQLException {
+	    Connection conexion = conectar();
+	    String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (?, ?, ?, ?, ?, ?)";
+	    try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+	        statement.setString(1, dni);
+	        statement.setString(2, contraseña);
+	        statement.setString(3, nombre);
+	        statement.setInt(4, telefono);
+	        statement.setString(5, email);
+	        statement.setString(6, iban);
+	        statement.executeUpdate();
+	    }
 	}
+
 
 
 

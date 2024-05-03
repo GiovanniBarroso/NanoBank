@@ -4,7 +4,7 @@ public class Usuario {
 
 
 	//Declaramos atributos
-	private int dni;
+	private String dni;
 	private String Contraseña;
 	private String Nombre;
 	private int telefono;
@@ -13,7 +13,7 @@ public class Usuario {
 
 
 	//Constructor
-	public Usuario(int dni, String contraseña, String nombre, int numTelefono, String email, String iban) {
+	public Usuario(String dni, String contraseña, String nombre, int numTelefono, String email, String iban) {
 
 		this.dni = dni;
 		this.Contraseña = contraseña;
@@ -26,12 +26,12 @@ public class Usuario {
 
 
 	//Metodos getter and setter
-	public int getDni() {
+	public String getDni() {
 		return dni;
 	}
 
 
-	public void setDni(int dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 
