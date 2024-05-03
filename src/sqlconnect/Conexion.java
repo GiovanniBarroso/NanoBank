@@ -65,6 +65,17 @@ public class Conexion {
 			statement.executeUpdate();
 		}
 	}
+	
+	public void sendTransferencia(String nombre, String cuentaDestino, String iban) throws SQLException {
+		Connection conexion = conectar();
+		String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (?, ?, ?, ?, ?, ?)";
+		try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+			statement.setString(1, nombre);
+			statement.setString(2, cuentaDestino);
+			statement.setString(3, iban);
+			statement.executeUpdate();
+		}
+	}
 
 
 

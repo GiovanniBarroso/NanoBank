@@ -8,7 +8,6 @@ import java.awt.event.*;
 import java.sql.SQLException;
 
 public class IniciarSesion extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 
 
@@ -23,11 +22,11 @@ public class IniciarSesion extends JFrame {
 		initComponents();
 	}
 
+
 	private void initComponents() {
 
 		// Crear un panel para contener los componentes
 		JPanel panel = new JPanel() {
-
 
 			@Override
 			protected void paintComponent(Graphics g) {
@@ -58,9 +57,12 @@ public class IniciarSesion extends JFrame {
 
 
 
+
+
 		// Logo
 		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_6.png"));
 		JLabel lblLogo = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+
 
 
 		// Usuario
@@ -69,6 +71,7 @@ public class IniciarSesion extends JFrame {
 		JTextField txtUsuario = new JTextField(15);
 		txtUsuario.setHorizontalAlignment(JTextField.CENTER);
 		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
+
 
 
 		// Contraseña
@@ -91,6 +94,7 @@ public class IniciarSesion extends JFrame {
 		JButton btnRegistrarse = new JButton("¿No estás registrado?");
 		btnRegistrarse.setHorizontalAlignment(JButton.CENTER);
 		btnRegistrarse.setFont(new Font("Arial Black", Font.PLAIN, 16));
+
 
 
 
@@ -130,9 +134,12 @@ public class IniciarSesion extends JFrame {
 
 
 
+
+
 		// Eventos de los botones
 		btnIniciarSesion.addActionListener(e -> iniciarSesion(txtUsuario.getText(), new String(txtContraseña.getPassword())));
 		btnRegistrarse.addActionListener(e -> mostrarRegistroUsuario());
+
 
 
 
@@ -154,23 +161,23 @@ public class IniciarSesion extends JFrame {
 
 
 
-	
+
 	private void iniciarSesion(String dni, String contraseña) {
-	    try {
-	        Conexion conexion = new Conexion();
-	        if (conexion.validarCredenciales(dni, contraseña)) {
-	            String nombreUsuario = conexion.obtenerNombrePorDNI(dni);
-	            getContentPane().removeAll();
-	            getContentPane().add(new Menu(nombreUsuario)); 
-	            revalidate();
-	            repaint();
-	        } else {
-	            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-	        }
-	    } catch (SQLException ex) {
-	        ex.printStackTrace();
-	        JOptionPane.showMessageDialog(this, "Error de conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
-	    }
+		try {
+			Conexion conexion = new Conexion();
+			if (conexion.validarCredenciales(dni, contraseña)) {
+				String nombreUsuario = conexion.obtenerNombrePorDNI(dni);
+				getContentPane().removeAll();
+				getContentPane().add(new Menu(nombreUsuario)); 
+				revalidate();
+				repaint();
+			} else {
+				JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Error de conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 

@@ -1,4 +1,5 @@
 -- Creación y selección de la base de datos
+
 CREATE DATABASE IF NOT EXISTS NanoBank;
 USE NanoBank;
 
