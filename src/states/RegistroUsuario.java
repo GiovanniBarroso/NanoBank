@@ -1,8 +1,10 @@
 package states;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import sqlconnect.Conexion;
+import states.IniciarSesion.RoundedBorder;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -10,9 +12,6 @@ import java.sql.SQLException;
 
 public class RegistroUsuario extends JPanel {
 
-
-    //Declaramos atributos
-    private static final long serialVersionUID = 1L;
     private JTextField txtDNI;
     private JTextField txtNombre;
     private JTextField txtTelefono;
@@ -21,14 +20,20 @@ public class RegistroUsuario extends JPanel {
     private JPasswordField txtContraseña;
     private JButton btnRegistrar;
     private JButton btnMostrarContraseña;
-    private JButton btnVolver; 
+    private JButton btnVolver;
     private boolean mostrarContraseña = false;
 
-
     public RegistroUsuario() {
-        setSize(400, 720);
-        setBackground(Color.ORANGE);
-        setLayout(new GridBagLayout());
+        setLayout(new BorderLayout());
+
+        // Panel para el fondo gris
+        JPanel panelFondo = new JPanel();
+        panelFondo.setBackground(Color.GRAY);
+        panelFondo.setLayout(new GridBagLayout());
+        
+     // Establecer el borde redondeado
+        Border border = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+        panelFondo.setBorder(BorderFactory.createCompoundBorder(border, new RoundedBorder(10)));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;
@@ -38,96 +43,98 @@ public class RegistroUsuario extends JPanel {
         lblDNI.setFont(new Font("Impact", Font.PLAIN, 20));
         txtDNI = new JTextField(20);
         txtDNI.setHorizontalAlignment(JTextField.CENTER);
-        txtDNI.setFont(new Font("Arial", Font.PLAIN, 16)); 
+        txtDNI.setFont(new Font("Arial", Font.PLAIN, 16));
 
         JLabel lblNombre = new JLabel("Nombre:");
-        lblNombre.setFont(new Font("Impact", Font.PLAIN, 20)); 
+        lblNombre.setFont(new Font("Impact", Font.PLAIN, 20));
         txtNombre = new JTextField(20);
         txtNombre.setHorizontalAlignment(JTextField.CENTER);
-        txtNombre.setFont(new Font("Arial", Font.PLAIN, 16)); 
+        txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
 
         JLabel lblTelefono = new JLabel("Número de Teléfono:");
-        lblTelefono.setFont(new Font("Impact", Font.PLAIN, 20)); 
+        lblTelefono.setFont(new Font("Impact", Font.PLAIN, 20));
         txtTelefono = new JTextField(20);
         txtTelefono.setHorizontalAlignment(JTextField.CENTER);
-        txtTelefono.setFont(new Font("Arial", Font.PLAIN, 16)); 
+        txtTelefono.setFont(new Font("Arial", Font.PLAIN, 16));
 
         JLabel lblEmail = new JLabel("Email:");
-        lblEmail.setFont(new Font("Impact", Font.PLAIN, 20)); 
+        lblEmail.setFont(new Font("Impact", Font.PLAIN, 20));
         txtEmail = new JTextField(20);
         txtEmail.setHorizontalAlignment(JTextField.CENTER);
-        txtEmail.setFont(new Font("Arial", Font.PLAIN, 16)); 
+        txtEmail.setFont(new Font("Arial", Font.PLAIN, 16));
 
         JLabel lblIBAN = new JLabel("IBAN:");
-        lblIBAN.setFont(new Font("Impact", Font.PLAIN, 20)); 
+        lblIBAN.setFont(new Font("Impact", Font.PLAIN, 20));
         txtIBAN = new JTextField(20);
         txtIBAN.setHorizontalAlignment(JTextField.CENTER);
-        txtIBAN.setFont(new Font("Arial", Font.PLAIN, 16)); 
+        txtIBAN.setFont(new Font("Arial", Font.PLAIN, 16));
 
         JLabel lblContraseña = new JLabel("Contraseña:");
-        lblContraseña.setFont(new Font("Impact", Font.PLAIN, 20)); 
+        lblContraseña.setFont(new Font("Impact", Font.PLAIN, 20));
         txtContraseña = new JPasswordField(20);
         txtContraseña.setHorizontalAlignment(JTextField.CENTER);
-        txtContraseña.setFont(new Font("Arial", Font.PLAIN, 16)); 
+        txtContraseña.setFont(new Font("Arial", Font.PLAIN, 16));
 
         btnRegistrar = new JButton("Registrarse");
         btnMostrarContraseña = new JButton("Mostrar Contraseña");
-        btnVolver = new JButton("Volver atrás"); 
+        btnVolver = new JButton("Volver atrás");
 
         // DNI
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(lblDNI, gbc);
+        panelFondo.add(lblDNI, gbc);
 
         gbc.gridy++;
-        add(txtDNI, gbc);
+        panelFondo.add(txtDNI, gbc);
 
         // Nombre
         gbc.gridy++;
-        add(lblNombre, gbc);
+        panelFondo.add(lblNombre, gbc);
 
         gbc.gridy++;
-        add(txtNombre, gbc);
+        panelFondo.add(txtNombre, gbc);
 
         // Teléfono
         gbc.gridy++;
-        add(lblTelefono, gbc);
+        panelFondo.add(lblTelefono, gbc);
 
         gbc.gridy++;
-        add(txtTelefono, gbc);
+        panelFondo.add(txtTelefono, gbc);
 
         // Email
         gbc.gridy++;
-        add(lblEmail, gbc);
+        panelFondo.add(lblEmail, gbc);
 
         gbc.gridy++;
-        add(txtEmail, gbc);
+        panelFondo.add(txtEmail, gbc);
 
         // IBAN
         gbc.gridy++;
-        add(lblIBAN, gbc);
+        panelFondo.add(lblIBAN, gbc);
 
         gbc.gridy++;
-        add(txtIBAN, gbc);
+        panelFondo.add(txtIBAN, gbc);
 
         // Contraseña
         gbc.gridy++;
-        add(lblContraseña, gbc);
+        panelFondo.add(lblContraseña, gbc);
 
         gbc.gridy++;
-        add(txtContraseña, gbc);
+        panelFondo.add(txtContraseña, gbc);
 
         // Botón Registrar
         gbc.gridy++;
-        add(btnRegistrar, gbc);
+        panelFondo.add(btnRegistrar, gbc);
 
         // Botón Mostrar Contraseña
         gbc.gridy++;
-        add(btnMostrarContraseña, gbc);
-        
+        panelFondo.add(btnMostrarContraseña, gbc);
+
         // Botón Volver a IniciarSesion
         gbc.gridy++;
-        add(btnVolver, gbc);
+        panelFondo.add(btnVolver, gbc);
+
+        add(panelFondo, BorderLayout.CENTER);
 
         // Acción del botón Registrar
         btnRegistrar.addActionListener(new ActionListener() {
@@ -147,7 +154,7 @@ public class RegistroUsuario extends JPanel {
                 }
             }
         });
-        
+
         // Acción del botón Volver a IniciarSesion
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -155,9 +162,6 @@ public class RegistroUsuario extends JPanel {
             }
         });
     }
-
-
-
 
     private void saveUser() {
         // Obtener los datos de los campos de entrada
@@ -213,19 +217,19 @@ public class RegistroUsuario extends JPanel {
             SwingUtilities.invokeLater(() -> new IniciarSesion());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } 
+        }
     }
-    
+
     // Método para volver a IniciarSesion
     private void volverAIniciarSesion() {
         // Cerrar la ventana actual de registro
         SwingUtilities.getWindowAncestor(this).dispose();
-        
+
         // Abrir una nueva instancia de la clase IniciarSesion
         SwingUtilities.invokeLater(() -> new IniciarSesion());
     }
-    
- // Método para limpiar los campos de entrada
+
+    // Método para limpiar los campos de entrada
     public void limpiarCampos() {
         txtDNI.setText("");
         txtNombre.setText("");
