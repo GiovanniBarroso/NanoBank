@@ -64,7 +64,7 @@ public class IniciarSesion extends JFrame {
 
 
 		// Usuario
-		JLabel lblUsuario = new JLabel("Usuario:");
+		JLabel lblUsuario = new JLabel("DNI:");
 		lblUsuario.setFont(new Font("Impact", Font.PLAIN, 20));
 		JTextField txtUsuario = new JTextField(15);
 		txtUsuario.setHorizontalAlignment(JTextField.CENTER);

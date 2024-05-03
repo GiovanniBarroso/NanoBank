@@ -100,7 +100,7 @@ public class Conexion {
 		boolean usuarioValido = false;
 
 		try {
-			String consultaLogin = "SELECT * FROM Usuario WHERE nombre = ? AND contraseña = ?";
+			String consultaLogin = "SELECT * FROM Usuario WHERE DNI = ? AND contraseña = ?";
 			PreparedStatement statement = conexion.prepareStatement(consultaLogin);
 			statement.setString(1, usuario);
 			statement.setString(2, contraseña);
