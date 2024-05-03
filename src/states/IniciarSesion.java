@@ -167,8 +167,9 @@ public class IniciarSesion extends JFrame {
 			Conexion conexion = new Conexion();
 			if (conexion.validarCredenciales(dni, contraseña)) {
 				String nombreUsuario = conexion.obtenerNombrePorDNI(dni);
+				double saldo = conexion.obtenerSaldoPorDNI(dni);
 				getContentPane().removeAll();
-				getContentPane().add(new Menu(nombreUsuario)); 
+				getContentPane().add(new Menu(nombreUsuario, saldo)); 
 				revalidate();
 				repaint();
 			} else {

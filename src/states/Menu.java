@@ -6,14 +6,15 @@ import java.awt.event.ActionListener;
 
 public class Menu extends JPanel {
 
-	private double saldo = 1000.0;
+	private double saldo;
 	private String nombreUsuario;
+	
 	private static final long serialVersionUID = 1L;
 
-	public Menu(String nombreUsuario) {
-		
+	public Menu(String nombreUsuario, double saldo) {
+
 		this.nombreUsuario = nombreUsuario;
-		
+
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); 
 		setBackground(Color.ORANGE); 
 
@@ -102,18 +103,17 @@ public class Menu extends JPanel {
 
 
 	private void realizarTransferencia() {
-	    // Crear una nueva instancia de Transferencia
-	    Transferencia transferencia = new Transferencia(nombreUsuario);
-	    
-	    // Crear un JFrame para mostrar la instancia de Transferencia
-	    JFrame frame = new JFrame("Realizar Transferencia");
-	    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cerrar solo la ventana de Transferencia
-	    frame.getContentPane().add(transferencia); // Agregar Transferencia al JFrame
-	    frame.pack();
-	    frame.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
-	    frame.setVisible(true);
+		Container parent = getParent();
+		if (parent != null) {
+			parent.removeAll();
+			parent.add(new Transferencia(nombreUsuario, saldo)); 
+			parent.revalidate();
+			parent.repaint();
+		} else {
+			// Manejar la situación donde getParent() devuelve null
+			System.out.println("El componente no tiene un padre.");
+		}
 	}
-
 
 
 	private void realizarBizum() {

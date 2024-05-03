@@ -65,43 +65,41 @@ public class Conexion {
 			statement.executeUpdate();
 		}
 	}
-	
-	public void sendTransferencia(String nombre, String cuentaDestino, String iban) throws SQLException {
-		Connection conexion = conectar();
-		String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (?, ?, ?, ?, ?, ?)";
-		try (PreparedStatement statement = conexion.prepareStatement(sql)) {
-			statement.setString(1, nombre);
-			statement.setString(2, cuentaDestino);
-			statement.setString(3, iban);
-			statement.executeUpdate();
+
+	// Método para enviar una transferencia
+	public void sendTransferencia(String nombreUsuario, String nombreDestino, String cuentaDestino, String concepto, double cantidad) throws SQLException {
+		// Establecer la conexión con la base de datos
+		try (Connection conexion = conectar()) {
+			// Insertar la transferencia en la tabla Transaciones
+			String sql = "INSERT INTO Transaciones (nombreDestino, cuentaDestino, concepto, cantidad) VALUES (?, ?, ?, ?)";
+			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+				statement.setString(1, nombreDestino);
+				statement.setString(2, cuentaDestino);
+				statement.setString(3, concepto);
+				statement.setDouble(4, cantidad);
+				statement.executeUpdate();
+			}
+
+			// Actualizar el saldo del usuario en la tabla Usuario
+			sql = "UPDATE Usuario SET saldo = saldo - ? WHERE nombre = ?";
+			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+				statement.setDouble(1, cantidad);
+				statement.setString(2, nombreUsuario);
+				statement.executeUpdate();
+			}
+
+			// Actualizar el saldo del destinatario en la tabla Usuario
+			sql = "UPDATE Usuario SET saldo = saldo + ? WHERE iban = ?";
+			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+				statement.setDouble(1, cantidad);
+				statement.setString(2, cuentaDestino);
+				statement.executeUpdate();
+			}
+
+			System.out.println("Transferencia realizada con éxito.");
 		}
 	}
 
-
-
-
-
-
-	public void insertData() throws SQLException{
-		Connection conexion = conectar();
-
-		try {
-
-			//Datos a insertar
-			String consultasInserccion = "INSERT INTO Usuario VALUES(11, 'Martin');";
-			System.out.println(consultasInserccion);
-			//Creación del Statement para poder reqalizar la consulta
-			Statement consul = conexion.createStatement();
-			//Ejecución de la consulta
-			consul.executeUpdate(consultasInserccion);
-			System.out.println("Datos insertados correctamente");
-			//Cierre del Statement
-			consul.close();
-		}finally {
-			//Cierre de la conexión
-			cerrarConexion(conexion);
-		}
-	}
 
 
 
@@ -131,6 +129,8 @@ public class Conexion {
 
 
 
+
+
 	public String obtenerNombrePorDNI(String dni) throws SQLException {
 		String nombre = null;
 		Connection conexion = conectar();
@@ -149,5 +149,28 @@ public class Conexion {
 		}
 		return nombre;
 	}
+
+	
+	
+
+	public double obtenerSaldoPorDNI (String dni) throws SQLException {
+		double saldo = 0;
+		Connection conexion = conectar();
+		try {
+			String consulta = "SELECT saldo FROM Usuario WHERE dni = ?";
+			PreparedStatement statement = conexion.prepareStatement(consulta);
+			statement.setString(1, dni);
+			ResultSet resultado = statement.executeQuery();
+			if (resultado.next()) {
+				saldo = resultado.getDouble("saldo");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cerrarConexion(conexion);
+		}
+		return saldo;
+	}
+
 
 }

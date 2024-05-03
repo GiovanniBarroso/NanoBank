@@ -16,17 +16,22 @@ public class Transferencia extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	private JTextField txtcuentaDestino;
 	private JTextField txtNombre;
+	private JTextField txtCantidad;
 	private JTextField txtConcepto;
-	private JTextField txtIBAN;
+
 	private String nombreUsuario;
+	private double saldo;
 	private JButton btnEnviarTransferencia;
 	private JButton btnVolver;
 
 
-	public Transferencia(String nombreUsuario) {
-		
+	public Transferencia(String nombreUsuario, double saldo) {
+
 		this.nombreUsuario = nombreUsuario;
+		this.saldo = saldo;
+		
 		setLayout(new BorderLayout());
 
 		// Panel para el fondo gris
@@ -44,35 +49,49 @@ public class Transferencia extends JPanel {
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(10, 10, 10, 10);
 
-		
-		JLabel lblIBAN = new JLabel("IBAN:");
-		lblIBAN.setFont(new Font("Impact", Font.PLAIN, 20));
-		txtIBAN = new JTextField(20);
-		txtIBAN.setHorizontalAlignment(JTextField.CENTER);
-		txtIBAN.setFont(new Font("Arial", Font.PLAIN, 16));
-		
-		
-		
-		JLabel lblNombre = new JLabel("Nombre:");
+
+		JLabel lblcuentaDestino = new JLabel("IBAN");
+		lblcuentaDestino.setFont(new Font("Impact", Font.PLAIN, 20));
+		txtcuentaDestino = new JTextField(20);
+		txtcuentaDestino.setHorizontalAlignment(JTextField.CENTER);
+		txtcuentaDestino.setFont(new Font("Arial", Font.PLAIN, 16));
+
+
+
+		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setFont(new Font("Impact", Font.PLAIN, 20));
 		txtNombre = new JTextField(20);
 		txtNombre.setHorizontalAlignment(JTextField.CENTER);
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
-		
-		
-		
-		JLabel lblConcepto = new JLabel("CuentaDestino:");
+
+
+
+		JLabel lblCantidad = new JLabel("Cantidad a enviar (Sin límites)");
+		lblCantidad.setFont(new Font("Impact", Font.PLAIN, 20));
+		txtCantidad = new JTextField(20);
+		txtCantidad.setHorizontalAlignment(JTextField.CENTER);
+		txtCantidad.setFont(new Font("Arial", Font.PLAIN, 16));
+
+
+
+		JLabel lblConcepto = new JLabel("Concepto");
 		lblConcepto.setFont(new Font("Impact", Font.PLAIN, 20));
 		txtConcepto = new JTextField(20);
 		txtConcepto.setHorizontalAlignment(JTextField.CENTER);
 		txtConcepto.setFont(new Font("Arial", Font.PLAIN, 16));
-		
-		
-		
+
 
 		btnEnviarTransferencia = new JButton("Realizar Transferencia");
 		btnVolver = new JButton("Volver atrás");
 
+
+
+		// IBAN
+		gbc.gridy++;
+		panelFondo.add(lblcuentaDestino, gbc);
+
+		gbc.gridy++;
+		panelFondo.add(txtcuentaDestino, gbc);
 
 
 		// Nombre
@@ -83,14 +102,12 @@ public class Transferencia extends JPanel {
 		panelFondo.add(txtNombre, gbc);
 
 
-
-		// IBAN
+		// Cantidad
 		gbc.gridy++;
-		panelFondo.add(lblIBAN, gbc);
+		panelFondo.add(lblCantidad, gbc);
 
 		gbc.gridy++;
-		panelFondo.add(txtIBAN, gbc);
-
+		panelFondo.add(txtCantidad, gbc);
 
 
 		// nombreDestino
@@ -101,17 +118,18 @@ public class Transferencia extends JPanel {
 		panelFondo.add(txtConcepto, gbc);
 
 
-
-
 		// Botón Registrar
 		gbc.gridy++;
 		panelFondo.add(btnEnviarTransferencia, gbc);
+
 
 		// Botón Volver a IniciarSesion
 		gbc.gridy++;
 		panelFondo.add(btnVolver, gbc);
 
 		add(panelFondo, BorderLayout.CENTER);
+
+
 
 
 
@@ -137,24 +155,25 @@ public class Transferencia extends JPanel {
 
 	private void saveTransferencia() {
 		// Obtener los datos de los campos de entrada
-		String nombre = txtNombre.getText();
+		String Nombre = txtNombre.getText();
 		String cuentaDestino = txtConcepto.getText();
-		String iban = txtIBAN.getText();
+		String Concepto = txtConcepto.getText();
+		String Cantidad = txtCantidad.getText();
 
 		// Validar que todos los campos estén llenos
-		if (nombre.isEmpty() || cuentaDestino.isEmpty() || iban.isEmpty()) {
+		if (Nombre.isEmpty() || cuentaDestino.isEmpty() || Cantidad.isEmpty() || Concepto.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		Conexion conexionDB = new Conexion();
 		try {
-			
-			
-			conexionDB.sendTransferencia(nombre, cuentaDestino, iban);
-			JOptionPane.showMessageDialog(this, "¡ Cuenta creada correctamente !");
 
-			
+
+			conexionDB.sendTransferencia(nombreUsuario,cuentaDestino, Nombre, Concepto, Double.parseDouble(Cantidad));
+			JOptionPane.showMessageDialog(this, "¡ Transferencia realizada !");
+
+
 			System.out.println("¡Enhorabuena, la transferencia se ha realizado correctamente!\n");
 			limpiarCampos();
 
@@ -172,15 +191,22 @@ public class Transferencia extends JPanel {
 
 	// Método para volver a IniciarSesion
 	private void volveraMenu() {
-		
-		// Cerrar la ventana actual de registro
-		SwingUtilities.getWindowAncestor(this).dispose();
+		Container parent = getParent();
+		if (parent != null) {
+			// Eliminar todos los componentes del padre
+			parent.removeAll();
 
+			// Crear una nueva instancia de Menu y agregarla al padre
+			Menu menu = new Menu(nombreUsuario, saldo);
+			parent.add(menu);
 
-
-		
-		// Abrir una nueva instancia de la clase Menu
-		SwingUtilities.invokeLater(() -> new Menu(nombreUsuario));
+			// Actualizar la interfaz de usuario
+			parent.revalidate();
+			parent.repaint();
+		} else {
+			// Manejar la situación donde getParent() devuelve null
+			System.out.println("El componente no tiene un padre [🆎].");
+		}
 	}
 
 
@@ -188,11 +214,11 @@ public class Transferencia extends JPanel {
 
 	// Método para limpiar los campos de entrada
 	public void limpiarCampos() {
+		txtcuentaDestino.setText("");
 		txtNombre.setText("");
+		txtCantidad.setText("");
 		txtConcepto.setText("");
-		txtIBAN.setText("");
 	}
-
 
 
 
