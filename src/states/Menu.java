@@ -137,7 +137,17 @@ public class Menu extends JPanel {
 
 
 	private void gestionarCarteras() {
+		Container parent = getParent();
 
+		if (parent != null) {
+			parent.removeAll();
+//			parent.add(new GestionarCarteras(id_usuario, nombreUsuario, saldo)); 
+			parent.revalidate();
+			parent.repaint();
+		} else {
+			// Manejar la situación donde getParent() devuelve null
+			System.out.println("El componente no tiene un padre.");
+		}
 	}
 
 

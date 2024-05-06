@@ -191,7 +191,6 @@ public class IniciarSesion extends JFrame {
 
 
 
-
 	private void mostrarRegistroUsuario() {
 		getContentPane().removeAll();
 		getContentPane().add(new RegistroUsuario());
