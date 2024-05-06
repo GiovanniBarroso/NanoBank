@@ -17,11 +17,12 @@ CREATE TABLE IF NOT EXISTS Usuario (
 
 
 
--- TABLA TRANSACIONES
-CREATE TABLE IF NOT EXISTS Transaciones (
+-- TABLA TRANSACCIONES
+CREATE TABLE IF NOT EXISTS Transacciones (
 id_transaciones INT PRIMARY KEY AUTO_INCREMENT,
-cuentaDestino VARCHAR (50) NOT NULL,
-nombreDestino VARCHAR (100) NOT NULL,
+cuentaOrigen VARCHAR (50) NOT NULL,
+cuentaDestino VARCHAR (100) NOT NULL,
+nombreDestino VARCHAR (50) NOT NULL,
 cantidad FLOAT (20,5) NOT NULL,
 concepto VARCHAR (250) NOT NULL,
 id_usuario INT,
@@ -39,4 +40,4 @@ WHERE NOT EXISTS (
 
 
 SELECT * FROM Usuario;
-SELECT * FROM Transaciones;
+SELECT * FROM Transacciones;

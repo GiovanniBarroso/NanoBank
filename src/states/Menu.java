@@ -6,13 +6,15 @@ import java.awt.event.ActionListener;
 
 public class Menu extends JPanel {
 
+	private int id_usuario;
 	private double saldo;
 	private String nombreUsuario;
-	
+
 	private static final long serialVersionUID = 1L;
 
-	public Menu(String nombreUsuario, double saldo) {
+	public Menu(int id_usuario, String nombreUsuario, double saldo) {
 
+		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
 
@@ -23,7 +25,7 @@ public class Menu extends JPanel {
 		add(createTopPanel(nombreUsuario));
 
 		// Panel para mostrar el saldo
-		add(createSaldoPanel());
+		add(createSaldoPanel(saldo));
 
 		// Espacio entre el panel de saldo y los botones
 		add(Box.createRigidArea(new Dimension(0, 50)));
@@ -71,7 +73,7 @@ public class Menu extends JPanel {
 
 
 
-	private JPanel createSaldoPanel() {
+	private JPanel createSaldoPanel(double saldo) {
 		JPanel saldoPanel = new JPanel();
 		saldoPanel.setLayout(new BoxLayout(saldoPanel, BoxLayout.Y_AXIS));
 		saldoPanel.setBackground(Color.GREEN);
@@ -105,9 +107,10 @@ public class Menu extends JPanel {
 
 	private void realizarTransferencia() {
 		Container parent = getParent();
+
 		if (parent != null) {
 			parent.removeAll();
-			parent.add(new Transferencia(nombreUsuario, saldo)); 
+			parent.add(new Transferencia(id_usuario, nombreUsuario, saldo)); 
 			parent.revalidate();
 			parent.repaint();
 		} else {

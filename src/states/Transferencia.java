@@ -22,16 +22,18 @@ public class Transferencia extends JPanel {
 	private JTextField txtConcepto;
 
 	private String nombreUsuario;
+	private int id_usuario;
 	private double saldo;
 	private JButton btnEnviarTransferencia;
 	private JButton btnVolver;
 
 
-	public Transferencia(String nombreUsuario, double saldo) {
+	public Transferencia(int id_usuario, String nombreUsuario, double saldo) {
 
+		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
-		
+
 		setLayout(new BorderLayout());
 
 		// Panel para el fondo gris
@@ -156,7 +158,7 @@ public class Transferencia extends JPanel {
 	private void saveTransferencia() {
 		// Obtener los datos de los campos de entrada
 		String Nombre = txtNombre.getText();
-		String cuentaDestino = txtConcepto.getText();
+		String cuentaDestino = txtcuentaDestino.getText();
 		String Concepto = txtConcepto.getText();
 		String Cantidad = txtCantidad.getText();
 
@@ -170,7 +172,7 @@ public class Transferencia extends JPanel {
 		try {
 
 
-			conexionDB.sendTransferencia(nombreUsuario,cuentaDestino, Nombre, Concepto, Double.parseDouble(Cantidad));
+			conexionDB.sendTransferencia(id_usuario, nombreUsuario, Nombre, cuentaDestino, Concepto, Double.parseDouble(Cantidad));
 			JOptionPane.showMessageDialog(this, "¡ Transferencia realizada !");
 
 
@@ -197,7 +199,7 @@ public class Transferencia extends JPanel {
 			parent.removeAll();
 
 			// Crear una nueva instancia de Menu y agregarla al padre
-			Menu menu = new Menu(nombreUsuario, saldo);
+			Menu menu = new Menu(id_usuario, nombreUsuario, saldo);
 			parent.add(menu);
 
 			// Actualizar la interfaz de usuario

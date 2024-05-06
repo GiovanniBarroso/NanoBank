@@ -165,13 +165,16 @@ public class IniciarSesion extends JFrame {
 	private void iniciarSesion(String dni, String contraseña) {
 		try {
 			Conexion conexion = new Conexion();
+
 			if (conexion.validarCredenciales(dni, contraseña)) {
+				int id_usuario = conexion.obtenerIdPorDNI(dni); // Obtener el id_usuario usando el dni
 				String nombreUsuario = conexion.obtenerNombrePorDNI(dni);
 				double saldo = conexion.obtenerSaldoPorDNI(dni);
 				getContentPane().removeAll();
-				getContentPane().add(new Menu(nombreUsuario, saldo)); 
+				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo));
 				revalidate();
 				repaint();
+
 			} else {
 				JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
 			}
@@ -180,6 +183,7 @@ public class IniciarSesion extends JFrame {
 			JOptionPane.showMessageDialog(this, "Error de conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+
 
 
 

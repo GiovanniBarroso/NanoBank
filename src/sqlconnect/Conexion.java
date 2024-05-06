@@ -42,11 +42,11 @@ public class Conexion {
 
 	public void cerrarConexion(Connection conection){
 		try {
-			//Cierre de la conexión
+
 			conection.close();
 		} catch (SQLException e) {
-			System.err.println("Se ha producido un error al cerrar la conexión");
 
+			System.err.println("Se ha producido un error al cerrar la conexión");
 		}
 	}
 
@@ -66,25 +66,26 @@ public class Conexion {
 		}
 	}
 
-	// Método para enviar una transferencia
-	public void sendTransferencia(String nombreUsuario, String nombreDestino, String cuentaDestino, String concepto, double cantidad) throws SQLException {
-		// Establecer la conexión con la base de datos
+
+
+	public void sendTransferencia(int id_usuario, String nombreUsuario, String cuentaDestino, String nombreDestino, String concepto, double cantidad) throws SQLException {
 		try (Connection conexion = conectar()) {
-			// Insertar la transferencia en la tabla Transaciones
-			String sql = "INSERT INTO Transaciones (nombreDestino, cuentaDestino, concepto, cantidad) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO Transacciones (cuentaOrigen, cuentaDestino, nombreDestino, cantidad, concepto, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
 			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
-				statement.setString(1, nombreDestino);
-				statement.setString(2, cuentaDestino);
-				statement.setString(3, concepto);
+				statement.setString(1, nombreUsuario);
+				statement.setString(2, nombreDestino);
+				statement.setString(3, cuentaDestino);
 				statement.setDouble(4, cantidad);
+				statement.setString(5, concepto);
+				statement.setInt(6, id_usuario); 
 				statement.executeUpdate();
 			}
 
 			// Actualizar el saldo del usuario en la tabla Usuario
-			sql = "UPDATE Usuario SET saldo = saldo - ? WHERE nombre = ?";
+			sql = "UPDATE Usuario SET saldo = saldo - ? WHERE id_usuario = ?";
 			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
 				statement.setDouble(1, cantidad);
-				statement.setString(2, nombreUsuario);
+				statement.setInt(2, id_usuario);
 				statement.executeUpdate();
 			}
 
@@ -92,13 +93,17 @@ public class Conexion {
 			sql = "UPDATE Usuario SET saldo = saldo + ? WHERE iban = ?";
 			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
 				statement.setDouble(1, cantidad);
-				statement.setString(2, cuentaDestino);
+				statement.setString(2, nombreDestino);
 				statement.executeUpdate();
 			}
 
 			System.out.println("Transferencia realizada con éxito.");
 		}
 	}
+
+
+
+
 
 
 
@@ -153,6 +158,7 @@ public class Conexion {
 
 
 
+
 	public double obtenerSaldoPorDNI (String dni) throws SQLException {
 		double saldo = 0;
 		Connection conexion = conectar();
@@ -173,4 +179,25 @@ public class Conexion {
 	}
 
 
+
+
+
+	public int obtenerIdPorDNI(String dni) throws SQLException {
+		int id_usuario = -1; // Valor por defecto en caso de que no se encuentre el usuario
+		Connection conexion = conectar();
+		try {
+			String consulta = "SELECT id_usuario FROM Usuario WHERE dni = ?";
+			PreparedStatement statement = conexion.prepareStatement(consulta);
+			statement.setString(1, dni);
+			ResultSet resultado = statement.executeQuery();
+			if (resultado.next()) {
+				id_usuario = resultado.getInt("id_usuario");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			cerrarConexion(conexion);
+		}
+		return id_usuario;
+	}
 }
