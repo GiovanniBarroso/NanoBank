@@ -17,6 +17,8 @@ public class Conexion {
 
 
 
+
+
 	public Connection conectar() {
 		Connection conexion = null;
 
@@ -40,6 +42,7 @@ public class Conexion {
 
 
 
+
 	public void cerrarConexion(Connection conection){
 		try {
 
@@ -49,6 +52,8 @@ public class Conexion {
 			System.err.println("Se ha producido un error al cerrar la conexión");
 		}
 	}
+
+
 
 
 
@@ -65,6 +70,8 @@ public class Conexion {
 			statement.executeUpdate();
 		}
 	}
+
+
 
 
 
@@ -101,6 +108,42 @@ public class Conexion {
 		}
 	}
 
+
+
+
+
+	public void sendBizum(int id_usuario, String nombreUsuario, int telefono, String nombreDestino, String concepto, double cantidad) throws SQLException {
+		try (Connection conexion = conectar()) {
+			String sql = "INSERT INTO Bizum (cuentaOrigen, telefono, nombreDestino, cantidad, concepto, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+				statement.setString(1, nombreUsuario);
+				statement.setInt(2, telefono);
+				statement.setString(3, nombreDestino);
+				statement.setDouble(4, cantidad);
+				statement.setString(5, concepto);
+				statement.setInt(6, id_usuario); 
+				statement.executeUpdate();
+			}
+
+			// Actualizar el saldo del usuario en la tabla Usuario
+			sql = "UPDATE Usuario SET saldo = saldo - ? WHERE id_usuario = ?";
+			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+				statement.setDouble(1, cantidad);
+				statement.setInt(2, id_usuario);
+				statement.executeUpdate();
+			}
+
+			// Actualizar el saldo del destinatario en la tabla Usuario
+			sql = "UPDATE Usuario SET saldo = saldo + ? WHERE telefono = ?";
+			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+				statement.setDouble(1, cantidad);
+				statement.setInt(2, telefono);
+				statement.executeUpdate();
+			}
+
+			System.out.println("Bizum realizada con éxito.");
+		}
+	}
 
 
 

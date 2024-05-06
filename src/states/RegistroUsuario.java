@@ -13,6 +13,8 @@ import java.sql.SQLException;
 
 public class RegistroUsuario extends JPanel {
 
+
+	private static final long serialVersionUID = 1L;
 	private JTextField txtDNI;
 	private JTextField txtNombre;
 	private JTextField txtTelefono;

@@ -31,6 +31,20 @@ FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 
 
 
+-- TABLA TRANSACCIONES
+CREATE TABLE IF NOT EXISTS Bizum (
+id_transaciones INT PRIMARY KEY AUTO_INCREMENT,
+cuentaOrigen VARCHAR (50) NOT NULL,
+telefono INT (10) NOT NULL,
+nombreDestino VARCHAR (50) NOT NULL,
+cantidad FLOAT (20,5) NOT NULL,
+concepto VARCHAR (250) NOT NULL,
+id_usuario INT,
+FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+);
+
+
+
 -- Insertamos datos del usuario ADMIN (Giovanni) si no existe ya
 INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) 
 SELECT * FROM (SELECT '30269762Z', 'admin123', 'Giovanni', '644126909', 'giovanni.baralv@gmail.com', 'ES62 2100 8434 7525 1401 1100') AS temp
@@ -41,3 +55,4 @@ WHERE NOT EXISTS (
 
 SELECT * FROM Usuario;
 SELECT * FROM Transacciones;
+SELECT * FROM Bizum;

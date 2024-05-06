@@ -28,6 +28,8 @@ public class IniciarSesion extends JFrame {
 		// Crear un panel para contener los componentes
 		JPanel panel = new JPanel() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);

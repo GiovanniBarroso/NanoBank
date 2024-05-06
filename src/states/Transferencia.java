@@ -24,6 +24,7 @@ public class Transferencia extends JPanel {
 	private String nombreUsuario;
 	private int id_usuario;
 	private double saldo;
+	
 	private JButton btnEnviarTransferencia;
 	private JButton btnVolver;
 
