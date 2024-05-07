@@ -1,5 +1,3 @@
--- Creación y selección de la base de datos
-
 CREATE DATABASE IF NOT EXISTS NanoBank;
 USE NanoBank;
 
@@ -31,7 +29,7 @@ FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 
 
 
--- TABLA TRANSACCIONES
+-- TABLA BIZUM
 CREATE TABLE IF NOT EXISTS Bizum (
 id_transaciones INT PRIMARY KEY AUTO_INCREMENT,
 cuentaOrigen VARCHAR (50) NOT NULL,
@@ -45,7 +43,7 @@ FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 
 
 
--- Insertamos datos del usuario ADMIN (Giovanni) si no existe ya
+-- Insertamos datos del usuario Giovanni si no existe
 INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) 
 SELECT * FROM (SELECT '30269762Z', 'admin123', 'Giovanni', '644126909', 'giovanni.baralv@gmail.com', 'ES62 2100 8434 7525 1401 1100') AS temp
 WHERE NOT EXISTS (
@@ -53,6 +51,23 @@ WHERE NOT EXISTS (
 );
 
 
+-- Insertamos datos del usuario Francisco si no existe 
+INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) 
+SELECT * FROM (SELECT '28724060G', 'admin123', 'Francisco', '696787146', 'joframan@hotmail.es', 'ES51 2100 8434 5821 0011 9914') AS temp
+WHERE NOT EXISTS (
+    SELECT * FROM Usuario WHERE dni = '28724060G' AND contraseña = 'admin123'
+);
+
+-- Insertamos datos del usuario Mari Carmen si no existe 
+INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) 
+SELECT * FROM (SELECT '28591788M', 'admin123', 'Mari Carmen', '669997119', 'LUNERA1000@HOTMAIL.COM', 'ES11 2100 8434 5802 0011 2182') AS temp
+WHERE NOT EXISTS (
+    SELECT * FROM Usuario WHERE dni = '28591788M' AND contraseña = 'admin123'
+);
+
+
+
+-- SELECT PARA COMPROBAR TABLAS
 SELECT * FROM Usuario;
 SELECT * FROM Transacciones;
 SELECT * FROM Bizum;

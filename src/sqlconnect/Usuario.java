@@ -10,10 +10,11 @@ public class Usuario {
 	private int telefono;
 	private String email;
 	private String iban;
+	private double saldo;
 
 
 	//Constructor
-	public Usuario(String dni, String contraseña, String nombre, int numTelefono, String email, String iban) {
+	public Usuario(String dni, String contraseña, String nombre, int numTelefono, String email, String iban, double saldo) {
 
 		this.dni = dni;
 		this.Contraseña = contraseña;
@@ -21,6 +22,7 @@ public class Usuario {
 		this.telefono = numTelefono;
 		this.email = email;
 		this.iban = iban;
+		this.saldo = saldo;
 	}
 
 
@@ -83,6 +85,30 @@ public class Usuario {
 
 	public void setIban(String iban) {
 		this.iban = iban;
+	}
+
+
+
+	public int getTelefono() {
+		return telefono;
+	}
+
+
+
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
+	}
+
+
+
+	public double getSaldo() {
+		return saldo;
+	}
+
+
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
 	}
 
 

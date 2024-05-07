@@ -24,16 +24,18 @@ public class Transferencia extends JPanel {
 	private String nombreUsuario;
 	private int id_usuario;
 	private double saldo;
-	
+	private String dni;
+
 	private JButton btnEnviarTransferencia;
 	private JButton btnVolver;
 
 
-	public Transferencia(int id_usuario, String nombreUsuario, double saldo) {
+	public Transferencia(int id_usuario, String nombreUsuario, double saldo, String dni) {
 
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
+		this.dni = dni;
 
 		setLayout(new BorderLayout());
 
@@ -136,7 +138,7 @@ public class Transferencia extends JPanel {
 
 
 
-		// Acción del botón Registrar
+		// Acción del botón Realizar Transferencia
 		btnEnviarTransferencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				saveTransferencia();
@@ -146,7 +148,7 @@ public class Transferencia extends JPanel {
 
 
 
-		// Acción del botón Volver a IniciarSesion
+		// Acción del botón Volver a menu
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				volveraMenu();
@@ -171,24 +173,18 @@ public class Transferencia extends JPanel {
 
 		Conexion conexionDB = new Conexion();
 		try {
-
-
 			conexionDB.sendTransferencia(id_usuario, nombreUsuario, Nombre, cuentaDestino, Concepto, Double.parseDouble(Cantidad));
 			JOptionPane.showMessageDialog(this, "¡ Transferencia realizada !");
-
-
-			System.out.println("¡Enhorabuena, la transferencia se ha realizado correctamente!\n");
+			// Obtener el saldo actualizado del usuario desde la base de datos
+			double nuevoSaldo = conexionDB.obtenerSaldoPorDNI(dni);
+			System.out.println("Nuevo saldo: " + nuevoSaldo);
 			limpiarCampos();
-
-			// Cerrar la ventana actual de registro
-			SwingUtilities.getWindowAncestor(this).dispose();
-
-			// Abrir una nueva instancia de la clase IniciarSesion
-			SwingUtilities.invokeLater(() -> new IniciarSesion());
+			volveraMenu2(nuevoSaldo); // Pasar el nuevo saldo al volver al menú
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(this, "Error al registrar usuario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+
 
 
 
@@ -200,7 +196,7 @@ public class Transferencia extends JPanel {
 			parent.removeAll();
 
 			// Crear una nueva instancia de Menu y agregarla al padre
-			Menu menu = new Menu(id_usuario, nombreUsuario, saldo);
+			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni);
 			parent.add(menu);
 
 			// Actualizar la interfaz de usuario
@@ -209,6 +205,26 @@ public class Transferencia extends JPanel {
 		} else {
 			// Manejar la situación donde getParent() devuelve null
 			System.out.println("El componente no tiene un padre [🆎].");
+		}
+	}
+
+
+	private void volveraMenu2(double nuevoSaldo) {
+		Container parent = getParent();
+		if (parent != null) {
+			// Eliminar todos los componentes del padre
+			parent.removeAll();
+
+			// Crear una nueva instancia de Menu y agregarla al padre con el nuevo saldo
+			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni);
+			parent.add(menu);
+
+			// Actualizar la interfaz de usuario
+			parent.revalidate();
+			parent.repaint();
+		} else {
+			// Manejar la situación donde getParent() devuelve null
+			System.out.println("El componente no tiene un padre.");
 		}
 	}
 

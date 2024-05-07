@@ -9,17 +9,20 @@ public class Menu extends JPanel {
 	private int id_usuario;
 	private double saldo;
 	private String nombreUsuario;
+	private String dni;
 
 	private static final long serialVersionUID = 1L;
 
-	public Menu(int id_usuario, String nombreUsuario, double saldo) {
+	public Menu(int id_usuario, String nombreUsuario, double saldo, String dni) {
 
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
+		this.dni = dni;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); 
 		setBackground(Color.ORANGE); 
+
 
 		// Panel superior para dar la bienvenida al usuario
 		add(createTopPanel(nombreUsuario));
@@ -110,7 +113,7 @@ public class Menu extends JPanel {
 
 		if (parent != null) {
 			parent.removeAll();
-			parent.add(new Transferencia(id_usuario, nombreUsuario, saldo)); 
+			parent.add(new Transferencia(id_usuario, nombreUsuario, saldo, dni)); 
 			parent.revalidate();
 			parent.repaint();
 		} else {
@@ -125,7 +128,7 @@ public class Menu extends JPanel {
 
 		if (parent != null) {
 			parent.removeAll();
-			parent.add(new Bizum(id_usuario, nombreUsuario, saldo)); 
+			parent.add(new Bizum(id_usuario, nombreUsuario, saldo, dni)); 
 			parent.revalidate();
 			parent.repaint();
 		} else {
@@ -141,7 +144,7 @@ public class Menu extends JPanel {
 
 		if (parent != null) {
 			parent.removeAll();
-//			parent.add(new GestionarCarteras(id_usuario, nombreUsuario, saldo)); 
+			//			parent.add(new GestionarCarteras(id_usuario, nombreUsuario, saldo)); 
 			parent.revalidate();
 			parent.repaint();
 		} else {

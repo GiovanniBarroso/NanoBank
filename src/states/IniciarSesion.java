@@ -15,6 +15,7 @@ public class IniciarSesion extends JFrame {
 		setTitle("Iniciar Sesión");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(450, 750);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		getContentPane().setBackground(Color.ORANGE);
 		setLayout(new GridBagLayout());
@@ -173,7 +174,7 @@ public class IniciarSesion extends JFrame {
 				String nombreUsuario = conexion.obtenerNombrePorDNI(dni);
 				double saldo = conexion.obtenerSaldoPorDNI(dni);
 				getContentPane().removeAll();
-				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo));
+				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo, dni));
 				revalidate();
 				repaint();
 
