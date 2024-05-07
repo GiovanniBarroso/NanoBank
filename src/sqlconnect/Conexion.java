@@ -18,7 +18,7 @@ public class Conexion {
 
 
 
-
+	//Metodo para conectar con la BD
 	public Connection conectar() {
 		Connection conexion = null;
 
@@ -42,7 +42,7 @@ public class Conexion {
 
 
 
-
+	//Metodo para desconectar de la BD
 	public void cerrarConexion(Connection conection){
 		try {
 
@@ -56,7 +56,7 @@ public class Conexion {
 
 
 
-
+	//Metodo para añadir usuarios a la BD
 	public void addUser(String dni, String contraseña, String nombre, int telefono, String email, String iban) throws SQLException {
 		Connection conexion = conectar();
 		String sql = "INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) VALUES (?, ?, ?, ?, ?, ?)";
@@ -74,7 +74,7 @@ public class Conexion {
 
 
 
-
+	//Metodo para realizar la transferencia en la BD
 	public void sendTransferencia(int id_usuario, String nombreUsuario, String cuentaDestino, String nombreDestino, String concepto, double cantidad) throws SQLException {
 		try (Connection conexion = conectar()) {
 			String sql = "INSERT INTO Transacciones (cuentaOrigen, cuentaDestino, nombreDestino, cantidad, concepto, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
@@ -88,6 +88,7 @@ public class Conexion {
 				statement.executeUpdate();
 			}
 
+
 			// Actualizar el saldo del usuario en la tabla Usuario
 			sql = "UPDATE Usuario SET saldo = saldo - ? WHERE id_usuario = ?";
 			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
@@ -95,6 +96,7 @@ public class Conexion {
 				statement.setInt(2, id_usuario);
 				statement.executeUpdate();
 			}
+
 
 			// Actualizar el saldo del destinatario en la tabla Usuario
 			sql = "UPDATE Usuario SET saldo = saldo + ? WHERE iban = ?";
@@ -111,7 +113,7 @@ public class Conexion {
 
 
 
-
+	//Metodo para registrar el Bizum en la BD
 	public void sendBizum(int id_usuario, String nombreUsuario, int telefono, String nombreDestino, String concepto, double cantidad) throws SQLException {
 		try (Connection conexion = conectar()) {
 			String sql = "INSERT INTO Bizum (cuentaOrigen, telefono, nombreDestino, cantidad, concepto, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
@@ -125,6 +127,7 @@ public class Conexion {
 				statement.executeUpdate();
 			}
 
+
 			// Actualizar el saldo del usuario en la tabla Usuario
 			sql = "UPDATE Usuario SET saldo = saldo - ? WHERE id_usuario = ?";
 			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
@@ -132,6 +135,7 @@ public class Conexion {
 				statement.setInt(2, id_usuario);
 				statement.executeUpdate();
 			}
+
 
 			// Actualizar el saldo del destinatario en la tabla Usuario
 			sql = "UPDATE Usuario SET saldo = saldo + ? WHERE telefono = ?";
@@ -151,7 +155,7 @@ public class Conexion {
 
 
 
-
+	//Metodo para validar si el usuario está registrado en la BD
 	public boolean validarCredenciales(String usuario, String contraseña) throws SQLException {
 		Connection conexion = conectar();
 		boolean usuarioValido = false;
@@ -179,6 +183,7 @@ public class Conexion {
 
 
 
+	//Metodo para obtener el nombre a través del DNI 
 	public String obtenerNombrePorDNI(String dni) throws SQLException {
 		String nombre = null;
 		Connection conexion = conectar();
@@ -202,6 +207,7 @@ public class Conexion {
 
 
 
+	//Metodo para obtener el saldo del usuario a través del DNI
 	public double obtenerSaldoPorDNI (String dni) throws SQLException {
 		double saldo = 0;
 		Connection conexion = conectar();
@@ -225,6 +231,7 @@ public class Conexion {
 
 
 
+	//Metodo para obtener la ID a través del DNI
 	public int obtenerIdPorDNI(String dni) throws SQLException {
 		int id_usuario = -1; // Valor por defecto en caso de que no se encuentre el usuario
 		Connection conexion = conectar();
@@ -243,4 +250,99 @@ public class Conexion {
 		}
 		return id_usuario;
 	}
+
+
+
+
+	//Metodo para comprobar si el Telefono coincide con el nombre en la BD
+	public boolean coincideNombreTelefono(String telefono, String nombre) throws SQLException {
+		boolean coincide = false;
+		String query = "SELECT COUNT(*) AS count FROM Usuario WHERE telefono = ? AND nombre = ?";
+
+		try (Connection connection = conectar();
+				PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setString(1, telefono);
+			statement.setString(2, nombre);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				if (resultSet.next()) {
+					int count = resultSet.getInt("count");
+					coincide = (count > 0);
+				}
+			}
+		}
+
+		return coincide;
+	}
+
+
+
+
+
+	//Metodo para verificar si el telefono existe en la BD
+	public boolean existeTelefono(String telefono) throws SQLException {
+		boolean existe = false;
+		String query = "SELECT COUNT(*) AS count FROM Usuario WHERE telefono = ?";
+
+		try (Connection connection = conectar();
+				PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setString(1, telefono);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				if (resultSet.next()) {
+					int count = resultSet.getInt("count");
+					existe = (count > 0);
+				}
+			}
+		}
+
+		return existe;
+	}
+
+
+
+
+	//Metodo para verificar si existe el IBAN en la BD
+	public boolean existeIBAN(String iban) throws SQLException {
+		Connection conexion = conectar();
+		boolean ibanExistente = false;
+
+		try {
+			String consulta = "SELECT COUNT(*) AS count FROM Usuario WHERE iban = ?";
+			PreparedStatement statement = conexion.prepareStatement(consulta);
+			statement.setString(1, iban);
+			ResultSet resultado = statement.executeQuery();
+			if (resultado.next()) {
+				int count = resultado.getInt("count");
+				ibanExistente = count > 0;
+			}
+		} finally {
+			cerrarConexion(conexion);
+		}
+
+		return ibanExistente;
+	}
+
+
+
+
+	//Metodo para verificar si el nombre del usuario coincide con el IBAN de destino
+	public boolean coincideNombreIBAN(String nombreUsuario, String iban) throws SQLException {
+		boolean coincide = false;
+		Connection conexion = conectar();
+		try {
+			String consulta = "SELECT * FROM Usuario WHERE nombre = ? AND iban = ?";
+			PreparedStatement statement = conexion.prepareStatement(consulta);
+			statement.setString(1, nombreUsuario);
+			statement.setString(2, iban);
+			ResultSet resultado = statement.executeQuery();
+			coincide = resultado.next();
+		} finally {
+			cerrarConexion(conexion);
+		}
+		return coincide;
+	}
+
+
+
+
+
 }

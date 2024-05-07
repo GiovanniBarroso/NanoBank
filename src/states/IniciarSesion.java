@@ -12,6 +12,8 @@ public class IniciarSesion extends JFrame {
 
 
 	public IniciarSesion() {
+
+		//Propiedades del JFrame
 		setTitle("Iniciar Sesión");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(450, 750);
@@ -26,11 +28,10 @@ public class IniciarSesion extends JFrame {
 
 	private void initComponents() {
 
-		// Crear un panel para contener los componentes
 		JPanel panel = new JPanel() {
-
 			private static final long serialVersionUID = 1L;
 
+			//Diseño del JFrame
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -46,6 +47,7 @@ public class IniciarSesion extends JFrame {
 		};
 
 
+		//Dimensiones del panel de datos de login
 		panel.setPreferredSize(new Dimension(300, 500)); 
 		panel.setBackground(Color.GRAY);
 
@@ -57,8 +59,6 @@ public class IniciarSesion extends JFrame {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(10, 10, 10, 10);
-
-
 
 
 
@@ -76,7 +76,6 @@ public class IniciarSesion extends JFrame {
 		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
-
 		// Contraseña
 		JLabel lblContraseña = new JLabel("Contraseña:");
 		lblContraseña.setFont(new Font("Impact", Font.PLAIN, 20));
@@ -85,20 +84,16 @@ public class IniciarSesion extends JFrame {
 		txtContraseña.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
-
 		// Botón de iniciar sesión
 		JButton btnIniciarSesion = new JButton("Iniciar Sesión");
 		btnIniciarSesion.setHorizontalAlignment(JButton.CENTER);
 		btnIniciarSesion.setFont(new Font("Arial Black", Font.PLAIN, 16));
 
 
-
 		// Botón de registrarse
 		JButton btnRegistrarse = new JButton("¿No estás registrado?");
 		btnRegistrarse.setHorizontalAlignment(JButton.CENTER);
 		btnRegistrarse.setFont(new Font("Arial Black", Font.PLAIN, 16));
-
-
 
 
 
@@ -110,12 +105,14 @@ public class IniciarSesion extends JFrame {
 		panel.add(lblLogo, gbc);
 		gbc.gridwidth = 1;
 
+
 		// Usuario
 		gbc.gridy = 1;
 		panel.add(lblUsuario, gbc);
 
 		gbc.gridy = 2;
 		panel.add(txtUsuario, gbc);
+
 
 		// Contraseña
 		gbc.gridy = 3;
@@ -124,18 +121,19 @@ public class IniciarSesion extends JFrame {
 		gbc.gridy = 4;
 		panel.add(txtContraseña, gbc);
 
+
 		// Botón de iniciar sesión
 		gbc.gridy = 5;
 		panel.add(btnIniciarSesion, gbc);
+
 
 		// Botón de registrarse
 		gbc.gridy = 6;
 		panel.add(btnRegistrarse, gbc);
 
+
 		// Agregar el panel al contenido del JFrame
 		getContentPane().add(panel);
-
-
 
 
 
@@ -144,10 +142,7 @@ public class IniciarSesion extends JFrame {
 		btnRegistrarse.addActionListener(e -> mostrarRegistroUsuario());
 
 
-
-
-
-		// evento de presionar "Enter" en el campo de contraseña
+		// Evento de presionar "Enter" en el campo de contraseña
 		txtContraseña.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -157,22 +152,22 @@ public class IniciarSesion extends JFrame {
 
 
 
-		// Hacer visible la ventana después de agregar todos los componentes
 		setVisible(true);
 	}
 
 
 
-
-
+	//Metodo para validad credenciales y entrar en la app
 	private void iniciarSesion(String dni, String contraseña) {
 		try {
 			Conexion conexion = new Conexion();
 
 			if (conexion.validarCredenciales(dni, contraseña)) {
-				int id_usuario = conexion.obtenerIdPorDNI(dni); // Obtener el id_usuario usando el dni
+
+				int id_usuario = conexion.obtenerIdPorDNI(dni); 
 				String nombreUsuario = conexion.obtenerNombrePorDNI(dni);
 				double saldo = conexion.obtenerSaldoPorDNI(dni);
+
 				getContentPane().removeAll();
 				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo, dni));
 				revalidate();
@@ -189,9 +184,7 @@ public class IniciarSesion extends JFrame {
 
 
 
-
-
-
+	//Metodo para cambiar a la clase RegistroUsuario
 	private void mostrarRegistroUsuario() {
 		getContentPane().removeAll();
 		getContentPane().add(new RegistroUsuario());
@@ -201,7 +194,7 @@ public class IniciarSesion extends JFrame {
 
 
 
-
+	//Metodo del diseño del JFrame
 	static class RoundedBorder implements Border {
 		private int radius;
 

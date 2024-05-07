@@ -3,7 +3,7 @@ package sqlconnect;
 public class Usuario {
 
 
-	//Declaramos atributos
+	//Atributos
 	private String dni;
 	private String Contraseña;
 	private String Nombre;

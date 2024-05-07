@@ -13,18 +13,23 @@ import java.sql.SQLException;
 
 public class RegistroUsuario extends JPanel {
 
-
+	//Atributos
 	private static final long serialVersionUID = 1L;
+
 	private JTextField txtDNI;
 	private JTextField txtNombre;
 	private JTextField txtTelefono;
 	private JTextField txtEmail;
 	private JTextField txtIBAN;
+
 	private JPasswordField txtContraseña;
 	private JButton btnRegistrar;
 	private JButton btnMostrarContraseña;
 	private JButton btnVolver;
+
 	private boolean mostrarContraseña = false;
+
+
 
 	public RegistroUsuario() {
 		setLayout(new BorderLayout());
@@ -40,11 +45,16 @@ public class RegistroUsuario extends JPanel {
 		panelFondo.setBorder(BorderFactory.createCompoundBorder(border, new RoundedBorder(10)));
 
 
+
+		//Distribucion GRID
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(10, 10, 10, 10);
 
 
+
+
+		//JLabel y JTextField
 		JLabel lblDNI = new JLabel("DNI:");
 		lblDNI.setFont(new Font("Impact", Font.PLAIN, 20));
 		txtDNI = new JTextField(20);
@@ -81,9 +91,13 @@ public class RegistroUsuario extends JPanel {
 		txtContraseña.setHorizontalAlignment(JTextField.CENTER);
 		txtContraseña.setFont(new Font("Arial", Font.PLAIN, 16));
 
+
+		//Botones
 		btnRegistrar = new JButton("Registrarse");
 		btnMostrarContraseña = new JButton("Mostrar Contraseña");
 		btnVolver = new JButton("Volver atrás");
+
+
 
 
 		// DNI
@@ -94,12 +108,14 @@ public class RegistroUsuario extends JPanel {
 		gbc.gridy++;
 		panelFondo.add(txtDNI, gbc);
 
+
 		// Nombre
 		gbc.gridy++;
 		panelFondo.add(lblNombre, gbc);
 
 		gbc.gridy++;
 		panelFondo.add(txtNombre, gbc);
+
 
 		// Teléfono
 		gbc.gridy++;
@@ -108,12 +124,14 @@ public class RegistroUsuario extends JPanel {
 		gbc.gridy++;
 		panelFondo.add(txtTelefono, gbc);
 
+
 		// Email
 		gbc.gridy++;
 		panelFondo.add(lblEmail, gbc);
 
 		gbc.gridy++;
 		panelFondo.add(txtEmail, gbc);
+
 
 		// IBAN
 		gbc.gridy++;
@@ -122,6 +140,7 @@ public class RegistroUsuario extends JPanel {
 		gbc.gridy++;
 		panelFondo.add(txtIBAN, gbc);
 
+
 		// Contraseña
 		gbc.gridy++;
 		panelFondo.add(lblContraseña, gbc);
@@ -129,13 +148,16 @@ public class RegistroUsuario extends JPanel {
 		gbc.gridy++;
 		panelFondo.add(txtContraseña, gbc);
 
+
 		// Botón Registrar
 		gbc.gridy++;
 		panelFondo.add(btnRegistrar, gbc);
 
+
 		// Botón Mostrar Contraseña
 		gbc.gridy++;
 		panelFondo.add(btnMostrarContraseña, gbc);
+
 
 		// Botón Volver a IniciarSesion
 		gbc.gridy++;
@@ -145,7 +167,7 @@ public class RegistroUsuario extends JPanel {
 
 
 
-		// Acción del botón Registrar
+		// Acción del botón Registrarse
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				saveUser();
@@ -168,7 +190,7 @@ public class RegistroUsuario extends JPanel {
 
 
 
-		// Acción del botón Volver a IniciarSesion
+		// Acción del botón Volver atrás
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				volverAIniciarSesion();
@@ -178,7 +200,9 @@ public class RegistroUsuario extends JPanel {
 
 
 
+	//Metodo para validad y registrar al usuario
 	private void saveUser() {
+
 		// Obtener los datos de los campos de entrada
 		String DNI = txtDNI.getText();
 		String nombre = txtNombre.getText();
@@ -187,11 +211,13 @@ public class RegistroUsuario extends JPanel {
 		String iban = txtIBAN.getText();
 		String contraseña = new String(txtContraseña.getPassword());
 
+
 		// Validar que todos los campos estén llenos
 		if (DNI.isEmpty() || nombre.isEmpty() || telefono.isEmpty() || email.isEmpty() || iban.isEmpty() || contraseña.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+
 
 		// Validar el formato del DNI
 		if (!validarDNI(DNI)) {
@@ -199,17 +225,20 @@ public class RegistroUsuario extends JPanel {
 			return;
 		}
 
+
 		// Validar el formato del IBAN
 		if (!validarIBAN(iban)) {
 			JOptionPane.showMessageDialog(this, "El IBAN no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
+
 		Conexion conexionDB = new Conexion();
 		try {
-			// Llamar al método addUser de la clase Conexion para agregar un nuevo usuario
+
 			conexionDB.addUser(DNI, contraseña, nombre, Integer.parseInt(telefono), email, iban);
 			JOptionPane.showMessageDialog(this, "¡ Cuenta creada correctamente !");
+
 
 			// Mostrar por consola el resultado del registro para verificar los datos
 			System.out.println("¡Enhorabuena, tu perfil con nombre " + nombre + " ha sido registrado!\n");
@@ -220,11 +249,11 @@ public class RegistroUsuario extends JPanel {
 
 			// Abrir una nueva instancia de la clase IniciarSesion
 			SwingUtilities.invokeLater(() -> new IniciarSesion());
+
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(this, "Error al registrar usuario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
 
 
 
@@ -250,39 +279,37 @@ public class RegistroUsuario extends JPanel {
 		txtContraseña.setText("");
 	}
 
-	
+
+
 	//Metodo para validar DNI
 	private boolean validarDNI(String dni) {
-		// El DNI debe tener 9 caracteres
+
 		if (dni.length() != 9) {
 			return false;
 		}
 
-		// Los primeros 8 caracteres deben ser dígitos
 		for (int i = 0; i < 8; i++) {
 			if (!Character.isDigit(dni.charAt(i))) {
 				return false;
 			}
 		}
 
-		// El último carácter debe ser una letra
 		char letra = Character.toUpperCase(dni.charAt(8));
 		if (letra < 'A' || letra > 'Z') {
 			return false;
 		}
 
-		// Calculamos la letra correspondiente al DNI
 		int numero = Integer.parseInt(dni.substring(0, 8));
 		char letraCalculada = "TRWAGMYFPDXBNJZSQVHLCKE".charAt(numero % 23);
 
-		// Comparamos la letra calculada con la letra del DNI
+
 		return letra == letraCalculada;
 	}
 
 
 
 
-	
+
 	//Metodo para validar IBAN
 	public static boolean validarIBAN(String cuenta) {
 
@@ -295,12 +322,12 @@ public class RegistroUsuario extends JPanel {
 		BigInteger cuentaNumero = new BigInteger("0"); 
 		BigInteger modo = new BigInteger("97");
 
-		
+
 		cuenta = cuenta.replaceAll(" ", "");
-		
-		
+
+
 		if(cuenta.length() == 24 && cuenta.substring(0,1).toUpperCase().equals("E") 
-			&& cuenta.substring(1,2).toUpperCase().equals("S")) {
+				&& cuenta.substring(1,2).toUpperCase().equals("S")) {
 
 			do {
 				caracterASCII = cuenta.codePointAt(i);
@@ -308,15 +335,15 @@ public class RegistroUsuario extends JPanel {
 				i++;
 			}
 			while(i < cuenta.length() && esValido); 
-		
-		
+
+
 			if(esValido) {
 				cuentaNumero = new BigInteger(cuenta.substring(4,24) + "142800");
 				resto = cuentaNumero.mod(modo).intValue();
 				dc = 98 - resto;
 				cadenaDc = String.valueOf(dc);
 			}	
-			
+
 			if(dc < 10) {
 				cadenaDc = "0" + cadenaDc;
 			} 

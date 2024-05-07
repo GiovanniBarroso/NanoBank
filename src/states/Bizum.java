@@ -13,8 +13,8 @@ import java.sql.SQLException;
 
 public class Bizum extends JPanel {
 
+	//Atributos
 	private static final long serialVersionUID = 1L;
-
 	private JTextField txtTelefono;
 	private JTextField txtNombre;
 	private JTextField txtCantidad;
@@ -28,7 +28,11 @@ public class Bizum extends JPanel {
 	private JButton btnEnviarBizum;
 	private JButton btnVolver;
 
+
+
 	public Bizum(int idUsuario, String nombreUsuario, double saldo, String dni) {
+
+		//Constructores
 		this.id_usuario = idUsuario;
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
@@ -74,6 +78,9 @@ public class Bizum extends JPanel {
 		btnEnviarBizum = new JButton("Realizar Bizum");
 		btnVolver = new JButton("Volver atrás");
 
+
+
+		//Distribución del grid de botones y textfield
 		gbc.gridy++;
 		panelFondo.add(lblTelefono, gbc);
 		gbc.gridy++;
@@ -97,12 +104,17 @@ public class Bizum extends JPanel {
 
 		add(panelFondo, BorderLayout.CENTER);
 
+
+
+		//Evento al pulsar boton realizar bizum
 		btnEnviarBizum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				saveBizum();
 			}
 		});
 
+
+		//Evento al pulsar boton volver atras
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				volveraMenu();
@@ -110,69 +122,118 @@ public class Bizum extends JPanel {
 		});
 	}
 
+
+	//Metodo que verifica y realiza el Bizum
 	private void saveBizum() {
 		String nombre = txtNombre.getText();
 		String telefono = txtTelefono.getText();
 		String concepto = txtConcepto.getText();
 		String cantidad = txtCantidad.getText();
 
+		//replaceall para eliminar error entre comas y puntos en la cantidad
+		cantidad = cantidad.replaceAll(",", ".");
+
+
+		// Valida que todos los campos estén llenos
 		if (nombre.isEmpty() || telefono.isEmpty() || cantidad.isEmpty() || concepto.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
+
+		double cantidadEnviar;
+		try {
+			cantidadEnviar = Double.parseDouble(cantidad);
+			if (cantidadEnviar <= 0 || cantidadEnviar > 500) {
+				JOptionPane.showMessageDialog(this, "La cantidad a enviar debe ser mayor que 0 y menor que el límite (500€).", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(this, "La cantidad a enviar debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		// Valida que el usuario tenga saldo suficiente
+		if (cantidadEnviar > saldo) {
+			JOptionPane.showMessageDialog(this, "Saldo insuficiente para realizar el Bizum.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+
+		// Valida que el número de teléfono exista en la base de datos
 		Conexion conexionDB = new Conexion();
 		try {
-			conexionDB.sendBizum(id_usuario, nombreUsuario, Integer.parseInt(telefono), nombre, concepto, Double.parseDouble(cantidad));
+			if (!conexionDB.existeTelefono(telefono)) {
+				JOptionPane.showMessageDialog(this, "El número de teléfono ingresado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(this, "Error al verificar el número de teléfono: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+
+		// Valida que el nombre del destinatario coincida con el número de teléfono de destino
+		try {
+			if (!conexionDB.coincideNombreTelefono(telefono, nombre)) {
+				JOptionPane.showMessageDialog(this, "El nombre ingresado no coincide con el número de teléfono de destino.", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(this, "Error al verificar el nombre del destinatario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+
+		// Realizar el Bizum
+		try {
+			conexionDB.sendBizum(id_usuario, nombreUsuario, Integer.parseInt(telefono), nombre, concepto, cantidadEnviar);
 			JOptionPane.showMessageDialog(this, "¡Bizum realizado con éxito!");
 
 			double nuevoSaldo = conexionDB.obtenerSaldoPorDNI(dni);
+			System.out.println("Nuevo saldo: " + nuevoSaldo);
 			limpiarCampos();
 			volveraMenu2(nuevoSaldo);
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(this, "Error al realizar Bizum: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error al realizar el Bizum: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-	// Método para volver a IniciarSesion
+
+
+	//Metodo para volver al menu en caso de no realizar un bizum
 	private void volveraMenu() {
 		Container parent = getParent();
 		if (parent != null) {
-			// Eliminar todos los componentes del padre
 			parent.removeAll();
-
-			// Crear una nueva instancia de Menu y agregarla al padre
 			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni);
 			parent.add(menu);
-
-			// Actualizar la interfaz de usuario
 			parent.revalidate();
 			parent.repaint();
+
 		} else {
-			// Manejar la situación donde getParent() devuelve null
 			System.out.println("El componente no tiene un padre [🆎].");
 		}
 	}
 
+
+	//Metodo para volver al menu en caso de realizar un bizum
 	private void volveraMenu2(double nuevoSaldo) {
 		Container parent = getParent();
 		if (parent != null) {
-			// Eliminar todos los componentes del padre
 			parent.removeAll();
-
-			// Crear una nueva instancia de Menu y agregarla al padre con el nuevo saldo
 			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni);
 			parent.add(menu);
-
-			// Actualizar la interfaz de usuario
 			parent.revalidate();
 			parent.repaint();
+
 		} else {
-			// Manejar la situación donde getParent() devuelve null
 			System.out.println("El componente no tiene un padre.");
 		}
 	}
 
+
+	//Metodo para limpiar los campos del formulario
 	public void limpiarCampos() {
 		txtTelefono.setText("");
 		txtNombre.setText("");

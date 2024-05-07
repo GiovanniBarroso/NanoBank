@@ -6,15 +6,18 @@ import java.awt.event.ActionListener;
 
 public class Menu extends JPanel {
 
+
+	//Atributos
+	private static final long serialVersionUID = 1L;
 	private int id_usuario;
 	private double saldo;
 	private String nombreUsuario;
 	private String dni;
 
-	private static final long serialVersionUID = 1L;
 
 	public Menu(int id_usuario, String nombreUsuario, double saldo, String dni) {
 
+		//Constructores
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
@@ -56,7 +59,7 @@ public class Menu extends JPanel {
 	}
 
 
-
+	//Panel de Bienvenida al usuario
 	private JPanel createTopPanel(String nombreUsuario) {
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
@@ -75,7 +78,7 @@ public class Menu extends JPanel {
 	}
 
 
-
+	//Panel de saldo del usuario
 	private JPanel createSaldoPanel(double saldo) {
 		JPanel saldoPanel = new JPanel();
 		saldoPanel.setLayout(new BoxLayout(saldoPanel, BoxLayout.Y_AXIS));
@@ -94,7 +97,7 @@ public class Menu extends JPanel {
 	}
 
 
-
+	//Metodo para crear botones.
 	private JButton createButton(String text, ActionListener action) {
 		JButton button = new JButton(text);
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -107,7 +110,7 @@ public class Menu extends JPanel {
 
 
 
-
+	//Metodo para entrar en la clase Transferencia
 	private void realizarTransferencia() {
 		Container parent = getParent();
 
@@ -117,12 +120,11 @@ public class Menu extends JPanel {
 			parent.revalidate();
 			parent.repaint();
 		} else {
-			// Manejar la situación donde getParent() devuelve null
 			System.out.println("El componente no tiene un padre.");
 		}
 	}
 
-
+	//Metodo para entrar en la clase Bizum
 	private void realizarBizum() {
 		Container parent = getParent();
 
@@ -132,13 +134,12 @@ public class Menu extends JPanel {
 			parent.revalidate();
 			parent.repaint();
 		} else {
-			// Manejar la situación donde getParent() devuelve null
 			System.out.println("El componente no tiene un padre.");
 		}
 	}
 
 
-
+	//Metodo para entrar en la clase Carteras
 	private void gestionarCarteras() {
 		Container parent = getParent();
 
@@ -148,7 +149,6 @@ public class Menu extends JPanel {
 			parent.revalidate();
 			parent.repaint();
 		} else {
-			// Manejar la situación donde getParent() devuelve null
 			System.out.println("El componente no tiene un padre.");
 		}
 	}

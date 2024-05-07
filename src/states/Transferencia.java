@@ -162,28 +162,64 @@ public class Transferencia extends JPanel {
 		// Obtener los datos de los campos de entrada
 		String Nombre = txtNombre.getText();
 		String cuentaDestino = txtcuentaDestino.getText();
-		String Concepto = txtConcepto.getText();
+		String Concepto  = txtConcepto.getText();
 		String Cantidad = txtCantidad.getText();
+		
+		Cantidad = Cantidad.replaceAll(",", ".");
 
 		// Validar que todos los campos estén llenos
-		if (Nombre.isEmpty() || cuentaDestino.isEmpty() || Cantidad.isEmpty() || Concepto.isEmpty()) {
+		if (Nombre.isEmpty() || cuentaDestino.isEmpty() || Concepto.isEmpty() || Cantidad.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		double cantidad = Double.parseDouble(Cantidad);
+
+		// Verificar que la cantidad sea mayor que cero
+		if (cantidad <= 0) {
+			JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor que cero.", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		Conexion conexionDB = new Conexion();
 		try {
+			// Verificar que el IBAN existe en la base de datos
+			if (!conexionDB.existeIBAN(cuentaDestino)) {
+				JOptionPane.showMessageDialog(this, "El IBAN especificado no existe en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			// Verificar que el nombre de destino coincide con el IBAN especificado
+			if (!conexionDB.coincideNombreIBAN(Nombre, cuentaDestino)) {
+				JOptionPane.showMessageDialog(this, "El nombre de destino no coincide con el IBAN especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			// Verificar que el usuario tiene saldo suficiente para la transferencia
+			double saldoActual = conexionDB.obtenerSaldoPorDNI(dni);
+			if (saldoActual < cantidad) {
+				JOptionPane.showMessageDialog(this, "Saldo insuficiente para realizar la transferencia.", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			// Realizar la transferencia
 			conexionDB.sendTransferencia(id_usuario, nombreUsuario, Nombre, cuentaDestino, Concepto, Double.parseDouble(Cantidad));
-			JOptionPane.showMessageDialog(this, "¡ Transferencia realizada !");
+			JOptionPane.showMessageDialog(this, "¡Transferencia realizada!");
+
 			// Obtener el saldo actualizado del usuario desde la base de datos
 			double nuevoSaldo = conexionDB.obtenerSaldoPorDNI(dni);
 			System.out.println("Nuevo saldo: " + nuevoSaldo);
+
+			// Limpiar los campos
 			limpiarCampos();
-			volveraMenu2(nuevoSaldo); // Pasar el nuevo saldo al volver al menú
+
+			// Volver al menú con el nuevo saldo
+			volveraMenu2(nuevoSaldo);
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(this, "Error al registrar usuario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error al realizar la transferencia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+
 
 
 
