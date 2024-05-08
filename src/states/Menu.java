@@ -17,7 +17,7 @@ public class Menu extends JPanel {
 	private int porcentajeRV;
 
 
-	public Menu(int id_usuario, String nombreUsuario, double saldo, String dni, int porcentajeRF, int porcentajeRV) {
+	public Menu(int id_usuario, String nombreUsuario, double saldo, String dni) {
 
 		//Constructores
 		this.id_usuario = id_usuario;
@@ -52,7 +52,7 @@ public class Menu extends JPanel {
 		add(createButton("CARTERAS", e -> gestionarCarteras()));
 		add(Box.createRigidArea(new Dimension(0, 20)));
 
-		add(createButton("PAGOS Y DEUDAS", e -> gestionarPagosDeudas()));
+		add(createButton("PAGOS Y DEUDAS", e -> realizarTestIdoneidad()));
 		add(Box.createRigidArea(new Dimension(0, 20)));
 
 		add(createButton("CONSULTAS", e -> realizarConsultas()));
@@ -159,8 +159,17 @@ public class Menu extends JPanel {
 
 
 
-	private void gestionarPagosDeudas() {
+	private void realizarTestIdoneidad() {
+		Container parent = getParent();
 
+		if (parent != null) {
+			parent.removeAll();
+			parent.add(new FormularioInversion(id_usuario, nombreUsuario, saldo, dni)); 
+			parent.revalidate();
+			parent.repaint();
+		} else {
+			System.out.println("El componente no tiene un padre.");
+		}
 	}
 
 

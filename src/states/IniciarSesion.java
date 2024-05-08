@@ -167,11 +167,11 @@ public class IniciarSesion extends JFrame {
 				int id_usuario = conexion.obtenerIdPorDNI(dni); 
 				String nombreUsuario = conexion.obtenerNombrePorDNI(dni);
 				double saldo = conexion.obtenerSaldoPorDNI(dni);
-				int porcentajeRF = conexion.obtenerRFporDNI(dni);
-				int porcentajeRV = conexion.obtenerRVporDNI(dni);
+//				int porcentajeRF = conexion.obtenerRFporDNI(dni);
+//				int porcentajeRV = conexion.obtenerRVporDNI(dni);
 
 				getContentPane().removeAll();
-				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV));
+				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo, dni));
 				revalidate();
 				repaint();
 
