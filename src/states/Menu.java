@@ -13,15 +13,19 @@ public class Menu extends JPanel {
 	private double saldo;
 	private String nombreUsuario;
 	private String dni;
+	private int porcentajeRF; 
+	private int porcentajeRV;
 
 
-	public Menu(int id_usuario, String nombreUsuario, double saldo, String dni) {
+	public Menu(int id_usuario, String nombreUsuario, double saldo, String dni, int porcentajeRF, int porcentajeRV) {
 
 		//Constructores
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
 		this.dni = dni;
+		this.porcentajeRF = porcentajeRF;
+		this.porcentajeRV = porcentajeRV;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); 
 		setBackground(Color.ORANGE); 
@@ -145,7 +149,7 @@ public class Menu extends JPanel {
 
 		if (parent != null) {
 			parent.removeAll();
-			//			parent.add(new GestionarCarteras(id_usuario, nombreUsuario, saldo)); 
+			parent.add(new GestionarCarteras(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV)); 
 			parent.revalidate();
 			parent.repaint();
 		} else {

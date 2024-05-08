@@ -20,6 +20,8 @@ public class Transferencia extends JPanel {
 	private JTextField txtNombre;
 	private JTextField txtCantidad;
 	private JTextField txtConcepto;
+	private int porcentajeRF; 
+	private int porcentajeRV;
 
 	private String nombreUsuario;
 	private int id_usuario;
@@ -36,6 +38,7 @@ public class Transferencia extends JPanel {
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
 		this.dni = dni;
+		
 
 		setLayout(new BorderLayout());
 
@@ -232,7 +235,7 @@ public class Transferencia extends JPanel {
 			parent.removeAll();
 
 			// Crear una nueva instancia de Menu y agregarla al padre
-			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni);
+			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV);
 			parent.add(menu);
 
 			// Actualizar la interfaz de usuario
@@ -252,7 +255,7 @@ public class Transferencia extends JPanel {
 			parent.removeAll();
 
 			// Crear una nueva instancia de Menu y agregarla al padre con el nuevo saldo
-			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni);
+			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV);
 			parent.add(menu);
 
 			// Actualizar la interfaz de usuario

@@ -24,6 +24,8 @@ public class Bizum extends JPanel {
 	private int id_usuario;
 	private double saldo;
 	private String dni;
+	private int porcentajeRF; 
+	private int porcentajeRV;
 
 	private JButton btnEnviarBizum;
 	private JButton btnVolver;
@@ -206,7 +208,7 @@ public class Bizum extends JPanel {
 		Container parent = getParent();
 		if (parent != null) {
 			parent.removeAll();
-			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni);
+			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV);
 			parent.add(menu);
 			parent.revalidate();
 			parent.repaint();
@@ -222,7 +224,7 @@ public class Bizum extends JPanel {
 		Container parent = getParent();
 		if (parent != null) {
 			parent.removeAll();
-			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni);
+			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV);
 			parent.add(menu);
 			parent.revalidate();
 			parent.repaint();
