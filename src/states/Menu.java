@@ -41,7 +41,7 @@ public class Menu extends JPanel {
 
 
 		// Espacio entre el panel de saldo y los botones
-		add(Box.createRigidArea(new Dimension(0, 50)));
+		add(Box.createRigidArea(new Dimension(0, 110)));
 
 
 		// Creamos los botones y los agregamos directamente al JPanel principal
@@ -62,44 +62,44 @@ public class Menu extends JPanel {
 
 		add(createButton("¿NECESITAS AYUDA?", e -> ofrecerAyuda()));
 		add(Box.createRigidArea(new Dimension (0,20)));
+
+
+
 	}
 
 
 	private JPanel PanelUsuario(String nombreUsuario, double saldo) {
-	    JPanel panel = new JPanel();
-	    panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-	
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 
-	    panel.setBackground(Color.GRAY);
-	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	    
-	    // Componente de relleno en la parte superior para centrar verticalmente
-	    panel.add(Box.createVerticalGlue());
 
-	    JLabel welcomeLabel = new JLabel("¡Bienvenido " + nombreUsuario + "!");
-	    welcomeLabel.setForeground(Color.BLACK);
-	    welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24)); 
-	    welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    panel.add(welcomeLabel);
+		panel.setBackground(Color.GRAY);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-	 // Espacio vertical de 10 píxeles
-	    panel.add(Box.createRigidArea(new Dimension(0, 10)));
+		// Componente de relleno en la parte superior para centrar verticalmente
+		panel.add(Box.createVerticalGlue());
 
-	    JLabel saldoLabel = new JLabel("Saldo: " + saldo + "€");
-	    saldoLabel.setForeground(Color.BLACK);
-	    saldoLabel.setFont(new Font("Arial", Font.PLAIN, 24)); 
-	    saldoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    panel.add(saldoLabel);
-	    
-	    // Componente de relleno en la parte inferior para centrar verticalmente
-	    panel.add(Box.createVerticalGlue());
+		JLabel welcomeLabel = new JLabel("¡Bienvenido " + nombreUsuario + "!");
+		welcomeLabel.setForeground(Color.BLACK);
+		welcomeLabel.setFont(new Font("Impact", Font.PLAIN, 35)); 
+		welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(welcomeLabel);
 
-	    return panel;
+		// Espacio vertical de 10 píxeles
+		panel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		JLabel saldoLabel = new JLabel("Saldo: " + saldo + " €");
+		saldoLabel.setForeground(Color.BLACK);
+		saldoLabel.setFont(new Font("Impact", Font.PLAIN, 35)); 
+		saldoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(saldoLabel);
+
+		// Componente de relleno en la parte inferior para centrar verticalmente
+		panel.add(Box.createVerticalGlue());
+
+		return panel;
 	}
 
-
-
-	
 
 	//Metodo para crear botones.
 	private JButton createButton(String text, ActionListener action) {

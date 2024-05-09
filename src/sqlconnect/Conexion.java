@@ -403,21 +403,22 @@ public class Conexion {
 	}
 
 
+
 	// Método para actualizar el saldo del usuario en la base de datos
-    public void actualizarSaldoUsuario(int id_usuario, double nuevoSaldo) throws SQLException {
-        Connection conexion = conectar();
-        try {
-            String sql = "UPDATE Usuario SET saldo = ? WHERE id_usuario = ?";
-            try (PreparedStatement statement = conexion.prepareStatement(sql)) {
-                statement.setDouble(1, nuevoSaldo);
-                statement.setInt(2, id_usuario);
-                statement.executeUpdate();
-            }
-        } finally {
-            cerrarConexion(conexion);
-        }
-    }
-	
-	
+	public void actualizarSaldoUsuario(int id_usuario, double nuevoSaldo) throws SQLException {
+		Connection conexion = conectar();
+		try {
+			String sql = "UPDATE Usuario SET saldo = ? WHERE id_usuario = ?";
+			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+				statement.setDouble(1, nuevoSaldo);
+				statement.setInt(2, id_usuario);
+				statement.executeUpdate();
+			}
+		} finally {
+			cerrarConexion(conexion);
+		}
+	}
+
+
 
 }

@@ -130,7 +130,7 @@ public class IniciarSesion extends JFrame {
 
 				getContentPane().removeAll();
 				getContentPane().setLayout(new BorderLayout());
-				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV));
+				getContentPane().add(new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV));
 				revalidate();
 				repaint();
 
