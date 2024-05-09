@@ -149,6 +149,7 @@ public class Menu extends JPanel {
 
 		if (parent != null) {
 			parent.removeAll();
+			parent.setLayout(new BorderLayout());
 			parent.add(new GestionarCarteras(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV)); 
 			parent.revalidate();
 			parent.repaint();
