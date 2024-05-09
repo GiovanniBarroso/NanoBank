@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import sqlconnect.Conexion;
-import states.IniciarSesion.RoundedBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,19 +23,23 @@ public class Bizum extends JPanel {
 	private int id_usuario;
 	private double saldo;
 	private String dni;
+	private double porcentajeRF; 
+	private double porcentajeRV;
 
 	private JButton btnEnviarBizum;
 	private JButton btnVolver;
 
 
 
-	public Bizum(int idUsuario, String nombreUsuario, double saldo, String dni) {
+	public Bizum(int idUsuario, String nombreUsuario, double saldo, String dni, double porcentajeRV, double porcentajeRF) {
 
 		//Constructores
 		this.id_usuario = idUsuario;
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
 		this.dni = dni;
+		this.porcentajeRF = porcentajeRF;
+		this.porcentajeRV = porcentajeRV;
 
 		setLayout(new BorderLayout());
 
@@ -45,7 +48,6 @@ public class Bizum extends JPanel {
 		panelFondo.setLayout(new GridBagLayout());
 
 		Border border = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-		panelFondo.setBorder(BorderFactory.createCompoundBorder(border, new RoundedBorder(10)));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -206,7 +208,7 @@ public class Bizum extends JPanel {
 		Container parent = getParent();
 		if (parent != null) {
 			parent.removeAll();
-			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni);
+			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV);
 			parent.add(menu);
 			parent.revalidate();
 			parent.repaint();
@@ -222,7 +224,7 @@ public class Bizum extends JPanel {
 		Container parent = getParent();
 		if (parent != null) {
 			parent.removeAll();
-			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni);
+			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV);
 			parent.add(menu);
 			parent.revalidate();
 			parent.repaint();

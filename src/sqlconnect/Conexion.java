@@ -344,5 +344,80 @@ public class Conexion {
 
 
 
+	//Método para guardar el formulario de carteras en la BD
+	public void saveFormularioCarteras(double porcentajeRF, double porcentajeRV, double cantidadInvertida, int id_usuario) throws SQLException {
+		Connection conexion = conectar();
+		try {
+			String sql = "INSERT INTO FormularioCarteras (porcentajeRF, porcentajeRV, cantidadInvertida, id_usuario) VALUES (?, ?, ?,?)";
+			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+				statement.setDouble(1, porcentajeRF);
+				statement.setDouble(2, porcentajeRV);
+				statement.setDouble(3, cantidadInvertida);
+				statement.setInt(4, id_usuario);
+				statement.executeUpdate();
+			}
+		} finally {
+			cerrarConexion(conexion);
+		}
+	}
+
+
+
+	// Método para obtener el porcentaje de Renta Fija por ID de usuario
+	public double obtenerRFporIdUsuario(int idUsuario) throws SQLException {
+		double porcentajeRF = 0.0;
+		Connection conexion = conectar();
+		try {
+			String consulta = "SELECT porcentajeRF FROM FormularioCarteras WHERE id_usuario = ?";
+			PreparedStatement statement = conexion.prepareStatement(consulta);
+			statement.setInt(1, idUsuario);
+			ResultSet resultado = statement.executeQuery();
+			if (resultado.next()) {
+				porcentajeRF = resultado.getDouble("porcentajeRF");
+			}
+		} finally {
+			cerrarConexion(conexion);
+		}
+		return porcentajeRF;
+	}
+
+
+
+
+	// Método para obtener el porcentaje de Renta Variable por ID de usuario
+	public double obtenerRVporIdUsuario(int idUsuario) throws SQLException {
+		double porcentajeRV = 0.0;
+		Connection conexion = conectar();
+		try {
+			String consulta = "SELECT porcentajeRV FROM FormularioCarteras WHERE id_usuario = ?";
+			PreparedStatement statement = conexion.prepareStatement(consulta);
+			statement.setInt(1, idUsuario);
+			ResultSet resultado = statement.executeQuery();
+			if (resultado.next()) {
+				porcentajeRV = resultado.getDouble("porcentajeRV");
+			}
+		} finally {
+			cerrarConexion(conexion);
+		}
+		return porcentajeRV;
+	}
+
+
+	// Método para actualizar el saldo del usuario en la base de datos
+    public void actualizarSaldoUsuario(int id_usuario, double nuevoSaldo) throws SQLException {
+        Connection conexion = conectar();
+        try {
+            String sql = "UPDATE Usuario SET saldo = ? WHERE id_usuario = ?";
+            try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+                statement.setDouble(1, nuevoSaldo);
+                statement.setInt(2, id_usuario);
+                statement.executeUpdate();
+            }
+        } finally {
+            cerrarConexion(conexion);
+        }
+    }
+	
+	
 
 }

@@ -43,6 +43,18 @@ FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 
 
 
+-- TABLA FORMULARIOCARTERAS
+CREATE TABLE IF NOT EXISTS FormularioCarteras (
+id_cartera INT PRIMARY KEY AUTO_INCREMENT,
+porcentajeRF FLOAT (20,2) NOT NULL,
+porcentajeRV FLOAT (20,2) NOT NULL,
+cantidadInvertida FLOAT (20,2) NOT NULL,
+id_usuario INT,
+FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+);
+
+
+
 -- Insertamos datos del usuario Giovanni si no existe
 INSERT INTO Usuario (dni, contraseña, nombre, telefono, email, iban) 
 SELECT * FROM (SELECT '30269762Z', 'admin123', 'Giovanni', '644126909', 'giovanni.baralv@gmail.com', 'ES62 2100 8434 5702 0011 1410') AS temp
@@ -71,3 +83,4 @@ WHERE NOT EXISTS (
 SELECT * FROM Usuario;
 SELECT * FROM Transacciones;
 SELECT * FROM Bizum;
+SELECT * FROM FormularioCarteras;

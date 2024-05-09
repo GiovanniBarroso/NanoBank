@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import sqlconnect.Conexion;
-import states.IniciarSesion.RoundedBorder;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -42,7 +41,6 @@ public class RegistroUsuario extends JPanel {
 
 		// Establecer el borde redondeado
 		Border border = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-		panelFondo.setBorder(BorderFactory.createCompoundBorder(border, new RoundedBorder(10)));
 
 
 

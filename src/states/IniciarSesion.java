@@ -6,6 +6,7 @@ import sqlconnect.Conexion;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import javax.swing.border.LineBorder;
 
 public class IniciarSesion extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -19,8 +20,8 @@ public class IniciarSesion extends JFrame {
 		setSize(450, 750);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		getContentPane().setBackground(Color.ORANGE);
-		setLayout(new GridBagLayout());
+		getContentPane().setBackground(new Color(64, 224, 208));
+		getContentPane().setLayout(new GridBagLayout());
 
 		initComponents();
 	}
@@ -28,108 +29,65 @@ public class IniciarSesion extends JFrame {
 
 	private void initComponents() {
 
-		JPanel panel = new JPanel() {
-			private static final long serialVersionUID = 1L;
-
-			//Diseño del JFrame
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				int radius = 10;
-				int width = getWidth();
-				int height = getHeight();
-				Graphics2D g2d = (Graphics2D) g.create();
-				g2d.setColor(getBackground());
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.fillRoundRect(0, 0, width - 1, height - 1, radius, radius);
-				g2d.dispose();
-			}
-		};
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 
 
 		//Dimensiones del panel de datos de login
 		panel.setPreferredSize(new Dimension(300, 500)); 
 		panel.setBackground(Color.GRAY);
 
-		// Establecer el borde redondeado
-		Border border = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-		panel.setBorder(BorderFactory.createCompoundBorder(border, new RoundedBorder(10)));
-
-		panel.setLayout(new GridBagLayout());
-
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(10, 10, 10, 10);
-
-
-
 		// Logo
 		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_6.png"));
-		JLabel lblLogo = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+		JLabel lblLogo = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+		lblLogo.setBounds(59, 25, 188, 178);
 
 
 
 		// Usuario
 		JLabel lblUsuario = new JLabel("DNI:");
+		lblUsuario.setBounds(134, 214, 32, 26);
 		lblUsuario.setFont(new Font("Impact", Font.PLAIN, 20));
 		JTextField txtUsuario = new JTextField(15);
-		txtUsuario.setHorizontalAlignment(JTextField.CENTER);
+		txtUsuario.setDisabledTextColor(Color.BLACK);
+		txtUsuario.setBounds(49, 251, 201, 25);
+		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
 		// Contraseña
 		JLabel lblContraseña = new JLabel("Contraseña:");
+		lblContraseña.setBounds(99, 287, 97, 26);
 		lblContraseña.setFont(new Font("Impact", Font.PLAIN, 20));
 		JPasswordField txtContraseña = new JPasswordField(15);
+		txtContraseña.setDisabledTextColor(Color.BLACK);
+		txtContraseña.setBounds(49, 324, 201, 25);
 		txtContraseña.setHorizontalAlignment(JPasswordField.CENTER);
 		txtContraseña.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
 		// Botón de iniciar sesión
 		JButton btnIniciarSesion = new JButton("Iniciar Sesión");
+		btnIniciarSesion.setBounds(59, 376, 178, 31);
 		btnIniciarSesion.setHorizontalAlignment(JButton.CENTER);
 		btnIniciarSesion.setFont(new Font("Arial Black", Font.PLAIN, 16));
 
 
 		// Botón de registrarse
 		JButton btnRegistrarse = new JButton("¿No estás registrado?");
+		btnRegistrarse.setBounds(22, 432, 255, 31);
 		btnRegistrarse.setHorizontalAlignment(JButton.CENTER);
 		btnRegistrarse.setFont(new Font("Arial Black", Font.PLAIN, 16));
+		panel.setLayout(null);
 
 
-
-		// Añadir el logo
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.CENTER;
-		panel.add(lblLogo, gbc);
-		gbc.gridwidth = 1;
-
-
-		// Usuario
-		gbc.gridy = 1;
-		panel.add(lblUsuario, gbc);
-
-		gbc.gridy = 2;
-		panel.add(txtUsuario, gbc);
-
-
-		// Contraseña
-		gbc.gridy = 3;
-		panel.add(lblContraseña, gbc);
-
-		gbc.gridy = 4;
-		panel.add(txtContraseña, gbc);
-
-
-		// Botón de iniciar sesión
-		gbc.gridy = 5;
-		panel.add(btnIniciarSesion, gbc);
-
-
-		// Botón de registrarse
-		gbc.gridy = 6;
-		panel.add(btnRegistrarse, gbc);
+		panel.add(lblLogo);
+		panel.add(lblUsuario);
+		panel.add(txtUsuario);
+		panel.add(lblContraseña);
+		panel.add(txtContraseña);
+		panel.add(btnIniciarSesion);
+		panel.add(btnRegistrarse);
 
 
 		// Agregar el panel al contenido del JFrame
@@ -167,11 +125,12 @@ public class IniciarSesion extends JFrame {
 				int id_usuario = conexion.obtenerIdPorDNI(dni); 
 				String nombreUsuario = conexion.obtenerNombrePorDNI(dni);
 				double saldo = conexion.obtenerSaldoPorDNI(dni);
-//				int porcentajeRF = conexion.obtenerRFporDNI(dni);
-//				int porcentajeRV = conexion.obtenerRVporDNI(dni);
+				double porcentajeRF  = conexion.obtenerRFporIdUsuario(id_usuario);
+				double porcentajeRV= conexion.obtenerRVporIdUsuario(id_usuario);
 
 				getContentPane().removeAll();
-				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo, dni));
+				getContentPane().setLayout(new BorderLayout());
+				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV));
 				revalidate();
 				repaint();
 
@@ -192,30 +151,5 @@ public class IniciarSesion extends JFrame {
 		getContentPane().add(new RegistroUsuario());
 		revalidate();
 		repaint();
-	}
-
-
-
-	//Metodo del diseño del JFrame
-	static class RoundedBorder implements Border {
-		private int radius;
-
-		RoundedBorder(int radius) {
-			this.radius = radius;
-		}
-
-		public Insets getBorderInsets(Component c) {
-			return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-		}
-
-		public boolean isBorderOpaque() {
-			return true;
-		}
-
-		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-			g.setColor(Color.BLACK);
-			((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-		}
 	}
 }
