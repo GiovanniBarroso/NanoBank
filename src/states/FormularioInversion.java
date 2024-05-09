@@ -29,27 +29,30 @@ public class FormularioInversion extends JPanel {
 
 	private String nombreUsuario;
 	private int id_usuario;
-	private double nuevoSaldo;
 	private double saldo;
 	private String dni;
 	private double porcentajeRF; 
 	private double porcentajeRV;
+	private double cantidadInvertida;
 
 
 	//Metodo para iniciar la clase
-	public FormularioInversion(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV) {
+	public FormularioInversion(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
 
-		setupUI(id_usuario, nombreUsuario, saldo, dni, porcentajeRF,porcentajeRV);
+		setupUI(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 	}
 
-	private void setupUI(int id_usuario, String nombreUsuario, double saldo, String dni,  double porcentajeRF, double porcentajeRV) {
+	private void setupUI(int id_usuario, String nombreUsuario, double saldo, String dni,  double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
 		//Constructores
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
 		this.saldo = saldo;
 		this.dni = dni;
+		this.porcentajeRF = porcentajeRF;
+		this.porcentajeRV = porcentajeRV;
+		this.cantidadInvertida = cantidadInvertida;
 
 
 		setPreferredSize(new Dimension(450, 600));
@@ -145,9 +148,11 @@ public class FormularioInversion extends JPanel {
 		// Acción del botón Volver atrás
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				volveraMenu();
+				volveraMenu(porcentajeRF, porcentajeRV, cantidadInvertida);
 			}
 		});
+
+
 	}
 
 
@@ -203,7 +208,8 @@ public class FormularioInversion extends JPanel {
 	}
 
 
-	private void sendFormulario() {
+	private void sendFormulario(double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
+
 		String perfilRiesgo = (String) perfilRiesgoComboBox.getSelectedItem();
 		String accionesPerdida = (String) accionesPerdidaComboBox.getSelectedItem();
 		String plazoInversion = (String) plazoInversionComboBox.getSelectedItem();
@@ -215,13 +221,7 @@ public class FormularioInversion extends JPanel {
 		String invertirRentaVariable = (String) invertirRentaVariableComboBox.getSelectedItem();
 
 
-
-
-		// Ajustar los valores según las selecciones del usuario
-		double porcentajeRF = 0.0;
-		double porcentajeRV = 0.0;
-
-		double cantidadInvertida = Double.parseDouble(cantidadInversionTextField.getText());
+		cantidadInvertida = Double.parseDouble(cantidadInversionTextField.getText());
 
 		// Restar la cantidad invertida del saldo del usuario
 		double nuevoSaldo = saldo - cantidadInvertida;
@@ -329,7 +329,7 @@ public class FormularioInversion extends JPanel {
 			porcentajeRV += 0.0;
 		} else if (invertirRentaVariable.equals("No")) {
 			porcentajeRF += 0.0;
-			porcentajeRV += 10.0;
+			porcentajeRV += 20.0;
 		}
 
 		try {
@@ -342,9 +342,10 @@ public class FormularioInversion extends JPanel {
 			conexion.actualizarSaldoUsuario(id_usuario, nuevoSaldo);
 
 			JOptionPane.showMessageDialog(null, "Formulario de Idoneidad registrado correctamente.");
-			System.out.println("Formulario guardado en la BD");
+			System.out.println("\nFormulario guardado en la BD");
 
-			volveraMenu2(nuevoSaldo);
+			volveraMenu2(nuevoSaldo,porcentajeRF, porcentajeRV, cantidadInvertida);
+
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Error al insertar datos en la base de datos: " + e.getMessage());
 		}
@@ -363,7 +364,7 @@ public class FormularioInversion extends JPanel {
 						"La cantidad a invertir supera el saldo disponible. Por favor, ingrese una cantidad válida.",
 						"Error de validación", JOptionPane.ERROR_MESSAGE);
 			} else {
-				sendFormulario();
+				sendFormulario(porcentajeRF, porcentajeRV, cantidadInvertida);
 			}
 		} catch (NumberFormatException ex) {
 			JOptionPane.showMessageDialog(null, "Por favor, ingrese una cantidad válida.", "Error de validación", JOptionPane.ERROR_MESSAGE);
@@ -375,13 +376,13 @@ public class FormularioInversion extends JPanel {
 
 
 	// Método para volver a Menu
-	private void volveraMenu() {
+	private void volveraMenu(double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 		Container parent = getParent();
 		if (parent != null) {
 
 			parent.removeAll();
 
-			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV);
+			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 			parent.revalidate();
 			parent.repaint();
@@ -392,13 +393,14 @@ public class FormularioInversion extends JPanel {
 	}
 
 
+
 	// Método para volver a Menu
-	private void volveraMenu2(double nuevoSaldo) {
+	private void volveraMenu2(double nuevoSaldo, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 		Container parent = getParent();
 		if (parent != null) {
 
 			parent.removeAll();
-			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV);
+			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 
 			parent.revalidate();

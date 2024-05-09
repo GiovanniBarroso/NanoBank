@@ -1,7 +1,6 @@
 package states;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import sqlconnect.Conexion;
 
@@ -26,12 +25,13 @@ public class Transferencia extends JPanel {
 	private String dni;
 	private double porcentajeRF; 
 	private double porcentajeRV;
+	private double cantidadInvertida;
 
 	private JButton btnEnviarTransferencia;
 	private JButton btnVolver;
 
 
-	public Transferencia(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRV, double porcentajeRF) {
+	public Transferencia(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRV, double porcentajeRF, double cantidadInvertida) {
 
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
@@ -39,6 +39,7 @@ public class Transferencia extends JPanel {
 		this.dni = dni;
 		this.porcentajeRF = porcentajeRF;
 		this.porcentajeRV = porcentajeRV;
+		this.cantidadInvertida = cantidadInvertida;
 		
 
 		setLayout(new BorderLayout());
@@ -48,8 +49,6 @@ public class Transferencia extends JPanel {
 		panelFondo.setLayout(new GridBagLayout());
 
 
-		// Establecer el borde redondeado
-		Border border = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 
 
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -234,7 +233,7 @@ public class Transferencia extends JPanel {
 			parent.removeAll();
 
 			// Crear una nueva instancia de Menu y agregarla al padre
-			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV);
+			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 
 			// Actualizar la interfaz de usuario
@@ -254,7 +253,7 @@ public class Transferencia extends JPanel {
 			parent.removeAll();
 
 			// Crear una nueva instancia de Menu y agregarla al padre con el nuevo saldo
-			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV);
+			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 
 			// Actualizar la interfaz de usuario

@@ -419,6 +419,25 @@ public class Conexion {
 		}
 	}
 
+	
+	
+	// Método para obtener el porcentaje de Renta Variable por ID de usuario
+		public double obtenercantidadInvertidaporIdUsuario(int idUsuario) throws SQLException {
+			double cantidadInvertida = 0.0;
+			Connection conexion = conectar();
+			try {
+				String consulta = "SELECT cantidadInvertida FROM FormularioCarteras WHERE id_usuario = ?";
+				PreparedStatement statement = conexion.prepareStatement(consulta);
+				statement.setInt(1, idUsuario);
+				ResultSet resultado = statement.executeQuery();
+				if (resultado.next()) {
+					cantidadInvertida = resultado.getDouble("cantidadInvertida");
+				}
+			} finally {
+				cerrarConexion(conexion);
+			}
+			return cantidadInvertida;
+		}
 
 
 }

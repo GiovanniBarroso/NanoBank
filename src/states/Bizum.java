@@ -1,7 +1,6 @@
 package states;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import sqlconnect.Conexion;
 
@@ -25,13 +24,14 @@ public class Bizum extends JPanel {
 	private String dni;
 	private double porcentajeRF; 
 	private double porcentajeRV;
+	private double cantidadInvertida;
 
 	private JButton btnEnviarBizum;
 	private JButton btnVolver;
 
 
 
-	public Bizum(int idUsuario, String nombreUsuario, double saldo, String dni, double porcentajeRV, double porcentajeRF) {
+	public Bizum(int idUsuario, String nombreUsuario, double saldo, String dni, double porcentajeRV, double porcentajeRF, double cantidadInvertida) {
 
 		//Constructores
 		this.id_usuario = idUsuario;
@@ -40,6 +40,7 @@ public class Bizum extends JPanel {
 		this.dni = dni;
 		this.porcentajeRF = porcentajeRF;
 		this.porcentajeRV = porcentajeRV;
+		this.cantidadInvertida = cantidadInvertida;
 
 		setLayout(new BorderLayout());
 
@@ -47,7 +48,6 @@ public class Bizum extends JPanel {
 		panelFondo.setBackground(Color.GRAY);
 		panelFondo.setLayout(new GridBagLayout());
 
-		Border border = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -208,7 +208,7 @@ public class Bizum extends JPanel {
 		Container parent = getParent();
 		if (parent != null) {
 			parent.removeAll();
-			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV);
+			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 			parent.revalidate();
 			parent.repaint();
@@ -224,7 +224,7 @@ public class Bizum extends JPanel {
 		Container parent = getParent();
 		if (parent != null) {
 			parent.removeAll();
-			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV);
+			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 			parent.revalidate();
 			parent.repaint();

@@ -1,7 +1,6 @@
 package states;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import sqlconnect.Conexion;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,7 +16,7 @@ public class IniciarSesion extends JFrame {
 		//Propiedades del JFrame
 		setTitle("Iniciar Sesión");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(450, 750);
+		setSize(450, 800);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		getContentPane().setBackground(new Color(64, 224, 208));
@@ -127,10 +126,11 @@ public class IniciarSesion extends JFrame {
 				double saldo = conexion.obtenerSaldoPorDNI(dni);
 				double porcentajeRF  = conexion.obtenerRFporIdUsuario(id_usuario);
 				double porcentajeRV= conexion.obtenerRVporIdUsuario(id_usuario);
+				double cantidadInvertida = conexion.obtenercantidadInvertidaporIdUsuario(id_usuario);
 
 				getContentPane().removeAll();
 				getContentPane().setLayout(new BorderLayout());
-				getContentPane().add(new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV));
+				getContentPane().add(new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida));
 				revalidate();
 				repaint();
 

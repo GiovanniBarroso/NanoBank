@@ -3,7 +3,6 @@ package states;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import states.Menu;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,9 +18,10 @@ public class GestionarCarteras extends JPanel {
 	private String dni;
 	private double porcentajeRF;
 	private double porcentajeRV;
+	private double cantidadInvertida;
 
 
-	public GestionarCarteras(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV) {
+	public GestionarCarteras(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 		// Constructores
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
@@ -29,6 +29,7 @@ public class GestionarCarteras extends JPanel {
 		this.dni = dni;
 		this.porcentajeRF = porcentajeRF;
 		this.porcentajeRV = porcentajeRV;
+		this.cantidadInvertida = cantidadInvertida;
 
 		//Metodo para iniciar la clase
 		initUI();
@@ -70,7 +71,7 @@ public class GestionarCarteras extends JPanel {
 		gbc.weighty = 0.1;
 		add(btnVolver, gbc);
 
-		
+
 		// Acción del botón Volver atrás
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -79,11 +80,11 @@ public class GestionarCarteras extends JPanel {
 		});
 	}
 
-		
-	
 
-	
-	
+
+
+
+
 	//Metodo para crear panel de la cartera
 	private JPanel crearPanelCarteras(double porcentajeRF, double porcentajeRV) {
 
@@ -122,7 +123,7 @@ public class GestionarCarteras extends JPanel {
 
 		// Componentes de información de la cartera
 		JLabel lblBeneficios = new JLabel("Beneficios: +96,04€");
-		JLabel lblInversion = new JLabel("Inversión: 1.041,00€");
+		JLabel lblInversion = new JLabel("Inversión:" + cantidadInvertida + " €");
 		JLabel lblValorMercado = new JLabel("Valor Mercado: 1.139.52€");
 		JLabel lblRentabilidad = new JLabel("Rentabilidad: 9,23%");
 		JLabel lblRiesgo = new JLabel("Riesgo: X%");
@@ -225,24 +226,25 @@ public class GestionarCarteras extends JPanel {
 		return panelCarteras;
 
 	}
-	
-	
-	
+
+
+
 	// Método para volver a Menu
-		private void volveraMenu() {
-			Container parent = getParent();
-			if (parent != null) {
+	private void volveraMenu() {
+		Container parent = getParent();
+		if (parent != null) {
 
-				parent.removeAll();
-				parent.setLayout(new BorderLayout());
-				Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV);
-				parent.add(menu);
 
-				parent.revalidate();
-				parent.repaint();
+			parent.removeAll();
+			parent.setLayout(new BorderLayout());
+			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
+			parent.add(menu);
 
-			} else {
-				System.out.println("El componente no tiene un padre [🆎].");
-			}
+			parent.revalidate();
+			parent.repaint();
+
+		} else {
+			System.out.println("El componente no tiene un padre [🆎].");
 		}
+	}
 }

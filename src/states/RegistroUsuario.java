@@ -1,7 +1,6 @@
 package states;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import sqlconnect.Conexion;
 
@@ -39,8 +38,6 @@ public class RegistroUsuario extends JPanel {
 		panelFondo.setLayout(new GridBagLayout());
 
 
-		// Establecer el borde redondeado
-		Border border = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 
 
 

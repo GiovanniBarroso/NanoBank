@@ -1,2 +1,6 @@
 /states/
 /sqlconnect/
+/.gitignore
+/driver/
+/img/
+/main/
