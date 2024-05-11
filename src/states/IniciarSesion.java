@@ -47,22 +47,22 @@ public class IniciarSesion extends JFrame {
 		JLabel lblUsuario = new JLabel("DNI:");
 		lblUsuario.setBounds(134, 214, 32, 26);
 		lblUsuario.setFont(new Font("Impact", Font.PLAIN, 20));
+
 		JTextField txtUsuario = new JTextField(15);
-		txtUsuario.setDisabledTextColor(Color.BLACK);
-		txtUsuario.setBounds(49, 251, 201, 25);
+		txtUsuario.setBounds(49, 251, 201, 26);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 15));
 
 
 		// Contraseña
 		JLabel lblContraseña = new JLabel("Contraseña:");
-		lblContraseña.setBounds(99, 287, 97, 26);
+		lblContraseña.setBounds(98, 286, 1123, 26);
 		lblContraseña.setFont(new Font("Impact", Font.PLAIN, 20));
+
 		JPasswordField txtContraseña = new JPasswordField(15);
-		txtContraseña.setDisabledTextColor(Color.BLACK);
-		txtContraseña.setBounds(49, 324, 201, 25);
+		txtContraseña.setBounds(49, 324, 201, 26);
 		txtContraseña.setHorizontalAlignment(JPasswordField.CENTER);
-		txtContraseña.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtContraseña.setFont(new Font("Arial", Font.PLAIN, 15));
 
 
 		// Botón de iniciar sesión
@@ -130,7 +130,7 @@ public class IniciarSesion extends JFrame {
 
 				getContentPane().removeAll();
 				getContentPane().setLayout(new BorderLayout());
-				getContentPane().add(new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida));
+				getContentPane().add(new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida));
 				revalidate();
 				repaint();
 
@@ -148,7 +148,8 @@ public class IniciarSesion extends JFrame {
 	//Metodo para cambiar a la clase RegistroUsuario
 	private void mostrarRegistroUsuario() {
 		getContentPane().removeAll();
-		getContentPane().add(new RegistroUsuario());
+		getContentPane().setLayout(new BorderLayout());
+		getContentPane().add(new RegistroUsuarioPrueba());
 		revalidate();
 		repaint();
 	}

@@ -233,7 +233,7 @@ public class Transferencia extends JPanel {
 			parent.removeAll();
 
 			// Crear una nueva instancia de Menu y agregarla al padre
-			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
+			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 
 			// Actualizar la interfaz de usuario
@@ -253,7 +253,7 @@ public class Transferencia extends JPanel {
 			parent.removeAll();
 
 			// Crear una nueva instancia de Menu y agregarla al padre con el nuevo saldo
-			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
+			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 
 			// Actualizar la interfaz de usuario

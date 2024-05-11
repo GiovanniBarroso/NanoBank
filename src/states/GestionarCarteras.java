@@ -272,7 +272,7 @@ public class GestionarCarteras extends JPanel {
 				parent.setLayout(new BorderLayout());
 
 				// Pasar el nuevo saldo al nuevo panel de menú
-				MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
+				Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 				parent.add(menu);
 
 				parent.revalidate();

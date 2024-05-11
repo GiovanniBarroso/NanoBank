@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuPrueba extends JPanel {
+public class Menu extends JPanel {
 
 
 	//Atributos
@@ -21,7 +21,7 @@ public class MenuPrueba extends JPanel {
 	private double cantidadInvertida;
 
 
-	public MenuPrueba(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
+	public Menu(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
 		setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		setBackground(new Color(64, 224, 208));

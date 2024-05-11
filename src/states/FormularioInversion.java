@@ -411,7 +411,7 @@ public class FormularioInversion extends JPanel {
 
 			parent.removeAll();
 
-			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
+			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 			parent.revalidate();
 			parent.repaint();
@@ -429,7 +429,7 @@ public class FormularioInversion extends JPanel {
 		if (parent != null) {
 
 			parent.removeAll();
-			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
+			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 
 			parent.revalidate();
