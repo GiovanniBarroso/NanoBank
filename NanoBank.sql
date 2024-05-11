@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS Usuario (
     nombre VARCHAR(50) NOT NULL,
     telefono INT (9) NOT NULL, 
     email VARCHAR(50) NOT NULL,
-    iban VARCHAR(50) NOT NULL
+    iban VARCHAR(50) NOT NULL,
+    fecha_liquidacion DATE DEFAULT NULL
 );
 
 

@@ -262,30 +262,30 @@ public class GestionarCarteras extends JPanel {
 
 
 	private void volveraMenu() {
-	    try {
-	        Conexion conexion = new Conexion();
+		try {
+			Conexion conexion = new Conexion();
 
-	        // Obtener el saldo actualizado
-	        double nuevoSaldo = conexion.obtenerSaldoPorDNI(dni);
+			// Obtener el saldo actualizado
+			double nuevoSaldo = conexion.obtenerSaldoPorDNI(dni);
 
-	        Container parent = getParent();
-	        if (parent != null) {
-	            parent.removeAll();
-	            parent.setLayout(new BorderLayout());
+			Container parent = getParent();
+			if (parent != null) {
+				parent.removeAll();
+				parent.setLayout(new BorderLayout());
 
-	            // Pasar el nuevo saldo al nuevo panel de menú
-	            MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
-	            parent.add(menu);
+				// Pasar el nuevo saldo al nuevo panel de menú
+				MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
+				parent.add(menu);
 
-	            parent.revalidate();
-	            parent.repaint();
-	        } else {
-	            System.out.println("El componente no tiene un padre [🆎].");
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        JOptionPane.showMessageDialog(this, "Error al volver al menú. Por favor, inténtelo de nuevo más tarde.");
-	    }
+				parent.revalidate();
+				parent.repaint();
+			} else {
+				System.out.println("El componente no tiene un padre [🆎].");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Error al volver al menú. Por favor, inténtelo de nuevo más tarde.");
+		}
 	}
 
 
@@ -358,44 +358,45 @@ public class GestionarCarteras extends JPanel {
 		return Riesgo;
 	}
 
-	
+
 	private void LiquidarCartera() {
-	    try {
-	        Conexion conexion = new Conexion();
-	        
-	        // Obtener los beneficios actuales
-	        double Beneficios = ObtenerBeneficios(ObtenerRentabilidad());
+		try {
+			Conexion conexion = new Conexion();
 
-	        // Calcular la cantidad a liquidar (invertida + beneficios)
-	        double cantidadALiquidar = cantidadInvertida + Beneficios;
+			double Beneficios = ObtenerBeneficios(ObtenerRentabilidad());
 
-	        // Obtener el saldo actual del usuario
-	        double saldoActual = conexion.obtenerSaldoPorDNI(dni);
+			double cantidadALiquidar = cantidadInvertida + Beneficios;
 
-	        // Actualizar el saldo del usuario sumando la cantidad a liquidar
-	        double nuevoSaldo = saldoActual + cantidadALiquidar;
-	        conexion.actualizarSaldoUsuario(id_usuario, nuevoSaldo);
+			double saldoActual = conexion.obtenerSaldoPorDNI(dni);
 
-	        // Restablecer los porcentajes de renta fija y renta variable a cero
-	        double porcentajeRF = 0.0;
-	        double porcentajeRV = 0.0;
-	        conexion.saveFormularioCarteras(porcentajeRF, porcentajeRV, 0.0, id_usuario);
-	        
-	        // Eliminar la cartera de la base de datos
-	       conexion.eliminarCarteraPorIdUsuario(id_usuario);
+			double nuevoSaldo = saldoActual + cantidadALiquidar;
 
-	        // Actualizar la cantidad invertida a cero
-	        cantidadInvertida = 0.0;
+			conexion.actualizarSaldoUsuario(id_usuario, nuevoSaldo);
 
-	        // Mostrar mensaje de liquidación exitosa
-	        JOptionPane.showMessageDialog(this, "Cartera liquidada con éxito. Se ha ingresado " + cantidadALiquidar + "€ en su cuenta.");
 
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        JOptionPane.showMessageDialog(this, "Error al liquidar la cartera. Por favor, inténtelo de nuevo más tarde.");
-	    }
+			double porcentajeRF = 0.0;
+			double porcentajeRV = 0.0;
+
+			conexion.saveFormularioCarteras(porcentajeRF, porcentajeRV, 0.0, id_usuario);
+
+			conexion.eliminarCarteraPorIdUsuario(id_usuario);
+			limpiarDatos();
+			cantidadInvertida = 0.0;
+
+			// Mostrar mensaje de liquidación exitosa
+			JOptionPane.showMessageDialog(this, "Cartera liquidada con éxito. Se ha ingresado " + cantidadALiquidar + "€ en su cuenta.");
+			volveraMenu();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Error al liquidar la cartera. Por favor, inténtelo de nuevo más tarde.");
+		}
 	}
 
+	private void limpiarDatos() {
+	    this.porcentajeRF = 0.0;
+	    this.porcentajeRV = 0.0;
+	    this.cantidadInvertida = 0.0;
+	}
 
 
 }
