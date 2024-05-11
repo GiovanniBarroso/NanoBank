@@ -438,6 +438,26 @@ public class Conexion {
 			}
 			return cantidadInvertida;
 		}
+		
+		public void eliminarCarteraPorIdUsuario(int idUsuario) throws SQLException {
+		    Connection conexion = conectar();
+		    try {
+		        // Construir la consulta SQL para eliminar la cartera del usuario
+		        String sql = "DELETE FROM FormularioCarteras WHERE id_usuario = ?";
+		        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+		            // Establecer el ID del usuario como parámetro en la consulta
+		            statement.setInt(1, idUsuario);
+		            // Ejecutar la consulta para eliminar la cartera del usuario
+		            statement.executeUpdate();
+		        }
+		    } finally {
+		        cerrarConexion(conexion);
+		    }
+		}
+
+	
+	
+
 
 
 }

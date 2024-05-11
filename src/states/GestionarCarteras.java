@@ -3,10 +3,12 @@ package states;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import sqlconnect.Conexion;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class GestionarCarteras extends JPanel {
 
@@ -31,11 +33,17 @@ public class GestionarCarteras extends JPanel {
 		this.porcentajeRV = porcentajeRV;
 		this.cantidadInvertida = cantidadInvertida;
 
-		//Metodo para iniciar la clase
+
 		initUI();
 	}
 
+	//Metodo principal
 	private void initUI() {
+
+		double Rentabilidad = ObtenerRentabilidad();
+		double Beneficios = ObtenerBeneficios(Rentabilidad);
+		double valorMercado = ObtenerValorMercado(Beneficios);
+		int Riesgo = ObtenerRiesgo();
 
 		setLayout(new GridBagLayout());
 		setBackground(new Color(64, 224, 208));
@@ -43,8 +51,10 @@ public class GestionarCarteras extends JPanel {
 		gbc.insets = new Insets(10, 10, 10, 10);
 
 
+
+
 		// Panel de Carteras
-		JPanel panelCarteras = crearPanelCarteras(porcentajeRF, porcentajeRV);
+		JPanel panelCarteras = crearPanelCarteras(porcentajeRF, porcentajeRV, Beneficios, valorMercado, Rentabilidad, Riesgo);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
@@ -55,21 +65,36 @@ public class GestionarCarteras extends JPanel {
 		add(panelCarteras, gbc);
 
 
+
+
 		// Título
-		JLabel lblTitulo = new JLabel("Gestionar Carteras");
-		lblTitulo.setFont(new Font("Impact", Font.PLAIN, 20));
-		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
+		JButton btnLiquidarCartera = new JButton("Liquidar Cartera");
+		btnLiquidarCartera.setFont(new Font("Impact", Font.PLAIN, 20));
+		btnLiquidarCartera.setHorizontalAlignment(JLabel.CENTER);
 		gbc.gridy++;
 		gbc.weighty = 0.1;
-		add(lblTitulo, gbc);
+		add(btnLiquidarCartera, gbc);
+
+
+
 
 
 		// Botón para añadir nueva cartera
 		JButton btnVolver = new JButton("Volver atrás");
-		btnVolver.setFont(new Font("Arial", Font.PLAIN, 16));
+		btnVolver.setFont(new Font("Impact", Font.PLAIN, 20));
 		gbc.gridy++;
 		gbc.weighty = 0.1;
 		add(btnVolver, gbc);
+
+
+		// Acción del botón Volver atrás
+		btnLiquidarCartera.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LiquidarCartera();
+			}
+		});
+
+
 
 
 		// Acción del botón Volver atrás
@@ -83,10 +108,8 @@ public class GestionarCarteras extends JPanel {
 
 
 
-
-
 	//Metodo para crear panel de la cartera
-	private JPanel crearPanelCarteras(double porcentajeRF, double porcentajeRV) {
+	private JPanel crearPanelCarteras(double porcentajeRF, double porcentajeRV, double Beneficios, double valorMercado , double Rentabilidad , int Riesgo ) {
 
 
 		JPanel panelCarteras = new JPanel(new BorderLayout());
@@ -120,14 +143,19 @@ public class GestionarCarteras extends JPanel {
 		panelInfoCartera.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 
-
 		// Componentes de información de la cartera
-		JLabel lblBeneficios = new JLabel("Beneficios: +96,04€");
-		JLabel lblInversion = new JLabel("Inversión:" + cantidadInvertida + " €");
-		JLabel lblValorMercado = new JLabel("Valor Mercado: 1.139.52€");
-		JLabel lblRentabilidad = new JLabel("Rentabilidad: 9,23%");
-		JLabel lblRiesgo = new JLabel("Riesgo: X%");
-		JLabel lblComposicion = new JLabel("Composición de la cartera");
+		JLabel lblBeneficios = new JLabel("BENEFICIOS : " + Beneficios + " €");
+		lblBeneficios.setFont(new Font("Impact", Font.PLAIN, 15)); 
+		JLabel lblInversion = new JLabel("INVERSIÓN : " + cantidadInvertida + " €");
+		lblInversion.setFont(new Font("Impact", Font.PLAIN, 15)); 
+		JLabel lblValorMercado = new JLabel("VALOR MERCADO : " + valorMercado + " €");
+		lblValorMercado.setFont(new Font("Impact", Font.PLAIN, 15)); 
+		JLabel lblRentabilidad = new JLabel("RENTABILIDAD : " + Rentabilidad + " %");
+		lblRentabilidad.setFont(new Font("Impact", Font.PLAIN, 15)); 
+		JLabel lblRiesgo = new JLabel("RIESGO: " + Riesgo + "/5");
+		lblRiesgo.setFont(new Font("Impact", Font.PLAIN, 15)); 
+		JLabel lblComposicion = new JLabel("REPRESENTACIÓN CICLOGRAMA");
+		lblComposicion.setFont(new Font("Impact", Font.PLAIN, 15));
 
 
 
@@ -154,10 +182,14 @@ public class GestionarCarteras extends JPanel {
 		JPanel panelEtiquetas = new JPanel(new GridLayout(2, 1));
 		panelEtiquetas.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		panelEtiquetas.setBackground(Color.LIGHT_GRAY);
+
+
 		JLabel lblRentaVariable = new JLabel(porcentajeRV + "% RENTA VARIABLE");
-		lblRentaVariable.setFont(new Font("Arial", Font.BOLD, 12));
+		lblRentaVariable.setFont(new Font("Impact", Font.PLAIN, 18));
+
+
 		JLabel lblRentaFija = new JLabel(porcentajeRF + "% RENTA FIJA");
-		lblRentaFija.setFont(new Font("Arial", Font.BOLD, 12));
+		lblRentaFija.setFont(new Font("Impact", Font.PLAIN, 18));
 		panelEtiquetas.add(lblRentaVariable);
 		panelEtiquetas.add(lblRentaFija);
 
@@ -229,22 +261,141 @@ public class GestionarCarteras extends JPanel {
 
 
 
-	// Método para volver a Menu
 	private void volveraMenu() {
-		Container parent = getParent();
-		if (parent != null) {
+	    try {
+	        Conexion conexion = new Conexion();
+
+	        // Obtener el saldo actualizado
+	        double nuevoSaldo = conexion.obtenerSaldoPorDNI(dni);
+
+	        Container parent = getParent();
+	        if (parent != null) {
+	            parent.removeAll();
+	            parent.setLayout(new BorderLayout());
+
+	            // Pasar el nuevo saldo al nuevo panel de menú
+	            MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
+	            parent.add(menu);
+
+	            parent.revalidate();
+	            parent.repaint();
+	        } else {
+	            System.out.println("El componente no tiene un padre [🆎].");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        JOptionPane.showMessageDialog(this, "Error al volver al menú. Por favor, inténtelo de nuevo más tarde.");
+	    }
+	}
 
 
-			parent.removeAll();
-			parent.setLayout(new BorderLayout());
-			MenuPrueba menu = new MenuPrueba(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
-			parent.add(menu);
 
-			parent.revalidate();
-			parent.repaint();
+	private int ObtenerRentabilidad() {
+		int Rentabilidad = 0;
+
+		if (porcentajeRV >= 80) {
+			Rentabilidad = 10;
+
+		} else if (porcentajeRV >= 60 && porcentajeRV <= 79) {
+			Rentabilidad = 8;
+
+		} else if (porcentajeRV >= 40 && porcentajeRV <= 59) {
+			Rentabilidad = 6;
+
+		} else if (porcentajeRV >= 20 && porcentajeRV <= 39) {
+			Rentabilidad = 4;
+
+		} else if (porcentajeRV >= 1 && porcentajeRV <= 19) {
+			Rentabilidad = 2;
 
 		} else {
-			System.out.println("El componente no tiene un padre [🆎].");
+			Rentabilidad = 0;
 		}
+
+		return Rentabilidad;
 	}
+
+	private double ObtenerBeneficios(double Rentabilidad) {
+
+		double Beneficio = cantidadInvertida * (Rentabilidad / 100);
+
+		String beneficioFormateado = String.format("%.2f", Beneficio).replace(",", ".");
+		Beneficio = Double.parseDouble(beneficioFormateado);
+
+		return Beneficio;
+	}
+
+	private double ObtenerValorMercado (double Beneficios) {
+
+		double valorMercado = cantidadInvertida + Beneficios;
+
+		return valorMercado;
+
+	}
+
+	private int ObtenerRiesgo() {
+		int Riesgo = 0;
+
+		if (porcentajeRV >= 80) {
+			Riesgo = 5;
+
+		} else if (porcentajeRV >= 60 && porcentajeRV <= 79) {
+			Riesgo = 4;
+
+		} else if (porcentajeRV >= 40 && porcentajeRV <= 59) {
+			Riesgo = 3;
+
+		} else if (porcentajeRV >= 20 && porcentajeRV <= 39) {
+			Riesgo = 2;
+
+		} else if (porcentajeRV >= 1 && porcentajeRV <= 19) {
+			Riesgo = 1;
+
+		} else {
+			Riesgo = 0;
+		}
+
+		return Riesgo;
+	}
+
+	
+	private void LiquidarCartera() {
+	    try {
+	        Conexion conexion = new Conexion();
+	        
+	        // Obtener los beneficios actuales
+	        double Beneficios = ObtenerBeneficios(ObtenerRentabilidad());
+
+	        // Calcular la cantidad a liquidar (invertida + beneficios)
+	        double cantidadALiquidar = cantidadInvertida + Beneficios;
+
+	        // Obtener el saldo actual del usuario
+	        double saldoActual = conexion.obtenerSaldoPorDNI(dni);
+
+	        // Actualizar el saldo del usuario sumando la cantidad a liquidar
+	        double nuevoSaldo = saldoActual + cantidadALiquidar;
+	        conexion.actualizarSaldoUsuario(id_usuario, nuevoSaldo);
+
+	        // Restablecer los porcentajes de renta fija y renta variable a cero
+	        double porcentajeRF = 0.0;
+	        double porcentajeRV = 0.0;
+	        conexion.saveFormularioCarteras(porcentajeRF, porcentajeRV, 0.0, id_usuario);
+	        
+	        // Eliminar la cartera de la base de datos
+	       conexion.eliminarCarteraPorIdUsuario(id_usuario);
+
+	        // Actualizar la cantidad invertida a cero
+	        cantidadInvertida = 0.0;
+
+	        // Mostrar mensaje de liquidación exitosa
+	        JOptionPane.showMessageDialog(this, "Cartera liquidada con éxito. Se ha ingresado " + cantidadALiquidar + "€ en su cuenta.");
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        JOptionPane.showMessageDialog(this, "Error al liquidar la cartera. Por favor, inténtelo de nuevo más tarde.");
+	    }
+	}
+
+
+
 }

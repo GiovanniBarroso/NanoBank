@@ -39,12 +39,6 @@ public class FormularioInversion extends JPanel {
 	//Metodo para iniciar la clase
 	public FormularioInversion(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
-
-		setupUI(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
-	}
-
-	private void setupUI(int id_usuario, String nombreUsuario, double saldo, String dni,  double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
-
 		//Constructores
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
@@ -53,6 +47,11 @@ public class FormularioInversion extends JPanel {
 		this.porcentajeRF = porcentajeRF;
 		this.porcentajeRV = porcentajeRV;
 		this.cantidadInvertida = cantidadInvertida;
+
+		setupUI();
+	}
+
+	private void setupUI() {
 
 
 		setPreferredSize(new Dimension(450, 600));
@@ -95,8 +94,8 @@ public class FormularioInversion extends JPanel {
 
 		// Nuevo JTextField con tamaño preferido y JLabel ajustado
 		cantidadInversionLabel = new JLabel("Cantidad a invertir:");
-		cantidadInversionTextField = new JTextField(10); // Establece el ancho del JTextField, por ejemplo, 10 caracteres
-		cantidadInversionLabel.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto del JLabel
+		cantidadInversionTextField = new JTextField(10); 
+		cantidadInversionLabel.setHorizontalAlignment(SwingConstants.CENTER); 
 		cantidadInversionLabel.setPreferredSize(new Dimension(20, 20));
 
 
@@ -325,12 +324,28 @@ public class FormularioInversion extends JPanel {
 
 
 		if (invertirRentaVariable.equals("Sí")) {
-			porcentajeRF += 10.0;
-			porcentajeRV += 0.0;
+			porcentajeRF = 0.0;
+			porcentajeRV = 100.0;
 		} else if (invertirRentaVariable.equals("No")) {
 			porcentajeRF += 0.0;
 			porcentajeRV += 20.0;
 		}
+
+
+
+		// Calcular el porcentaje restante para que la suma sea 100%
+		double porcentajeRestante = 100.0 - (porcentajeRF + porcentajeRV);
+
+		// Asignar el porcentaje restante al porcentaje más bajo entre porcentajeRF y porcentajeRV
+		if (porcentajeRestante > 0) {
+			if (porcentajeRF <= porcentajeRV) {
+				porcentajeRF += porcentajeRestante;
+			} else {
+				porcentajeRV += porcentajeRestante;
+			}
+		}
+
+
 
 		try {
 			// Por ejemplo, puedes pasar estos valores a tu método de conexión para insertar en la base de datos
