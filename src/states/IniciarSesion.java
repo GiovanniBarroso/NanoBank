@@ -1,9 +1,12 @@
 package states;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import sqlconnect.Conexion;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.SQLException;
 import javax.swing.border.LineBorder;
 
@@ -12,17 +15,36 @@ public class IniciarSesion extends JFrame {
 
 
 	public IniciarSesion() {
-
-		//Propiedades del JFrame
+		// Propiedades del JFrame
 		setTitle("Iniciar Sesión");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(450, 800);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		getContentPane().setBackground(new Color(64, 224, 208));
-		getContentPane().setLayout(new GridBagLayout());
 
-		initComponents();
+		// Cargar la imagen como fondo
+		try {
+			BufferedImage backgroundImage = ImageIO.read(getClass().getResource("/img/bg_img2.png")); 
+
+			// Crear un panel transparente para contener el contenido
+			JPanel contentPanel = new JPanel() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void paintComponent(Graphics g) {
+					super.paintComponent(g);
+					g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+				}
+			};
+
+			contentPanel.setLayout(new GridBagLayout()); 
+			setContentPane(contentPanel);
+			initComponents();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Error al cargar la imagen de fondo", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 
@@ -149,7 +171,7 @@ public class IniciarSesion extends JFrame {
 	private void mostrarRegistroUsuario() {
 		getContentPane().removeAll();
 		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(new RegistroUsuarioPrueba());
+		getContentPane().add(new RegistroUsuario());
 		revalidate();
 		repaint();
 	}

@@ -6,8 +6,10 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import bgimg.ImagenFondo;
 
-public class Menu extends JPanel {
+
+public class Menu extends ImagenFondo {
 
 
 	//Atributos
@@ -20,11 +22,13 @@ public class Menu extends JPanel {
 	private double porcentajeRV;
 	private double cantidadInvertida;
 
-
 	public Menu(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
+		super("/img/bg_img2.png");
+
+		setLayout(null);
 		setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		setBackground(new Color(64, 224, 208));
+
 
 		//Constructores
 		this.id_usuario = id_usuario;
@@ -39,7 +43,7 @@ public class Menu extends JPanel {
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panel.setBounds(63, 100, 317, 213);
+		panel.setBounds(63, 83, 317, 213);
 		add(panel);
 		panel.setLayout(null);
 
@@ -57,7 +61,7 @@ public class Menu extends JPanel {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panel_1.setBounds(63, 340, 317, 371);
+		panel_1.setBounds(63, 318, 317, 371);
 		add(panel_1);
 		panel_1.setLayout(null);
 
@@ -128,6 +132,7 @@ public class Menu extends JPanel {
 
 
 	}
+
 
 	//Metodo para entrar en la clase Transferencia
 	private void realizarTransferencia() {
