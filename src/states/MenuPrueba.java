@@ -166,7 +166,7 @@ public class MenuPrueba extends JPanel {
 		if (parent != null) {
 			parent.removeAll();
 
-			parent.add(new GestionarCarteras(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida)); 
+			parent.add(new GestionarCarteras(id_usuario, nombreUsuario, dni, porcentajeRF, porcentajeRV, cantidadInvertida)); 
 			parent.revalidate();
 			parent.repaint();
 		} else {

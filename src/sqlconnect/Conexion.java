@@ -404,6 +404,7 @@ public class Conexion {
 
 
 
+	
 	// Método para actualizar el saldo del usuario en la base de datos
 	public void actualizarSaldoUsuario(int id_usuario, double nuevoSaldo) throws SQLException {
 		Connection conexion = conectar();
@@ -419,6 +420,7 @@ public class Conexion {
 		}
 	}
 
+	
 	
 	
 	// Método para obtener el porcentaje de Renta Variable por ID de usuario
@@ -439,6 +441,9 @@ public class Conexion {
 			return cantidadInvertida;
 		}
 		
+		
+		
+		//Metodo para eliminar la cartera de la BD
 		public void eliminarCarteraPorIdUsuario(int idUsuario) throws SQLException {
 		    Connection conexion = conectar();
 		    try {
@@ -455,8 +460,41 @@ public class Conexion {
 		    }
 		}
 
-	
-	
+		
+		
+		//Metodo para registrar la fecha_liquidacion en la BD
+		public void registrarFechaLiquidacion(int idUsuario, Date fecha) throws SQLException {
+		    Connection conexion = conectar();
+		    try {
+		        String sql = "UPDATE Usuario SET fecha_liquidacion = ? WHERE id_usuario = ?";
+		        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+		            statement.setDate(1, fecha);
+		            statement.setInt(2, idUsuario);
+		            statement.executeUpdate();
+		        }
+		    } finally {
+		        cerrarConexion(conexion);
+		    }
+		}
+		
+		
+		//Metodo para recibir la fecha_liquidacion en la BD
+		public Date obtenerFechaLiquidacion(int idUsuario) throws SQLException {
+		    Date fechaLiquidacion = null;
+		    Connection conexion = conectar();
+		    try {
+		        String consulta = "SELECT fecha_liquidacion FROM Usuario WHERE id_usuario = ?";
+		        PreparedStatement statement = conexion.prepareStatement(consulta);
+		        statement.setInt(1, idUsuario);
+		        ResultSet resultado = statement.executeQuery();
+		        if (resultado.next()) {
+		            fechaLiquidacion = resultado.getDate("fecha_liquidacion");
+		        }
+		    } finally {
+		        cerrarConexion(conexion);
+		    }
+		    return fechaLiquidacion;
+		}
 
 
 

@@ -222,7 +222,7 @@ public class FormularioInversion extends JPanel {
 
 		cantidadInvertida = Double.parseDouble(cantidadInversionTextField.getText());
 
-		// Restar la cantidad invertida del saldo del usuario
+
 		double nuevoSaldo = saldo - cantidadInvertida;
 
 		if (perfilRiesgo.equals("Conservador")) {
@@ -350,6 +350,20 @@ public class FormularioInversion extends JPanel {
 		try {
 			// Por ejemplo, puedes pasar estos valores a tu método de conexión para insertar en la base de datos
 			Conexion conexion = new Conexion();
+			 // Obtener la fecha de liquidación más reciente
+	        java.sql.Date fechaLiquidacion = conexion.obtenerFechaLiquidacion(id_usuario);
+
+	        // Verificar si han pasado al menos 30 días
+	        if (fechaLiquidacion != null) {
+	            java.util.Date fechaActual = new java.util.Date();
+	            long diferencia = fechaActual.getTime() - fechaLiquidacion.getTime();
+	            long diasPasados = diferencia / (1000 * 60 * 60 * 24); // Convertir milisegundos a días
+
+	            if (diasPasados < 30) {
+	                JOptionPane.showMessageDialog(this, "Lo siento, existe una penalización de 30 días desde que borras tu última cartera.");
+	                return; // Salir del método si no han pasado 30 días
+	            }
+	        }
 			conexion.saveFormularioCarteras(porcentajeRF, porcentajeRV, cantidadInvertida, id_usuario);
 
 

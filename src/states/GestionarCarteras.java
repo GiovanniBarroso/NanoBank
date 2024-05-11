@@ -15,7 +15,6 @@ public class GestionarCarteras extends JPanel {
 	//Atributos
 	private static final long serialVersionUID = 1L;
 	private int id_usuario;
-	private double saldo;
 	private String nombreUsuario;
 	private String dni;
 	private double porcentajeRF;
@@ -23,11 +22,10 @@ public class GestionarCarteras extends JPanel {
 	private double cantidadInvertida;
 
 
-	public GestionarCarteras(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
+	public GestionarCarteras(int id_usuario, String nombreUsuario, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 		// Constructores
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
-		this.saldo = saldo;
 		this.dni = dni;
 		this.porcentajeRF = porcentajeRF;
 		this.porcentajeRV = porcentajeRV;
@@ -363,6 +361,14 @@ public class GestionarCarteras extends JPanel {
 		try {
 			Conexion conexion = new Conexion();
 
+			// Obtener la fecha actual
+			java.util.Date fechaActual = new java.util.Date();
+			java.sql.Date fechaSQL = new java.sql.Date(fechaActual.getTime());
+
+			// Registrar la fecha de liquidación en la base de datos
+			conexion.registrarFechaLiquidacion(id_usuario, fechaSQL);
+
+
 			double Beneficios = ObtenerBeneficios(ObtenerRentabilidad());
 
 			double cantidadALiquidar = cantidadInvertida + Beneficios;
@@ -393,9 +399,9 @@ public class GestionarCarteras extends JPanel {
 	}
 
 	private void limpiarDatos() {
-	    this.porcentajeRF = 0.0;
-	    this.porcentajeRV = 0.0;
-	    this.cantidadInvertida = 0.0;
+		this.porcentajeRF = 0.0;
+		this.porcentajeRV = 0.0;
+		this.cantidadInvertida = 0.0;
 	}
 
 
