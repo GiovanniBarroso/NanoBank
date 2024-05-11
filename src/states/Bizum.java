@@ -31,7 +31,7 @@ public class Bizum extends JPanel {
 
 
 
-	public Bizum(int idUsuario, String nombreUsuario, double saldo, String dni, double porcentajeRV, double porcentajeRF, double cantidadInvertida) {
+	public Bizum(int idUsuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
 		//Constructores
 		this.id_usuario = idUsuario;

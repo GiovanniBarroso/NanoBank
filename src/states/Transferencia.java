@@ -31,7 +31,7 @@ public class Transferencia extends JPanel {
 	private JButton btnVolver;
 
 
-	public Transferencia(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRV, double porcentajeRF, double cantidadInvertida) {
+	public Transferencia(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
@@ -40,7 +40,7 @@ public class Transferencia extends JPanel {
 		this.porcentajeRF = porcentajeRF;
 		this.porcentajeRV = porcentajeRV;
 		this.cantidadInvertida = cantidadInvertida;
-		
+
 
 		setLayout(new BorderLayout());
 		// Panel para el fondo gris
@@ -165,7 +165,7 @@ public class Transferencia extends JPanel {
 		String cuentaDestino = txtcuentaDestino.getText();
 		String Concepto  = txtConcepto.getText();
 		String Cantidad = txtCantidad.getText();
-		
+
 		Cantidad = Cantidad.replaceAll(",", ".");
 
 		// Validar que todos los campos estén llenos
