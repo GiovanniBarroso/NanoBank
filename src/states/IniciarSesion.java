@@ -40,7 +40,7 @@ public class IniciarSesion extends JFrame {
 			contentPanel.setLayout(new GridBagLayout()); 
 			setContentPane(contentPanel);
 			initComponents();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(this, "Error al cargar la imagen de fondo", "Error", JOptionPane.ERROR_MESSAGE);
@@ -56,7 +56,7 @@ public class IniciarSesion extends JFrame {
 
 		//Dimensiones del panel de datos de login
 		panel.setPreferredSize(new Dimension(300, 500)); 
-		panel.setBackground(Color.GRAY);
+		panel.setBackground(Color.LIGHT_GRAY);
 
 		// Logo
 		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_6.png"));

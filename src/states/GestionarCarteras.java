@@ -4,13 +4,13 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import sqlconnect.Conexion;
-
+import bgimg.ImagenFondo;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class GestionarCarteras extends JPanel {
+public class GestionarCarteras extends ImagenFondo {
 
 	//Atributos
 	private static final long serialVersionUID = 1L;
@@ -23,6 +23,8 @@ public class GestionarCarteras extends JPanel {
 
 
 	public GestionarCarteras(int id_usuario, String nombreUsuario, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
+		super("/img/bg_img2.png");
+		
 		// Constructores
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
@@ -37,7 +39,8 @@ public class GestionarCarteras extends JPanel {
 
 	//Metodo principal
 	private void initUI() {
-
+		
+		
 		double Rentabilidad = ObtenerRentabilidad();
 		double Beneficios = ObtenerBeneficios(Rentabilidad);
 		double valorMercado = ObtenerValorMercado(Beneficios);
@@ -398,11 +401,14 @@ public class GestionarCarteras extends JPanel {
 		}
 	}
 
+	
+	
 	private void limpiarDatos() {
 		this.porcentajeRF = 0.0;
 		this.porcentajeRV = 0.0;
 		this.cantidadInvertida = 0.0;
 	}
 
+	
 
 }

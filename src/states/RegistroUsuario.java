@@ -9,8 +9,9 @@ import java.awt.event.*;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import javax.swing.border.LineBorder;
+import bgimg.ImagenFondo;
 
-public class RegistroUsuario extends JPanel {
+public class RegistroUsuario extends ImagenFondo {
 
 	//Atributos
 	private static final long serialVersionUID = 1L;
@@ -20,7 +21,6 @@ public class RegistroUsuario extends JPanel {
 	private JTextField txtTelefono;
 	private JTextField txtEmail;
 	private JTextField txtIBAN;
-	private Image backgroundImage; 
 
 	private JPasswordField txtContraseña;
 	private JButton btnRegistrar;
@@ -30,10 +30,11 @@ public class RegistroUsuario extends JPanel {
 	private boolean mostrarContraseña = false;
 
 
-
 	public RegistroUsuario() {
+
+		super("/img/bg_img2.png");
 		setLayout(null);
-		backgroundImage = new ImageIcon(getClass().getResource("/img/bg_img2.png")).getImage();
+
 
 		//Panel de fondo
 		JPanel panelFondo = new JPanel();
@@ -43,7 +44,7 @@ public class RegistroUsuario extends JPanel {
 
 
 		// Logo
-		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_6.png"));
+		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_7.png"));
 		JLabel lblLogo = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
 		lblLogo.setBounds(154, 0, 127, 119);
 		add(lblLogo);
@@ -109,6 +110,13 @@ public class RegistroUsuario extends JPanel {
 		txtContraseña.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
+
+		JLabel lblRegistroUsuario = new JLabel("REGISTRO USUARIO");
+		lblRegistroUsuario.setFont(new Font("Impact", Font.PLAIN, 35));
+		lblRegistroUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRegistroUsuario.setBounds(0, 21, 372, 35);
+
+
 		//Botones
 		btnRegistrar = new JButton("Registrarse");
 		btnRegistrar.setBounds(61, 525, 108, 35);
@@ -122,36 +130,38 @@ public class RegistroUsuario extends JPanel {
 		btnVolver.setBounds(203, 525, 108, 35);
 		panelFondo.setLayout(null);
 
+
+
+		// RegistroUsuario
+		panelFondo.add(lblRegistroUsuario);
+
+
 		// DNI
 		panelFondo.add(lblDNI);
 		panelFondo.add(txtDNI);
 
-		// Nombre
 
+		// Nombre
 		panelFondo.add(lblNombre);
 		panelFondo.add(txtNombre);
 
 
 		// Teléfono
-
 		panelFondo.add(lblTelefono);
 		panelFondo.add(txtTelefono);
 
 
 		// Email
-
 		panelFondo.add(lblEmail);
 		panelFondo.add(txtEmail);
 
 
 		// IBAN
-
 		panelFondo.add(lblIBAN);
 		panelFondo.add(txtIBAN);
 
 
 		// Contraseña
-
 		panelFondo.add(lblContraseña);
 		panelFondo.add(txtContraseña);
 
@@ -165,17 +175,10 @@ public class RegistroUsuario extends JPanel {
 
 
 		// Botón Volver a IniciarSesion
-
 		panelFondo.add(btnVolver);
+
+
 		add(panelFondo);
-
-		JLabel lblNewLabel = new JLabel("REGISTRO USUARIO");
-		lblNewLabel.setFont(new Font("Impact", Font.PLAIN, 35));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(0, 21, 372, 35);
-		panelFondo.add(lblNewLabel);
-
-
 
 
 		// Acción del botón Registrarse
@@ -209,13 +212,8 @@ public class RegistroUsuario extends JPanel {
 		});
 	}
 
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
 
-		// Dibujar la imagen de fondo
-		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-	}
+
 
 	//Metodo para validad y registrar al usuario
 	private void saveUser() {
@@ -295,6 +293,7 @@ public class RegistroUsuario extends JPanel {
 		txtIBAN.setText("");
 		txtContraseña.setText("");
 	}
+
 
 
 

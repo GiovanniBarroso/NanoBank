@@ -1,15 +1,16 @@
 package states;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import sqlconnect.Conexion;
-
+import bgimg.ImagenFondo;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class Bizum extends JPanel {
+public class Bizum extends ImagenFondo {
 
 	//Atributos
 	private static final long serialVersionUID = 1L;
@@ -28,10 +29,13 @@ public class Bizum extends JPanel {
 
 	private JButton btnEnviarBizum;
 	private JButton btnVolver;
+	private JLabel lblNewLabel;
 
 
 
 	public Bizum(int idUsuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
+
+		super("/img/bg_img2.png");
 
 		//Constructores
 		this.id_usuario = idUsuario;
@@ -42,69 +46,97 @@ public class Bizum extends JPanel {
 		this.porcentajeRV = porcentajeRV;
 		this.cantidadInvertida = cantidadInvertida;
 
-		setLayout(new BorderLayout());
+		setLayout(null);
+
+		//Declaramos JPanel, JFrame & JTextField
 
 		JPanel panelFondo = new JPanel();
-		panelFondo.setBackground(Color.GRAY);
-		panelFondo.setLayout(new GridBagLayout());
+		panelFondo.setBounds(61, 164, 321, 500);
+		panelFondo.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panelFondo.setBackground(Color.LIGHT_GRAY);
 
+		// Logo
+		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_7.png"));
 
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(10, 10, 10, 10);
 
 		JLabel lblTelefono = new JLabel("Nº Teléfono");
+		lblTelefono.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTelefono.setBounds(72, 89, 177, 26);
 		lblTelefono.setFont(new Font("Impact", Font.PLAIN, 20));
+
 		txtTelefono = new JTextField(20);
+		txtTelefono.setBounds(56, 121, 211, 26);
 		txtTelefono.setHorizontalAlignment(JTextField.CENTER);
 		txtTelefono.setFont(new Font("Arial", Font.PLAIN, 16));
 
+
+
 		JLabel lblNombre = new JLabel("Nombre Destinatario");
+		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombre.setBounds(72, 157, 182, 26);
 		lblNombre.setFont(new Font("Impact", Font.PLAIN, 20));
+
 		txtNombre = new JTextField(20);
+		txtNombre.setBounds(56, 186, 211, 26);
 		txtNombre.setHorizontalAlignment(JTextField.CENTER);
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
 
-		JLabel lblCantidad = new JLabel("Cantidad a enviar (500.00€)");
+
+
+		JLabel lblCantidad = new JLabel("Cantidad (500€ Max)");
+		lblCantidad.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCantidad.setBounds(72, 222, 177, 26);
 		lblCantidad.setFont(new Font("Impact", Font.PLAIN, 20));
+
 		txtCantidad = new JTextField(20);
+		txtCantidad.setBounds(56, 251, 211, 26);
 		txtCantidad.setHorizontalAlignment(JTextField.CENTER);
 		txtCantidad.setFont(new Font("Arial", Font.PLAIN, 16));
 
+
+
 		JLabel lblConcepto = new JLabel("Concepto");
+		lblConcepto.setHorizontalAlignment(SwingConstants.CENTER);
+		lblConcepto.setBounds(72, 287, 177, 26);
 		lblConcepto.setFont(new Font("Impact", Font.PLAIN, 20));
+
 		txtConcepto = new JTextField(20);
+		txtConcepto.setBounds(56, 316, 211, 67);
 		txtConcepto.setHorizontalAlignment(JTextField.CENTER);
 		txtConcepto.setFont(new Font("Arial", Font.PLAIN, 16));
 
+
+		//Botones
+
 		btnEnviarBizum = new JButton("Realizar Bizum");
+		btnEnviarBizum.setBounds(93, 398, 134, 26);
+
 		btnVolver = new JButton("Volver atrás");
+		btnVolver.setBounds(93, 440, 134, 26);
+		panelFondo.setLayout(null);
+		panelFondo.add(lblTelefono);
+		panelFondo.add(txtTelefono);
+		panelFondo.add(lblNombre);
+		panelFondo.add(txtNombre);
+		panelFondo.add(lblCantidad);
+		panelFondo.add(txtCantidad);
+		panelFondo.add(lblConcepto);
+		panelFondo.add(txtConcepto);
+		panelFondo.add(btnEnviarBizum);
+		panelFondo.add(btnVolver);
+
+		add(panelFondo);
+
+		lblNewLabel = new JLabel("BIZUM");
+		lblNewLabel.setFont(new Font("Impact", Font.BOLD, 35));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(10, 21, 300, 42);
+		panelFondo.add(lblNewLabel);
+		JLabel lblLogo = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+		lblLogo.setBounds(145, 10, 150, 150);
+		add(lblLogo);
 
 
-
-		//Distribución del grid de botones y textfield
-		gbc.gridy++;
-		panelFondo.add(lblTelefono, gbc);
-		gbc.gridy++;
-		panelFondo.add(txtTelefono, gbc);
-		gbc.gridy++;
-		panelFondo.add(lblNombre, gbc);
-		gbc.gridy++;
-		panelFondo.add(txtNombre, gbc);
-		gbc.gridy++;
-		panelFondo.add(lblCantidad, gbc);
-		gbc.gridy++;
-		panelFondo.add(txtCantidad, gbc);
-		gbc.gridy++;
-		panelFondo.add(lblConcepto, gbc);
-		gbc.gridy++;
-		panelFondo.add(txtConcepto, gbc);
-		gbc.gridy++;
-		panelFondo.add(btnEnviarBizum, gbc);
-		gbc.gridy++;
-		panelFondo.add(btnVolver, gbc);
-
-		add(panelFondo, BorderLayout.CENTER);
 
 
 

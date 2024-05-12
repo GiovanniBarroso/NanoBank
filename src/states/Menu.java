@@ -38,20 +38,22 @@ public class Menu extends ImagenFondo {
 		this.porcentajeRF = porcentajeRF;
 		this.porcentajeRV = porcentajeRV;
 		this.cantidadInvertida = cantidadInvertida;
-		setLayout(null);
 
 
+
+		//Panel info Usuario
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panel.setBounds(63, 83, 317, 213);
+		panel.setBounds(63, 57, 317, 213);
+		panel.setBackground(Color.LIGHT_GRAY);
 		add(panel);
 		panel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("¡Bienvenido " + nombreUsuario + "!");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Impact", Font.PLAIN, 25));
-		lblNewLabel.setBounds(22, 42, 270, 50);
-		panel.add(lblNewLabel);
+		JLabel lblnombreUsuario = new JLabel("¡Bienvenido " + nombreUsuario + "!");
+		lblnombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblnombreUsuario.setFont(new Font("Impact", Font.PLAIN, 25));
+		lblnombreUsuario.setBounds(22, 42, 270, 50);
+		panel.add(lblnombreUsuario);
 
 		JLabel lblSaldo = new JLabel("Saldo: " + saldo + " €");
 		lblSaldo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -59,9 +61,12 @@ public class Menu extends ImagenFondo {
 		lblSaldo.setBounds(22, 127, 270, 50);
 		panel.add(lblSaldo);
 
+
+		//Panel botones
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panel_1.setBounds(63, 318, 317, 371);
+		panel_1.setBounds(63, 292, 317, 371);
+		panel_1.setBackground(Color.LIGHT_GRAY);
 		add(panel_1);
 		panel_1.setLayout(null);
 
@@ -84,18 +89,6 @@ public class Menu extends ImagenFondo {
 		JButton btnConsultas = new JButton("CONSULTAS");
 		btnConsultas.setBounds(34, 294, 252, 53);
 		panel_1.add(btnConsultas);
-
-
-
-
-
-		JLabel lblNewLabel_1_1 = new JLabel("NANO BANK");
-		lblNewLabel_1_1.setBounds(0, 24, 450, 49);
-		add(lblNewLabel_1_1);
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setFont(new Font("Trebuchet MS", Font.BOLD, 45));
-		lblNewLabel_1_1.setBackground(Color.WHITE);
-
 
 
 
