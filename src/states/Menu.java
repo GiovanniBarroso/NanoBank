@@ -27,7 +27,6 @@ public class Menu extends ImagenFondo {
 		super("/img/bg_img2.png");
 
 		setLayout(null);
-		setBorder(new LineBorder(new Color(0, 0, 0), 3));
 
 
 		//Constructores

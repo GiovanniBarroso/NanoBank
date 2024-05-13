@@ -77,7 +77,7 @@ public class Conexion {
 	//Metodo para realizar la transferencia en la BD
 	public void sendTransferencia(int id_usuario, String nombreUsuario, String cuentaDestino, String nombreDestino, String concepto, double cantidad) throws SQLException {
 		try (Connection conexion = conectar()) {
-			String sql = "INSERT INTO Transacciones (cuentaOrigen, cuentaDestino, nombreDestino, cantidad, concepto, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO Transferencia (cuentaOrigen, cuentaDestino, nombreDestino, cantidad, concepto, id_usuario) VALUES (?, ?, ?, ?, ?, ?)";
 			try (PreparedStatement statement = conexion.prepareStatement(sql)) {
 				statement.setString(1, nombreUsuario);
 				statement.setString(2, nombreDestino);

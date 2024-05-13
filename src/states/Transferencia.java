@@ -38,6 +38,7 @@ public class Transferencia extends ImagenFondo {
 		//Llamada para panel de fondo
 		super("/img/bg_img2.png");
 
+
 		//Contructores
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
@@ -47,8 +48,8 @@ public class Transferencia extends ImagenFondo {
 		this.porcentajeRV = porcentajeRV;
 		this.cantidadInvertida = cantidadInvertida;
 
-		setLayout(null);
 
+		setLayout(null);
 
 
 
@@ -57,6 +58,7 @@ public class Transferencia extends ImagenFondo {
 		panelFondo.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		panelFondo.setBounds(61, 164, 316, 500);
 		panelFondo.setBackground(Color.LIGHT_GRAY);
+
 
 		// Logo
 		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_7.png"));
@@ -120,43 +122,21 @@ public class Transferencia extends ImagenFondo {
 		btnVolver.setBounds(90, 447, 133, 25);
 		panelFondo.setLayout(null);
 
-		
+
 		//Logo
 		add(lblLogo);
-		
-		// Transferencia
 		panelFondo.add(lblTransferencia);
-
-		// IBAN
 		panelFondo.add(lblcuentaDestino);
 		panelFondo.add(txtcuentaDestino);
-
-
-		// Nombre
 		panelFondo.add(lblNombre);
 		panelFondo.add(txtNombre);
-
-
-		// Cantidad
 		panelFondo.add(lblCantidad);
 		panelFondo.add(txtCantidad);
-
-
-		// nombreDestino
 		panelFondo.add(lblConcepto);
 		panelFondo.add(txtConcepto);
-
-
-		// Botón Registrar
 		panelFondo.add(btnEnviarTransferencia);
-
-
-		// Botón Volver a IniciarSesion
 		panelFondo.add(btnVolver);
 		add(panelFondo);
-
-
-
 
 
 
@@ -180,9 +160,9 @@ public class Transferencia extends ImagenFondo {
 	}
 
 
-
+	//Metodo para validad y guardar la transferencia
 	private void saveTransferencia() {
-		// Obtener los datos de los campos de entrada
+
 		String Nombre = txtNombre.getText();
 		String cuentaDestino = txtcuentaDestino.getText();
 		String Concepto  = txtConcepto.getText();

@@ -1,7 +1,7 @@
 package states;
 
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 import sqlconnect.Conexion;
 
@@ -57,15 +57,12 @@ public class FormularioInversion extends JPanel {
 		setPreferredSize(new Dimension(450, 600));
 		setLayout(new BorderLayout());
 
+
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new GridLayout(0, 1, 10, 20)); 
 		contentPanel.setBackground(Color.GRAY);
+		contentPanel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 
-		// Crear un borde compuesto con un borde negro
-		Border border = BorderFactory.createLineBorder(Color.BLACK,3);
-
-		// Establecer el borde al panel principal
-		contentPanel.setBorder(border);
 
 
 		// Preguntas
@@ -92,12 +89,12 @@ public class FormularioInversion extends JPanel {
 		invertirRentaVariableComboBox = new JComboBox<>(invertirRentaVariable);
 
 
+
 		// Nuevo JTextField con tamaño preferido y JLabel ajustado
 		cantidadInversionLabel = new JLabel("Cantidad a invertir:");
 		cantidadInversionTextField = new JTextField(10); 
 		cantidadInversionLabel.setHorizontalAlignment(SwingConstants.CENTER); 
 		cantidadInversionLabel.setPreferredSize(new Dimension(20, 20));
-
 
 
 
@@ -144,6 +141,7 @@ public class FormularioInversion extends JPanel {
 		});
 
 
+
 		// Acción del botón Volver atrás
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -151,8 +149,8 @@ public class FormularioInversion extends JPanel {
 			}
 		});
 
-
 	}
+
 
 
 	//Panel de las preguntas
@@ -168,43 +166,6 @@ public class FormularioInversion extends JPanel {
 	}
 
 
-
-	// Métodos para obtener los valores seleccionados en los JComboBox
-	public String getPerfilRiesgo() {
-		return (String) perfilRiesgoComboBox.getSelectedItem();
-	}
-
-	public String getAccionesPerdida() {
-		return (String) accionesPerdidaComboBox.getSelectedItem();
-	}
-
-	public String getPlazoInversion() {
-		return (String) plazoInversionComboBox.getSelectedItem();
-	}
-
-	public String getPorcentajePatrimonio() {
-		return (String) porcentajePatrimonioComboBox.getSelectedItem();
-	}
-
-	public String getPorcentajeGastos() {
-		return (String) porcentajeGastosComboBox.getSelectedItem();
-	}
-
-	public String getEstabilidadIngresos() {
-		return (String) estabilidadIngresosComboBox.getSelectedItem();
-	}
-
-	public String getGestionCartera() {
-		return (String) gestionCarteraComboBox.getSelectedItem();
-	}
-
-	public String getConsiderarESG() {
-		return (String) considerarESGComboBox.getSelectedItem();
-	}
-
-	public String getInvertirRentaVariable() {
-		return (String) invertirRentaVariableComboBox.getSelectedItem();
-	}
 
 
 	private void sendFormulario(double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
@@ -226,26 +187,26 @@ public class FormularioInversion extends JPanel {
 		double nuevoSaldo = saldo - cantidadInvertida;
 
 		if (perfilRiesgo.equals("Conservador")) {
-			porcentajeRF += 10.0;
-			porcentajeRV += 0.0;
-		} else if (perfilRiesgo.equals("Moderado")) {
 			porcentajeRF += 0.0;
 			porcentajeRV += 10.0;
+		} else if (perfilRiesgo.equals("Moderado")) {
+			porcentajeRF += 10.0;
+			porcentajeRV += 0.0;
 		} else if (perfilRiesgo.equals("Agresivo")) {
 			porcentajeRF += 0.0;
-			porcentajeRV += 0.0;
+			porcentajeRV += 10.0;
 		}
 
 
 
 		if (accionesPerdida.equals("Mantener la inversión")) {
-			porcentajeRF += 10.0;
-			porcentajeRV += 0.0;
-		} else if (accionesPerdida.equals("Vender parte de la inversión")) {
 			porcentajeRF += 0.0;
 			porcentajeRV += 10.0;
+		} else if (accionesPerdida.equals("Vender parte de la inversión")) {
+			porcentajeRF += 10.0;
+			porcentajeRV += 0.0;
 		} else if (accionesPerdida.equals("Vender toda la inversión")) {
-			porcentajeRF += 0.0;
+			porcentajeRF += 10.0;
 			porcentajeRV += 0.0;
 		}
 
@@ -255,18 +216,18 @@ public class FormularioInversion extends JPanel {
 			porcentajeRF += 10.0;
 			porcentajeRV += 0.0;
 		} else if (plazoInversion.equals("Mediano plazo")) {
-			porcentajeRF += 0.0;
-			porcentajeRV += 10.0;
+			porcentajeRF += 10.0;
+			porcentajeRV += 0.0;
 		} else if (plazoInversion.equals("Largo plazo")) {
 			porcentajeRF += 0.0;
-			porcentajeRV += 0.0;
+			porcentajeRV += 10.0;
 		}
 
 
 
 		if (porcentajePatrimonio.equals("Menos del 25%")) {
-			porcentajeRF += 10.0;
-			porcentajeRV += 0.0;
+			porcentajeRF += 0.0;
+			porcentajeRV += 10.0;
 		} else if (porcentajePatrimonio.equals("Entre 25% y 50%")) {
 			porcentajeRF += 0.0;
 			porcentajeRV += 10.0;
@@ -285,7 +246,7 @@ public class FormularioInversion extends JPanel {
 			porcentajeRV += 10.0;
 		} else if (porcentajeGastos.equals("Más del 50%")) {
 			porcentajeRF += 0.0;
-			porcentajeRV += 0.0;
+			porcentajeRV += 10.0;
 		}
 
 
@@ -336,6 +297,7 @@ public class FormularioInversion extends JPanel {
 		// Calcular el porcentaje restante para que la suma sea 100%
 		double porcentajeRestante = 100.0 - (porcentajeRF + porcentajeRV);
 
+
 		// Asignar el porcentaje restante al porcentaje más bajo entre porcentajeRF y porcentajeRV
 		if (porcentajeRestante > 0) {
 			if (porcentajeRF <= porcentajeRV) {
@@ -348,32 +310,30 @@ public class FormularioInversion extends JPanel {
 
 
 		try {
-			// Por ejemplo, puedes pasar estos valores a tu método de conexión para insertar en la base de datos
 			Conexion conexion = new Conexion();
-			// Obtener la fecha de liquidación más reciente
+
 			java.sql.Date fechaLiquidacion = conexion.obtenerFechaLiquidacion(id_usuario);
 
 			// Verificar si han pasado al menos 30 días
 			if (fechaLiquidacion != null) {
 				java.util.Date fechaActual = new java.util.Date();
 				long diferencia = fechaActual.getTime() - fechaLiquidacion.getTime();
-				long diasPasados = diferencia / (1000 * 60 * 60 * 24); // Convertir milisegundos a días
+				long diasPasados = diferencia / (1000 * 60 * 60 * 24); 
 
 				if (diasPasados < 30) {
 					JOptionPane.showMessageDialog(this, "Lo siento, existe una penalización de 30 días desde que borras tu última cartera.");
-					return; // Salir del método si no han pasado 30 días
+					return; 
 				}
 			}
+
 			conexion.saveFormularioCarteras(porcentajeRF, porcentajeRV, cantidadInvertida, id_usuario);
 
-
-			// Actualizar el saldo del usuario en la base de datos
 			conexion.actualizarSaldoUsuario(id_usuario, nuevoSaldo);
 
 			JOptionPane.showMessageDialog(null, "Formulario de Idoneidad registrado correctamente.");
 			System.out.println("\nFormulario guardado en la BD");
 
-			volveraMenu2(nuevoSaldo,porcentajeRF, porcentajeRV, cantidadInvertida);
+			volveraMenu2(nuevoSaldo, porcentajeRF, porcentajeRV, cantidadInvertida);
 
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Error al insertar datos en la base de datos: " + e.getMessage());

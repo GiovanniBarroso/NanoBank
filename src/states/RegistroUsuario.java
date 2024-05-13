@@ -43,11 +43,13 @@ public class RegistroUsuario extends ImagenFondo {
 		panelFondo.setBackground(Color.LIGHT_GRAY);
 
 
-		// Logo
+		//Logo
 		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_7.png"));
 		JLabel lblLogo = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
 		lblLogo.setBounds(154, 0, 127, 119);
 		add(lblLogo);
+
+
 
 
 		//JLabel y JTextField
@@ -60,7 +62,6 @@ public class RegistroUsuario extends ImagenFondo {
 		txtDNI.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
-
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(151, 220, 76, 26);
 		lblNombre.setFont(new Font("Impact", Font.PLAIN, 20));
@@ -68,7 +69,6 @@ public class RegistroUsuario extends ImagenFondo {
 		txtNombre.setBounds(61, 256, 250, 26);
 		txtNombre.setHorizontalAlignment(JTextField.CENTER);
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
-
 
 
 		JLabel lblTelefono = new JLabel("Teléfono:");
@@ -80,7 +80,6 @@ public class RegistroUsuario extends ImagenFondo {
 		txtTelefono.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
-
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setBounds(161, 370, 49, 26);
 		lblEmail.setFont(new Font("Impact", Font.PLAIN, 20));
@@ -88,7 +87,6 @@ public class RegistroUsuario extends ImagenFondo {
 		txtEmail.setBounds(61, 406, 250, 26);
 		txtEmail.setHorizontalAlignment(JTextField.CENTER);
 		txtEmail.setFont(new Font("Arial", Font.PLAIN, 16));
-
 
 
 		JLabel lblIBAN = new JLabel("IBAN:");
@@ -100,7 +98,6 @@ public class RegistroUsuario extends ImagenFondo {
 		txtIBAN.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
-
 		JLabel lblContraseña = new JLabel("Contraseña:");
 		lblContraseña.setBounds(133, 441, 101, 26);
 		lblContraseña.setFont(new Font("Impact", Font.PLAIN, 20));
@@ -110,11 +107,12 @@ public class RegistroUsuario extends ImagenFondo {
 		txtContraseña.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
-
 		JLabel lblRegistroUsuario = new JLabel("REGISTRO USUARIO");
 		lblRegistroUsuario.setFont(new Font("Impact", Font.PLAIN, 35));
 		lblRegistroUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRegistroUsuario.setBounds(0, 21, 372, 35);
+
+
 
 
 		//Botones
@@ -122,8 +120,10 @@ public class RegistroUsuario extends ImagenFondo {
 		btnRegistrar.setBounds(61, 525, 108, 35);
 
 
-		btnMostrarContraseña = new JButton("PW");
-		btnMostrarContraseña.setBounds(321, 478, 33, 26);
+		btnMostrarContraseña = new JButton();
+		ImageIcon iconoMostrarContraseña = new ImageIcon(getClass().getResource("/img/show_pw.png"));
+		btnMostrarContraseña.setIcon(iconoMostrarContraseña);
+		btnMostrarContraseña.setBounds(320, 478, 26, 26);
 
 
 		btnVolver = new JButton("Volver atrás");
@@ -181,12 +181,15 @@ public class RegistroUsuario extends ImagenFondo {
 		add(panelFondo);
 
 
+
+
 		// Acción del botón Registrarse
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				saveUser();
 			}
 		});
+
 
 
 
@@ -218,7 +221,6 @@ public class RegistroUsuario extends ImagenFondo {
 	//Metodo para validad y registrar al usuario
 	private void saveUser() {
 
-		// Obtener los datos de los campos de entrada
 		String DNI = txtDNI.getText();
 		String nombre = txtNombre.getText();
 		String telefono = txtTelefono.getText();
@@ -254,8 +256,6 @@ public class RegistroUsuario extends ImagenFondo {
 			conexionDB.addUser(DNI, contraseña, nombre, Integer.parseInt(telefono), email, iban);
 			JOptionPane.showMessageDialog(this, "¡ Cuenta creada correctamente !");
 
-
-			// Mostrar por consola el resultado del registro para verificar los datos
 			System.out.println("¡Enhorabuena, tu perfil con nombre " + nombre + " ha sido registrado!\n");
 			limpiarCampos();
 
