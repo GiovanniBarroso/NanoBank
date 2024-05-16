@@ -18,20 +18,20 @@ import sqlconnect.Conexion;
 
 public class GenerarPDFCarteras {
 
-	private static final String OUTPUT_PDF_FILE = "Registro_Carteras ";
+	private static final String OUTPUT_PDF_FILE = "Registro_Cartera ";
 
-	public static void generarPDFCarteras(int id_usuario, String nombreUsuario) {
+	public static void generarPDFCartera(int id_usuario, String nombreUsuario) {
 		String outputFileName = OUTPUT_PDF_FILE + nombreUsuario + ".pdf";
 		Document document = new Document(PageSize.A4);
 
 		try {
-			
+
 			FileOutputStream outputStream = new FileOutputStream(outputFileName);
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 			document.open();
 
 			// Encabezado del documento
-			Paragraph header = new Paragraph("NANOBANK\nCARTERAS", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 40));
+			Paragraph header = new Paragraph("NANOBANK\nCARTERA", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 40));
 			header.setAlignment(Element.ALIGN_CENTER);
 			document.add(header);
 
@@ -47,7 +47,7 @@ public class GenerarPDFCarteras {
 
 			document.add(table);
 
-			System.out.println("PDF_CARTERAS generado correctamente.");
+			System.out.println("\nRegistro_Cartera.pdf generado correctamente.");
 		} catch (Exception e) {
 			System.err.println("Error al generar el PDF de CARTERAS: " + e.getMessage());
 		} finally {
@@ -58,10 +58,10 @@ public class GenerarPDFCarteras {
 	}
 
 	private static PdfPTable createCarterasTable() {
-		PdfPTable table = new PdfPTable(6);
+		PdfPTable table = new PdfPTable(4);
 		table.setWidthPercentage(100);
 
-		String[] headers = {"ID Transacción", "Cuenta Origen", "Teléfono", "Nombre Destino", "Cantidad", "Concepto"};
+		String[] headers = {"ID Cartera", "porcentajeRF", "porcentajeRV", "cantidadInvertida"};
 		for (String header : headers) {
 			PdfPCell cell = new PdfPCell();
 			cell.addElement(new Paragraph(header, new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 12)));

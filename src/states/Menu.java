@@ -89,9 +89,9 @@ public class Menu extends ImagenFondo {
 		btnConsultas.setBounds(34, 294, 252, 53);
 		panel_1.add(btnConsultas);
 
-		JButton btnNewButton = new JButton("Deslogueo");
-		btnNewButton.setBounds(320, 11, 120, 35);
-		add(btnNewButton);
+		JButton btnCerrarSesion = new JButton("Cerrar Sesión");
+		btnCerrarSesion.setBounds(297, 11, 120, 35);
+		add(btnCerrarSesion);
 
 
 
@@ -126,8 +126,15 @@ public class Menu extends ImagenFondo {
 			}
 		});
 
+		btnCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				volverAIniciarSesion();
+			}
+		});
+
 
 	}
+
 
 
 	//Metodo para entrar en la clase Transferencia
@@ -145,6 +152,8 @@ public class Menu extends ImagenFondo {
 		}
 	}
 
+
+
 	//Metodo para entrar en la clase Bizum
 	private void realizarBizum() {
 		Container parent = getParent();
@@ -161,6 +170,7 @@ public class Menu extends ImagenFondo {
 	}
 
 
+
 	//Metodo para entrar en la clase Carteras
 	private void gestionarCarteras() {
 		Container parent = getParent();
@@ -174,6 +184,7 @@ public class Menu extends ImagenFondo {
 			System.out.println("El componente no tiene un padre.");
 		}
 	}
+
 
 
 
@@ -193,6 +204,7 @@ public class Menu extends ImagenFondo {
 
 
 
+
 	private void realizarConsultas() {
 
 		Container parent = getParent();
@@ -207,6 +219,21 @@ public class Menu extends ImagenFondo {
 			System.out.println("El componente no tiene un padre.");
 		}
 	}
+
+
+
+
+	private void volverAIniciarSesion() {
+		// Cerrar la ventana actual de registro
+		SwingUtilities.getWindowAncestor(this).dispose();
+
+		// Abrir una nueva instancia de la clase IniciarSesion
+		SwingUtilities.invokeLater(() -> new IniciarSesion());
+
+	}
+
+
+
 
 
 }

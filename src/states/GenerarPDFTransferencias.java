@@ -52,7 +52,7 @@ public class GenerarPDFTransferencias {
 			PdfPTable table = createTransferenciasTable();
 			fillTransferenciasTable(table, id_usuario);
 			document.add(table);
-			System.out.println("PDF de transferencias generado correctamente.");
+			System.out.println("\nRegistro_Transferencias.pdf generado correctamente.");
 
 		} catch (Exception e) {
 			System.err.println("Error al generar el PDF de transferencias: " + e.getMessage());

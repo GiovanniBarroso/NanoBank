@@ -46,7 +46,7 @@ public class GenerarPDFBizum {
 
 			document.add(table);
 
-			System.out.println("PDF de Bizum generado correctamente.");
+			System.out.println("\nRegistro_Bizum.pdf generado correctamente.");
 		} catch (Exception e) {
 			System.err.println("Error al generar el PDF de Bizum: " + e.getMessage());
 		} finally {

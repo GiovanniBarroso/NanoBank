@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import bgimg.ImagenFondo;
-import states.Menu;
 
 
 public class Consultas extends ImagenFondo {
@@ -70,13 +69,13 @@ public class Consultas extends ImagenFondo {
 
 
 
-		JButton btnBizum = new JButton("CONSULTAR BIZUM");
+		JButton btnBizum = new JButton("CONSULTAR BIZUM REALIZADOS");
 		btnBizum.setBounds(25, 35, 306, 60);
 		panelBotones.add(btnBizum);
 
 
 
-		JButton btnTransferencias = new JButton("CONSULTAR TRANSFERENCIAS");
+		JButton btnTransferencias = new JButton("CONSULTAR TRANSFERENCIAS REALIZADOS");
 		btnTransferencias.setBounds(25, 118, 306, 60);
 		panelBotones.add(btnTransferencias);
 
@@ -140,7 +139,7 @@ public class Consultas extends ImagenFondo {
 			parent.repaint();
 
 		} else {
-			System.out.println("El componente no tiene un padre [🆎].");
+			System.out.println("El componente no tiene un padre.");
 		}
 	}
 
@@ -153,7 +152,7 @@ public class Consultas extends ImagenFondo {
 	}
 
 	private void generarPDFCarteras() {
-		GenerarPDFCarteras.generarPDFCarteras(id_usuario, nombreUsuario);
+		GenerarPDFCarteras.generarPDFCartera(id_usuario, nombreUsuario);
 	}
 
 }
