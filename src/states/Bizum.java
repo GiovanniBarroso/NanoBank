@@ -107,7 +107,6 @@ public class Bizum extends ImagenFondo {
 
 
 		//Botones
-
 		btnEnviarBizum = new JButton("Realizar Bizum");
 		btnEnviarBizum.setBounds(93, 398, 134, 26);
 
@@ -135,7 +134,6 @@ public class Bizum extends ImagenFondo {
 		JLabel lblLogo = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
 		lblLogo.setBounds(145, 10, 150, 150);
 		add(lblLogo);
-
 
 
 

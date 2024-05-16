@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import bgimg.ImagenFondo;
+import states.Menu;
 
 
 public class Consultas extends ImagenFondo {
@@ -14,7 +15,7 @@ public class Consultas extends ImagenFondo {
 
 	//Atributos
 	private static final long serialVersionUID = 1L;
-	
+
 	private int id_usuario;
 	private double saldo;
 	private String nombreUsuario;
@@ -22,7 +23,6 @@ public class Consultas extends ImagenFondo {
 	private double porcentajeRF; 
 	private double porcentajeRV;
 	private double cantidadInvertida;
-	private JTextField txtQuConsultaDeseas;
 
 	public Consultas(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
@@ -37,50 +37,123 @@ public class Consultas extends ImagenFondo {
 		this.porcentajeRF = porcentajeRF;
 		this.porcentajeRV = porcentajeRV;
 		this.cantidadInvertida = cantidadInvertida;
+
 		setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panel.setBounds(21, 75, 399, 132);
-		add(panel);
-		panel.setLayout(null);
-		
-		txtQuConsultaDeseas = new JTextField();
-		txtQuConsultaDeseas.setFont(new Font("Impact", Font.BOLD, 23));
-		txtQuConsultaDeseas.setHorizontalAlignment(SwingConstants.CENTER);
-		txtQuConsultaDeseas.setText("¿QUÉ CONSULTA DESEAS REALIZAR?");
-		txtQuConsultaDeseas.setBounds(22, 21, 353, 86);
-		panel.add(txtQuConsultaDeseas);
-		txtQuConsultaDeseas.setColumns(10);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panel_1.setBounds(21, 233, 399, 405);
-		add(panel_1);
-		panel_1.setLayout(null);
-		
-		JButton btnNewButton = new JButton("CONSULTAR ENTRADA Y SALIDA DE BIZUM\r\n");
-		btnNewButton.addActionListener(new ActionListener() {
+
+
+
+		JPanel panelFondo = new JPanel();
+		panelFondo.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panelFondo.setBounds(37, 123, 358, 132);
+		add(panelFondo);
+		panelFondo.setLayout(null);
+
+
+
+		JLabel lblConsulta = new JLabel("<html><div style='text-align: center;'>¿QUÉ CONSULTA DESEAS REALIZAR?</div></html>");
+		lblConsulta.setOpaque(true);
+		lblConsulta.setForeground(Color.BLACK);
+		lblConsulta.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblConsulta.setBackground(new Color(255, 255, 255));
+		lblConsulta.setFont(new Font("Impact", Font.BOLD, 40));
+		lblConsulta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblConsulta.setBounds(10, 11, 338, 110);
+		panelFondo.add(lblConsulta);
+
+
+
+		JPanel panelBotones = new JPanel();
+		panelBotones.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		panelBotones.setBounds(37, 295, 358, 369);
+		add(panelBotones);
+		panelBotones.setLayout(null);
+
+
+
+		JButton btnBizum = new JButton("CONSULTAR BIZUM");
+		btnBizum.setBounds(25, 35, 306, 60);
+		panelBotones.add(btnBizum);
+
+
+
+		JButton btnTransferencias = new JButton("CONSULTAR TRANSFERENCIAS");
+		btnTransferencias.setBounds(25, 118, 306, 60);
+		panelBotones.add(btnTransferencias);
+
+
+
+		JButton btnCarteras = new JButton("CONSULTAR Y GESTIONAR CARTERAS");
+		btnCarteras.setBounds(25, 199, 306, 60);
+		panelBotones.add(btnCarteras);
+
+
+
+		JButton btnVolverAtras = new JButton("Volver atrás\r\n");
+		btnVolverAtras.setBounds(108, 305, 138, 37);
+		panelBotones.add(btnVolverAtras);
+
+
+
+
+		btnBizum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				generarPDFBizum();
 			}
 		});
-		btnNewButton.setBounds(47, 57, 306, 60);
-		panel_1.add(btnNewButton);
-		
-		JButton btnGestionarTransferencias = new JButton("CONSULTAR ENTRADA Y SALIDA DE TRANSFERENCIAS");
-		btnGestionarTransferencias.setBounds(47, 176, 306, 60);
-		panel_1.add(btnGestionarTransferencias);
-		
-		JButton btnNewButton_1_1 = new JButton("CONSULTAR Y GESTIONAR CARTERAS");
-		btnNewButton_1_1.setBounds(47, 296, 306, 60);
-		panel_1.add(btnNewButton_1_1);
-		
-		
-		
-		
-		
-		
-		
-		
+
+
+
+		btnTransferencias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				generarPDFTransferencias();
+			}
+		});
+
+
+
+		btnCarteras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				generarPDFCarteras();
+			}
+		});
+
+
+
+		btnVolverAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				volveraMenu();
+			}
+		});
+
+
+
 	}
+
+
+	private void volveraMenu() {
+		Container parent = getParent();
+		if (parent != null) {
+			parent.removeAll();
+			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
+			parent.add(menu);
+			parent.revalidate();
+			parent.repaint();
+
+		} else {
+			System.out.println("El componente no tiene un padre [🆎].");
+		}
+	}
+
+	private void generarPDFBizum() {
+		GenerarPDFBizum.generarPDFBizum();
+	}
+
+	private void generarPDFTransferencias() {
+		GenerarPDFTransferencias.generarPDFTransferencias();
+	}
+
+	private void generarPDFCarteras() {
+		GenerarPDFCarteras.generarPDFCarteras();
+	}
+
 }
