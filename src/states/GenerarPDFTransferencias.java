@@ -15,17 +15,18 @@ import sqlconnect.Conexion;
 
 public class GenerarPDFTransferencias {
 
-	private static final String OUTPUT_PDF_FILE = "transferencias_registros.pdf";
+	private static final String OUTPUT_PDF_FILE = "Registro_Transferencias";
 
-	public static void generarPDFTransferencias() {
+	public static void generarPDFTransferencias(int id_usuario, String nombreUsuario) {
+		String outputFileName = OUTPUT_PDF_FILE + " " + nombreUsuario + ".pdf";
 		Document document = new Document(PageSize.A4);
 		try {
-			FileOutputStream outputStream = new FileOutputStream(OUTPUT_PDF_FILE);
+			FileOutputStream outputStream = new FileOutputStream(outputFileName);
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 			document.open();
 
 			PdfPTable table = createTransferenciasTable();
-			fillTransferenciasTable(table);
+			fillTransferenciasTable(table, id_usuario);
 
 			document.add(table);
 
@@ -55,22 +56,24 @@ public class GenerarPDFTransferencias {
 
 
 
-	private static void fillTransferenciasTable(PdfPTable table) throws SQLException {
-		Conexion conexion = new Conexion();
-		try (Connection con = conexion.conectar();
-				PreparedStatement ps = con.prepareStatement("SELECT * FROM Transferencia");
-				ResultSet rs = ps.executeQuery()) {
+	private static void fillTransferenciasTable(PdfPTable table, int id_usuario) throws SQLException {
+	    Conexion conexion = new Conexion();
+	    try (Connection con = conexion.conectar();
+	            PreparedStatement ps = con.prepareStatement("SELECT * FROM Transferencia WHERE id_usuario = ?");
+	            ) {
+	        ps.setInt(1, id_usuario); // Establecer el parámetro id_usuario en la consulta
+	        ResultSet rs = ps.executeQuery();
 
-			while (rs.next()) {
-				table.addCell(rs.getString("id_transaciones"));
-				table.addCell(rs.getString("cuentaOrigen"));
-				table.addCell(rs.getString("cuentaDestino"));
-				table.addCell(rs.getString("nombreDestino"));
-				table.addCell(rs.getString("cantidad"));
-				table.addCell(rs.getString("concepto"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	        while (rs.next()) {
+	            table.addCell(rs.getString("id_transaciones"));
+	            table.addCell(rs.getString("cuentaOrigen"));
+	            table.addCell(rs.getString("cuentaDestino"));
+	            table.addCell(rs.getString("nombreDestino"));
+	            table.addCell(rs.getString("cantidad"));
+	            table.addCell(rs.getString("concepto"));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

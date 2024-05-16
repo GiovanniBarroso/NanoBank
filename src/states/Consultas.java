@@ -145,15 +145,15 @@ public class Consultas extends ImagenFondo {
 	}
 
 	private void generarPDFBizum() {
-		GenerarPDFBizum.generarPDFBizum();
+		GenerarPDFBizum.generarPDFBizum(id_usuario, nombreUsuario);
 	}
 
 	private void generarPDFTransferencias() {
-		GenerarPDFTransferencias.generarPDFTransferencias();
+		GenerarPDFTransferencias.generarPDFTransferencias(id_usuario, nombreUsuario);
 	}
 
 	private void generarPDFCarteras() {
-		GenerarPDFCarteras.generarPDFCarteras();
+		GenerarPDFCarteras.generarPDFCarteras(id_usuario, nombreUsuario);
 	}
 
 }

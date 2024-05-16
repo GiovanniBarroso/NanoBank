@@ -15,19 +15,18 @@ import sqlconnect.Conexion;
 
 public class GenerarPDFCarteras {
 
-	private static final String OUTPUT_PDF_FILE = "carteras_registros.pdf";
+	private static final String OUTPUT_PDF_FILE = "Registro_Carteras";
 
-
-
-	public static void generarPDFCarteras() {
+	public static void generarPDFCarteras(int id_usuario, String nombreUsuario) {
+		String outputFileName = OUTPUT_PDF_FILE + " " + nombreUsuario + ".pdf";
 		Document document = new Document(PageSize.A4);
 		try {
-			FileOutputStream outputStream = new FileOutputStream(OUTPUT_PDF_FILE);
+			FileOutputStream outputStream = new FileOutputStream(outputFileName);
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 			document.open();
 
 			PdfPTable table = createCarterasTable();
-			fillCarterasTable(table);
+			fillCarterasTable(table, id_usuario);
 
 			document.add(table);
 
@@ -57,20 +56,22 @@ public class GenerarPDFCarteras {
 
 
 
-	private static void fillCarterasTable(PdfPTable table) throws SQLException {
-		Conexion conexion = new Conexion();
-		try (Connection con = conexion.conectar();
-				PreparedStatement ps = con.prepareStatement("SELECT * FROM FormularioCarteras");
-				ResultSet rs = ps.executeQuery()) {
+	private static void fillCarterasTable(PdfPTable table, int id_usuario) throws SQLException {
+	    Conexion conexion = new Conexion();
+	    try (Connection con = conexion.conectar();
+	            PreparedStatement ps = con.prepareStatement("SELECT * FROM FormularioCarteras WHERE id_usuario = ?");
+	            ) {
+	        ps.setInt(1, id_usuario); // Establecer el parámetro id_usuario en la consulta
+	        ResultSet rs = ps.executeQuery();
 
-			while (rs.next()) {
-				table.addCell(rs.getString("id_cartera"));
-				table.addCell(rs.getString("porcentajeRF"));
-				table.addCell(rs.getString("porcentajeRV"));
-				table.addCell(rs.getString("cantidadInvertida"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	        while (rs.next()) {
+	            table.addCell(rs.getString("id_cartera"));
+	            table.addCell(rs.getString("porcentajeRF"));
+	            table.addCell(rs.getString("porcentajeRV"));
+	            table.addCell(rs.getString("cantidadInvertida"));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

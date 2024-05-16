@@ -15,17 +15,18 @@ import sqlconnect.Conexion;
 
 public class GenerarPDFBizum {
 
-	private static final String OUTPUT_PDF_FILE = "bizum_registros.pdf";
+	private static final String OUTPUT_PDF_FILE = "Registro_Bizum";
 
-	public static void generarPDFBizum() {
+	public static void generarPDFBizum(int id_usuario, String nombreUsuario) {
+		String outputFileName = OUTPUT_PDF_FILE + " " + nombreUsuario + ".pdf";
 		Document document = new Document(PageSize.A4);
 		try {
-			FileOutputStream outputStream = new FileOutputStream(OUTPUT_PDF_FILE);
+			FileOutputStream outputStream = new FileOutputStream(outputFileName);
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 			document.open();
 
 			PdfPTable table = createBizumTable();
-			fillBizumTable(table);
+			fillBizumTable(table, id_usuario);
 
 			document.add(table);
 
@@ -51,19 +52,21 @@ public class GenerarPDFBizum {
 		return table;
 	}
 
-	private static void fillBizumTable(PdfPTable table) throws SQLException {
+	private static void fillBizumTable(PdfPTable table, int id_usuario) throws SQLException {
 		Conexion conexion = new Conexion();
 		try (Connection con = conexion.conectar();
-				PreparedStatement ps = con.prepareStatement("SELECT * FROM Bizum");
-				ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				table.addCell(rs.getString("id_transaciones"));
-				table.addCell(rs.getString("cuentaOrigen"));
-				table.addCell(rs.getString("telefono"));
-				table.addCell(rs.getString("nombreDestino"));
-				table.addCell(rs.getString("cantidad"));
-				table.addCell(rs.getString("concepto"));
+				PreparedStatement ps = con.prepareStatement("SELECT * FROM Bizum WHERE id_usuario = ?");
+				) {
+			ps.setInt(1, id_usuario); // Establecer el id_usuario como parámetro en la consulta
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					table.addCell(rs.getString("id_transaciones"));
+					table.addCell(rs.getString("cuentaOrigen"));
+					table.addCell(rs.getString("telefono"));
+					table.addCell(rs.getString("nombreDestino"));
+					table.addCell(rs.getString("cantidad"));
+					table.addCell(rs.getString("concepto"));
+				}
 			}
 		}
 	}
