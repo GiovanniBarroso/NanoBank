@@ -89,6 +89,10 @@ public class Menu extends ImagenFondo {
 		btnConsultas.setBounds(34, 294, 252, 53);
 		panel_1.add(btnConsultas);
 
+		JButton btnNewButton = new JButton("Deslogueo");
+		btnNewButton.setBounds(320, 11, 120, 35);
+		add(btnNewButton);
+
 
 
 		// Eventos para los botones
