@@ -191,6 +191,17 @@ public class Menu extends ImagenFondo {
 
 	private void realizarConsultas() {
 
+		Container parent = getParent();
+
+		if (parent != null) {
+			parent.removeAll();
+
+			parent.add(new Consultas(id_usuario, nombreUsuario, saldo, dni,  porcentajeRF, porcentajeRV, cantidadInvertida)); 
+			parent.revalidate();
+			parent.repaint();
+		} else {
+			System.out.println("El componente no tiene un padre.");
+		}
 	}
 
 
