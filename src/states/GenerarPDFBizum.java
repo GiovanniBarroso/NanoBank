@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -31,8 +32,35 @@ public class GenerarPDFBizum {
 
 			// Encabezado del documento
 			Paragraph header = new Paragraph("NANOBANK\nBIZUM", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 40));
-			header.setAlignment(Element.ALIGN_CENTER);
-			document.add(header);
+			header.setAlignment(Element.ALIGN_LEFT);
+
+			// Añadir logo
+			Image logo = Image.getInstance("src/img/foto_7.png");
+			logo.scaleToFit(100, 100);
+			logo.setAlignment(Element.ALIGN_RIGHT);
+			document.add(logo);
+			
+
+			// Crear una tabla para alinear el título y el logo
+			PdfPTable titleTable = new PdfPTable(2);
+			titleTable.setWidthPercentage(100);
+			PdfPCell titleCell = new PdfPCell(header);
+			PdfPCell logoCell = new PdfPCell(logo);
+
+			// Ajustar las celdas para que no tengan bordes
+			titleCell.setBorder(PdfPCell.NO_BORDER);
+			logoCell.setBorder(PdfPCell.NO_BORDER);
+
+			// Alinear el contenido de las celdas al centro verticalmente
+			titleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			logoCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+			// Añadir las celdas a la tabla
+			titleTable.addCell(titleCell);
+			titleTable.addCell(logoCell);
+
+			// Añadir la tabla al documento
+			document.add(titleTable);
 
 			// Información del usuario
 			Paragraph userInfo = new Paragraph("\nID_USUARIO: " + id_usuario + "\nUSUARIO: " + nombreUsuario, new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 15));
