@@ -62,10 +62,10 @@ public class IniciarSesion extends JFrame {
 
 		// Dimensiones del panel de datos de login
 		panel.setPreferredSize(new Dimension(300, 500)); 
-		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBackground(Color.WHITE);
 
 		// Logo
-		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_6.png"));
+		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_7.png"));
 		JLabel lblLogo = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
 		lblLogo.setBounds(59, 25, 188, 178);
 
@@ -77,10 +77,13 @@ public class IniciarSesion extends JFrame {
 		lblUsuario.setBounds(46, 214, 198, 26);
 		lblUsuario.setFont(new Font("Impact", Font.PLAIN, 20));
 
+
+
 		JTextField txtUsuario = new JTextField(15);
 		txtUsuario.setBounds(46, 251, 201, 26);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 15));
+
 
 
 		// Contraseña
@@ -89,6 +92,8 @@ public class IniciarSesion extends JFrame {
 		lblContraseña.setBounds(46, 288, 198, 26);
 		lblContraseña.setFont(new Font("Impact", Font.PLAIN, 20));
 
+
+
 		JPasswordField txtContraseña = new JPasswordField(15);
 		txtContraseña.setBounds(46, 324, 201, 26);
 		txtContraseña.setHorizontalAlignment(JPasswordField.CENTER);
@@ -96,17 +101,19 @@ public class IniciarSesion extends JFrame {
 
 
 		// Botón de iniciar sesión
-		JButton btnIniciarSesion = new JButton("Iniciar Sesión");
-		btnIniciarSesion.setBounds(59, 376, 178, 31);
-		btnIniciarSesion.setHorizontalAlignment(JButton.CENTER);
-		btnIniciarSesion.setFont(new Font("Arial Black", Font.PLAIN, 16));
+		JButton btnIniciarSesion = new JButton();
+		ImageIcon FondobtnIniciarSesion = new ImageIcon(getClass().getResource("/img/login_button.png"));
+		btnIniciarSesion.setIcon(FondobtnIniciarSesion);
+		btnIniciarSesion.setBounds(59, 376, 185, 31);
+
 
 
 		// Botón de registrarse
-		JButton btnRegistrarse = new JButton("¿No estás registrado?");
+		JButton btnRegistrarse = new JButton();
+		ImageIcon FondobtnRegistro = new ImageIcon(getClass().getResource("/img/registro_button.png"));
+		btnRegistrarse.setIcon(FondobtnRegistro);
 		btnRegistrarse.setBounds(22, 432, 255, 31);
-		btnRegistrarse.setHorizontalAlignment(JButton.CENTER);
-		btnRegistrarse.setFont(new Font("Arial Black", Font.PLAIN, 16));
+
 
 
 		// Botón de mostrarContraseña
@@ -139,7 +146,7 @@ public class IniciarSesion extends JFrame {
 		btnIniciarSesion.addActionListener(e -> iniciarSesion(txtUsuario.getText(), new String(txtContraseña.getPassword())));
 		btnRegistrarse.addActionListener(e -> mostrarRegistroUsuario());
 
-		
+
 
 		// Acción del botón Mostrar Contraseña
 		btnMostrarContraseña.addActionListener(new ActionListener() {
@@ -153,7 +160,7 @@ public class IniciarSesion extends JFrame {
 			}
 		});
 
-		
+
 
 		// Evento de presionar "Enter" en el campo de contraseña
 		txtContraseña.addActionListener(new ActionListener() {
