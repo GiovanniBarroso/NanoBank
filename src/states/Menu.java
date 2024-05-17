@@ -44,7 +44,7 @@ public class Menu extends ImagenFondo {
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		panel.setBounds(63, 57, 317, 213);
-		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBackground(Color.WHITE);
 		add(panel);
 		panel.setLayout(null);
 
@@ -65,7 +65,7 @@ public class Menu extends ImagenFondo {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		panel_1.setBounds(63, 292, 317, 371);
-		panel_1.setBackground(Color.LIGHT_GRAY);
+		panel_1.setBackground(Color.WHITE);
 		add(panel_1);
 		panel_1.setLayout(null);
 
@@ -89,8 +89,10 @@ public class Menu extends ImagenFondo {
 		btnConsultas.setBounds(34, 294, 252, 53);
 		panel_1.add(btnConsultas);
 
-		JButton btnCerrarSesion = new JButton("Cerrar Sesión");
-		btnCerrarSesion.setBounds(297, 11, 120, 35);
+		JButton btnCerrarSesion = new JButton();
+		btnCerrarSesion.setBounds(312, 11, 111, 32);
+		ImageIcon iconoLogout = new ImageIcon(getClass().getResource("/img/logout_button.png"));
+		btnCerrarSesion.setIcon(iconoLogout);
 		add(btnCerrarSesion);
 
 

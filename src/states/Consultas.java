@@ -43,9 +43,16 @@ public class Consultas extends ImagenFondo {
 
 		JPanel panelFondo = new JPanel();
 		panelFondo.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panelFondo.setBounds(37, 123, 358, 132);
+		panelFondo.setBounds(37, 128, 358, 132);
 		add(panelFondo);
 		panelFondo.setLayout(null);
+
+
+		//Logo
+		ImageIcon logoIcon = new ImageIcon(IniciarSesion.class.getResource("/img/foto_7.png"));
+		JLabel lblLogo = new JLabel(new ImageIcon(logoIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+		lblLogo.setBounds(154, 11, 127, 119);
+		add(lblLogo);
 
 
 
@@ -70,19 +77,19 @@ public class Consultas extends ImagenFondo {
 
 
 		JButton btnBizum = new JButton("CONSULTAR BIZUM REALIZADOS");
-		btnBizum.setBounds(25, 35, 306, 60);
+		btnBizum.setBounds(25, 45, 306, 60);
 		panelBotones.add(btnBizum);
 
 
 
 		JButton btnTransferencias = new JButton("CONSULTAR TRANSFERENCIAS REALIZADOS");
-		btnTransferencias.setBounds(25, 118, 306, 60);
+		btnTransferencias.setBounds(25, 130, 306, 60);
 		panelBotones.add(btnTransferencias);
 
 
 
 		JButton btnCarteras = new JButton("CONSULTAR Y GESTIONAR CARTERAS");
-		btnCarteras.setBounds(25, 199, 306, 60);
+		btnCarteras.setBounds(25, 213, 306, 60);
 		panelBotones.add(btnCarteras);
 
 
