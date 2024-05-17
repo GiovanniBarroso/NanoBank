@@ -116,9 +116,15 @@ public class Transferencia extends ImagenFondo {
 		txtConcepto.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
-		btnEnviarTransferencia = new JButton("Transferir\r\n");
+		btnEnviarTransferencia = new JButton();
+		ImageIcon FondobtnTransferir = new ImageIcon(getClass().getResource("/img/transferir_btn.png"));
+		btnEnviarTransferencia.setIcon(FondobtnTransferir);
 		btnEnviarTransferencia.setBounds(90, 404, 133, 25);
-		btnVolver = new JButton("Volver atrás");
+		
+		
+		btnVolver = new JButton();
+		ImageIcon FondobtnBack2 = new ImageIcon(getClass().getResource("/img/back_btn2.png"));
+		btnVolver.setIcon(FondobtnBack2);
 		btnVolver.setBounds(90, 447, 133, 25);
 		panelFondo.setLayout(null);
 

@@ -116,7 +116,9 @@ public class RegistroUsuario extends ImagenFondo {
 
 
 		//Botones
-		btnRegistrar = new JButton("Registrarse");
+		btnRegistrar = new JButton();
+		ImageIcon FondobtnRegistrarse = new ImageIcon(getClass().getResource("/img/registrarse_btn.png"));
+		btnRegistrar.setIcon(FondobtnRegistrarse);
 		btnRegistrar.setBounds(61, 525, 108, 35);
 
 
@@ -126,7 +128,9 @@ public class RegistroUsuario extends ImagenFondo {
 		btnMostrarContraseña.setBounds(320, 478, 26, 26);
 
 
-		btnVolver = new JButton("Volver atrás");
+		btnVolver = new JButton();
+		ImageIcon FondobtnBack = new ImageIcon(getClass().getResource("/img/volverAtras_btn.png"));
+		btnVolver.setIcon(FondobtnBack);
 		btnVolver.setBounds(203, 525, 108, 35);
 		panelFondo.setLayout(null);
 

@@ -69,23 +69,33 @@ public class Menu extends ImagenFondo {
 		add(panel_1);
 		panel_1.setLayout(null);
 
-		JButton btnTransferencia = new JButton("TRANSFERENCIA");
+		JButton btnTransferencia = new JButton();
+		ImageIcon FondobtnTransferencia = new ImageIcon(getClass().getResource("/img/transferencia_button.png"));
+		btnTransferencia.setIcon(FondobtnTransferencia);
 		btnTransferencia.setBounds(34, 38, 252, 53);
 		panel_1.add(btnTransferencia);
 
-		JButton btnBizum = new JButton("BIZUM");
+		JButton btnBizum = new JButton();
+		ImageIcon FondobtnBizum = new ImageIcon(getClass().getResource("/img/bizum_button.png"));
+		btnBizum.setIcon(FondobtnBizum);
 		btnBizum.setBounds(34, 102, 252, 53);
 		panel_1.add(btnBizum);
 
-		JButton btnCarteras = new JButton("CARTERAS");
+		JButton btnCarteras = new JButton();
+		ImageIcon FondobtnCarteras = new ImageIcon(getClass().getResource("/img/carteras_button.png"));
+		btnCarteras.setIcon(FondobtnCarteras);
 		btnCarteras.setBounds(34, 166, 252, 53);
 		panel_1.add(btnCarteras);
 
-		JButton btnFormularioCarteras = new JButton("FORMULARIO CARTERAS");
+		JButton btnFormularioCarteras = new JButton();
+		ImageIcon FondobtnformCarteras = new ImageIcon(getClass().getResource("/img/formularioCarteras_button.png"));
+		btnFormularioCarteras.setIcon(FondobtnformCarteras);
 		btnFormularioCarteras.setBounds(34, 230, 252, 53);
 		panel_1.add(btnFormularioCarteras);
 
-		JButton btnConsultas = new JButton("CONSULTAS");
+		JButton btnConsultas = new JButton();
+		ImageIcon FondobtnConsultas = new ImageIcon(getClass().getResource("/img/Consultas_button.png"));
+		btnConsultas.setIcon(FondobtnConsultas);
 		btnConsultas.setBounds(34, 294, 252, 53);
 		panel_1.add(btnConsultas);
 

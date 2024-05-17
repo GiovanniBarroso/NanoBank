@@ -107,11 +107,18 @@ public class Bizum extends ImagenFondo {
 
 
 		//Botones
-		btnEnviarBizum = new JButton("Realizar Bizum");
+		btnEnviarBizum = new JButton();
+		ImageIcon FondobtnRealizarBizum = new ImageIcon(getClass().getResource("/img/bizum_btn.png"));
+		btnEnviarBizum.setIcon(FondobtnRealizarBizum);
 		btnEnviarBizum.setBounds(93, 398, 134, 26);
 
-		btnVolver = new JButton("Volver atrás");
+		btnVolver = new JButton();
+		ImageIcon FondobtnBack2 = new ImageIcon(getClass().getResource("/img/back_btn2.png"));
+		btnVolver.setIcon(FondobtnBack2);
 		btnVolver.setBounds(93, 440, 134, 26);
+		
+		
+		
 		panelFondo.setLayout(null);
 		panelFondo.add(lblTelefono);
 		panelFondo.add(txtTelefono);
