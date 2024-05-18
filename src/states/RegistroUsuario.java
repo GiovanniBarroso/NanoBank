@@ -237,6 +237,16 @@ public class RegistroUsuario extends ImagenFondo {
 			return;
 		}
 
+		if (!validarTelefono(telefono)) {
+			JOptionPane.showMessageDialog(this, "El número de teléfono no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		// Validar el formato del correo electrónico
+		if (!validarCorreoElectronico(email)) {
+			JOptionPane.showMessageDialog(this, "El correo electrónico no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 
 		// Validar el formato del DNI
 		if (!validarDNI(DNI)) {
@@ -293,6 +303,45 @@ public class RegistroUsuario extends ImagenFondo {
 		txtEmail.setText("");
 		txtIBAN.setText("");
 		txtContraseña.setText("");
+	}
+
+
+
+	// Metodo para validar telefono
+	private boolean validarTelefono(String telefono) {
+
+		telefono = telefono.replaceAll("\\s", "").replaceAll("-", "");
+		if (telefono.length() != 9) {
+			return false;
+		}
+
+
+		for (char c : telefono.toCharArray()) {
+			if (!Character.isDigit(c)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+
+
+	// Metodo para validar correo electrónico
+	private boolean validarCorreoElectronico(String correo) {
+		// El correo electrónico debe contener un "@" y al menos un carácter antes y después del "@"
+		if (!correo.contains("@") || correo.indexOf("@") == 0 || correo.indexOf("@") == correo.length() - 1) {
+			return false;
+		}
+
+
+		// El correo electrónico debe contener al menos un carácter antes del punto después del "@" y al menos dos caracteres después del punto
+		String[] partes = correo.split("@");
+		if (partes.length != 2 || partes[1].indexOf(".") == 0 || partes[1].indexOf(".") == partes[1].length() - 1) {
+			return false;
+		}
+
+		return true;
 	}
 
 

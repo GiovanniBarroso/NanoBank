@@ -1,5 +1,6 @@
 package states;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,14 +23,27 @@ import sqlconnect.Conexion;
 public class GenerarPDFTransferencias {
 
 	private static final String OUTPUT_PDF_FILE = "Registro_Transferencias ";
-	
+
 	public static void generarPDFTransferencias(int id_usuario, String nombreUsuario) {
 
-		String outputFileName = OUTPUT_PDF_FILE + nombreUsuario + ".pdf";
+		// Obtiene la ruta del directorio de trabajo actual
+		String currentDir = System.getProperty("user.dir");
+
+		// Define la carpeta donde se guardarán los PDF dentro del directorio de trabajo actual
+		String folderPath = currentDir + "/PDF Consultas";
+
+		// Crea el directorio si no existe
+		File folder = new File(folderPath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+
+		// Concatena la ruta de la carpeta con el nombre de archivo
+		String outputFileName = folderPath + "/" + OUTPUT_PDF_FILE + nombreUsuario + ".pdf";
 		Document document = new Document(PageSize.A4);
 
 		try {
-			
+
 			FileOutputStream outputStream = new FileOutputStream(outputFileName);
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 			document.open();
@@ -63,7 +77,7 @@ public class GenerarPDFTransferencias {
 
 			document.add(titleTable);
 
-			
+
 			// Información del usuario
 			Paragraph userInfo = new Paragraph("\nID_USUARIO: " + id_usuario + "\nUSUARIO: " + nombreUsuario, new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 15));
 			document.add(userInfo);
@@ -82,7 +96,7 @@ public class GenerarPDFTransferencias {
 
 			System.out.println("\nRegistro_Transferencias.pdf generado correctamente.");
 
-			
+
 		} catch (Exception e) {
 			System.err.println("Error al generar el PDF de transferencias: " + e.getMessage());
 		} finally {
