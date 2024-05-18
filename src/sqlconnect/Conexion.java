@@ -343,6 +343,37 @@ public class Conexion {
 
 
 
+	// Método para verificar si existe una cartera asociada a un usuario
+	public boolean existeCarteraParaUsuario(int id_usuario) throws SQLException {
+		boolean existeCartera = false;
+		Connection conexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			conexion = conectar();
+			String consulta = "SELECT * FROM FormularioCarteras WHERE id_usuario = ?";
+			statement = conexion.prepareStatement(consulta);
+			statement.setInt(1, id_usuario);
+			resultSet = statement.executeQuery();
+
+			existeCartera = resultSet.next();
+		} finally {
+			if (resultSet != null) {
+				resultSet.close();
+			}
+			if (statement != null) {
+				statement.close();
+			}
+			if (conexion != null) {
+				cerrarConexion(conexion);
+			}
+		}
+
+		return existeCartera;
+	}
+
+
 
 	//Método para guardar el formulario de carteras en la BD
 	public void saveFormularioCarteras(double porcentajeRF, double porcentajeRV, double cantidadInvertida, int id_usuario) throws SQLException {

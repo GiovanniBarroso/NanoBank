@@ -382,6 +382,11 @@ public class GestionarCarteras extends ImagenFondo {
 		try {
 			Conexion conexion = new Conexion();
 
+			if (!conexion.existeCarteraParaUsuario(id_usuario)) {
+				JOptionPane.showMessageDialog(this, "No existe una cartera para liquidar.");
+				return;
+			}
+
 			// Obtener la fecha actual
 			java.util.Date fechaActual = new java.util.Date();
 			java.sql.Date fechaSQL = new java.sql.Date(fechaActual.getTime());
