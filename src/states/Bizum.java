@@ -71,7 +71,7 @@ public class Bizum extends ImagenFondo {
 
 
 
-		JLabel lblNombre = new JLabel("Nombre Destinatario");
+		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombre.setBounds(72, 157, 182, 26);
 		lblNombre.setFont(new Font("Impact", Font.PLAIN, 20));

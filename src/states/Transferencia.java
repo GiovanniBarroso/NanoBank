@@ -73,7 +73,7 @@ public class Transferencia extends ImagenFondo {
 
 
 
-		JLabel lblcuentaDestino = new JLabel("IBAN");
+		JLabel lblcuentaDestino = new JLabel("IBAN DESTINO");
 		lblcuentaDestino.setHorizontalAlignment(SwingConstants.CENTER);
 		lblcuentaDestino.setBounds(56, 92, 199, 25);
 		lblcuentaDestino.setFont(new Font("Impact", Font.PLAIN, 20));

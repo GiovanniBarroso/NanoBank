@@ -40,7 +40,7 @@ public class RegistroUsuario extends ImagenFondo {
 		JPanel panelFondo = new JPanel();
 		panelFondo.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		panelFondo.setBounds(34, 109, 372, 580);
-		panelFondo.setBackground(Color.LIGHT_GRAY);
+		panelFondo.setBackground(Color.WHITE);
 
 
 		//Logo

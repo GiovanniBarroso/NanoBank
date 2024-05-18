@@ -38,12 +38,17 @@ public class GenerarPDFCarteras {
 			// Añadir logo
 			Image logo = Image.getInstance("src/img/foto_7.png");
 			logo.scaleToFit(100, 100);  
-			logo.setAlignment(Element.ALIGN_RIGHT);
-			document.add(logo);
+
 
 			// Crear una tabla para alinear el título y el logo
 			PdfPTable titleTable = new PdfPTable(2);
 			titleTable.setWidthPercentage(100);
+
+			// Ancho de las celdas (ajustar según sea necesario)
+			float[] columnWidths = {80f, 20f}; // 70% para el título y 30% para el logo
+			titleTable.setWidths(columnWidths);
+
+
 			PdfPCell titleCell = new PdfPCell(header);
 			PdfPCell logoCell = new PdfPCell(logo);
 
