@@ -24,7 +24,7 @@ public class GestionarCarteras extends ImagenFondo {
 
 	public GestionarCarteras(int id_usuario, String nombreUsuario, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 		super("/img/bg_img2.png");
-		
+
 		// Constructores
 		this.id_usuario = id_usuario;
 		this.nombreUsuario = nombreUsuario;
@@ -39,8 +39,8 @@ public class GestionarCarteras extends ImagenFondo {
 
 	//Metodo principal
 	private void initUI() {
-		
-		
+
+
 		double Rentabilidad = ObtenerRentabilidad();
 		double Beneficios = ObtenerBeneficios(Rentabilidad);
 		double valorMercado = ObtenerValorMercado(Beneficios);
@@ -68,27 +68,43 @@ public class GestionarCarteras extends ImagenFondo {
 
 
 
-		// Título
-		JButton btnLiquidarCartera = new JButton("Liquidar Cartera");
-		btnLiquidarCartera.setFont(new Font("Impact", Font.PLAIN, 20));
-		btnLiquidarCartera.setHorizontalAlignment(JLabel.CENTER);
+		// Boton de liquidar cartera
+		JButton btnLiquidarCartera = new JButton();
+
+		ImageIcon FondoliquidarButton = new ImageIcon(getClass().getResource("/img/liquidar_btn.png"));
+		btnLiquidarCartera.setIcon(FondoliquidarButton);
+		btnLiquidarCartera.setContentAreaFilled(false);
+		btnLiquidarCartera.setFocusPainted(false);
+
 		gbc.gridy++;
 		gbc.weighty = 0.1;
 		add(btnLiquidarCartera, gbc);
 
 
+		// Botón para volver al menú
+		JButton btnVolver = new JButton();
 
+		ImageIcon FondobackButton = new ImageIcon(getClass().getResource("/img/back_btn3.png"));
+		btnVolver.setIcon(FondobackButton);
+		btnVolver.setContentAreaFilled(false);
+		btnVolver.setFocusPainted(false);
 
-
-		// Botón para añadir nueva cartera
-		JButton btnVolver = new JButton("Volver atrás");
-		btnVolver.setFont(new Font("Impact", Font.PLAIN, 20));
 		gbc.gridy++;
 		gbc.weighty = 0.1;
 		add(btnVolver, gbc);
 
 
-		// Acción del botón Volver atrás
+
+		// Panel transparente para ajustar la posición de los botones
+		JPanel panelTransparente = new JPanel();
+		panelTransparente.setOpaque(false);
+		gbc.gridy++;
+		gbc.weighty = 0.05; 
+		add(panelTransparente, gbc);
+
+
+
+		// Acción del botón Liquidar Cartera
 		btnLiquidarCartera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LiquidarCartera();
@@ -329,7 +345,6 @@ public class GestionarCarteras extends ImagenFondo {
 	private double ObtenerValorMercado (double Beneficios) {
 
 		double valorMercado = cantidadInvertida + Beneficios;
-
 		return valorMercado;
 
 	}
@@ -355,7 +370,6 @@ public class GestionarCarteras extends ImagenFondo {
 		} else {
 			Riesgo = 0;
 		}
-
 		return Riesgo;
 	}
 
@@ -373,11 +387,8 @@ public class GestionarCarteras extends ImagenFondo {
 
 
 			double Beneficios = ObtenerBeneficios(ObtenerRentabilidad());
-
 			double cantidadALiquidar = cantidadInvertida + Beneficios;
-
 			double saldoActual = conexion.obtenerSaldoPorDNI(dni);
-
 			double nuevoSaldo = saldoActual + cantidadALiquidar;
 
 			conexion.actualizarSaldoUsuario(id_usuario, nuevoSaldo);
@@ -385,8 +396,9 @@ public class GestionarCarteras extends ImagenFondo {
 
 			double porcentajeRF = 0.0;
 			double porcentajeRV = 0.0;
+			double cantidadInvertida = 0.0;
 
-			conexion.saveFormularioCarteras(porcentajeRF, porcentajeRV, 0.0, id_usuario);
+			conexion.saveFormularioCarteras(porcentajeRF, porcentajeRV, cantidadInvertida, id_usuario);
 
 			conexion.eliminarCarteraPorIdUsuario(id_usuario);
 			limpiarDatos();
@@ -401,14 +413,13 @@ public class GestionarCarteras extends ImagenFondo {
 		}
 	}
 
-	
-	
+
+
 	private void limpiarDatos() {
 		this.porcentajeRF = 0.0;
 		this.porcentajeRV = 0.0;
 		this.cantidadInvertida = 0.0;
 	}
 
-	
 
 }

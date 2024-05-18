@@ -92,11 +92,11 @@ public class FormularioInversion extends JPanel {
 
 		// Nuevo JTextField con tamaño preferido y JLabel ajustado
 		cantidadInversionLabel = new JLabel("Cantidad a invertir:");
-		cantidadInversionTextField = new JTextField(10); 
+		cantidadInversionLabel.setFont(new Font("Impact", Font.PLAIN, 18));
 		cantidadInversionLabel.setHorizontalAlignment(SwingConstants.CENTER); 
 		cantidadInversionLabel.setPreferredSize(new Dimension(20, 20));
 
-
+		cantidadInversionTextField = new JTextField(10); 
 
 
 		// Agregar componentes al panel
@@ -110,16 +110,23 @@ public class FormularioInversion extends JPanel {
 		contentPanel.add(createQuestionPanel("¿Considerar factores ESG en la cartera?:", considerarESGComboBox));
 		contentPanel.add(createQuestionPanel("¿Invertir al 100% en renta variable?:", invertirRentaVariableComboBox));
 
-
 		// Agregar JTextField y JLabel al panel
 		contentPanel.add(cantidadInversionLabel);
 		contentPanel.add(cantidadInversionTextField);
 
-
 		// Botones
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JButton confirmButton = new JButton("Confirmar Formulario");
-		JButton btnVolver = new JButton("Volver Atrás");
+
+		JButton confirmButton = new JButton();
+		ImageIcon FondoconfirmButton = new ImageIcon(getClass().getResource("/img/confirm_btn.png"));
+		confirmButton.setPreferredSize(new Dimension(160,30));
+		confirmButton.setIcon(FondoconfirmButton);
+
+		JButton btnVolver = new JButton();
+		ImageIcon FondobtnBack = new ImageIcon(getClass().getResource("/img/backform_btn.png"));
+		btnVolver.setPreferredSize(new Dimension(160,30));
+		btnVolver.setIcon(FondobtnBack);
+
 
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(btnVolver);
@@ -157,8 +164,10 @@ public class FormularioInversion extends JPanel {
 	private JPanel createQuestionPanel(String question, JComboBox<String> comboBox) {
 		JPanel panel = new JPanel(new BorderLayout());
 		JLabel label = new JLabel(question);
+
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Impact", Font.PLAIN, 18));
+
 		panel.setBackground(Color.GRAY);
 		panel.add(label, BorderLayout.NORTH);
 		panel.add(comboBox, BorderLayout.CENTER);
@@ -233,7 +242,7 @@ public class FormularioInversion extends JPanel {
 			porcentajeRV += 10.0;
 		} else if (porcentajePatrimonio.equals("Más del 50%")) {
 			porcentajeRF += 0.0;
-			porcentajeRV += 0.0;
+			porcentajeRV += 10.0;
 		}
 
 

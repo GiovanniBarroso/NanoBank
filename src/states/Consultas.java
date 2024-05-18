@@ -76,26 +76,34 @@ public class Consultas extends ImagenFondo {
 
 
 
-		JButton btnBizum = new JButton("CONSULTAR BIZUM REALIZADOS");
+		JButton btnBizum = new JButton();
+		ImageIcon FondobtnBizum = new ImageIcon(getClass().getResource("/img/BizumRealizados_btn.png"));
+		btnBizum.setIcon(FondobtnBizum);
 		btnBizum.setBounds(25, 45, 306, 60);
 		panelBotones.add(btnBizum);
 
 
 
-		JButton btnTransferencias = new JButton("CONSULTAR TRANSFERENCIAS REALIZADOS");
+		JButton btnTransferencias = new JButton();
+		ImageIcon FondobtnTransferencias = new ImageIcon(getClass().getResource("/img/TransferenciasRealizadas_btn.png"));
+		btnTransferencias.setIcon(FondobtnTransferencias);
 		btnTransferencias.setBounds(25, 130, 306, 60);
 		panelBotones.add(btnTransferencias);
 
 
 
-		JButton btnCarteras = new JButton("CONSULTAR Y GESTIONAR CARTERAS");
+		JButton btnCarteras = new JButton();
+		ImageIcon FondobtnCarteras = new ImageIcon(getClass().getResource("/img/ConsultarCarteras_btn.png"));
+		btnCarteras.setIcon(FondobtnCarteras);
 		btnCarteras.setBounds(25, 213, 306, 60);
 		panelBotones.add(btnCarteras);
 
 
 
-		JButton btnVolverAtras = new JButton("Volver atrás\r\n");
-		btnVolverAtras.setBounds(108, 305, 138, 37);
+		JButton btnVolverAtras = new JButton();
+		ImageIcon FondobtnBack= new ImageIcon(getClass().getResource("/img/back_btn4.png"));
+		btnVolverAtras.setIcon(FondobtnBack);
+		btnVolverAtras.setBounds(106, 305, 140, 37);
 		panelBotones.add(btnVolverAtras);
 
 
