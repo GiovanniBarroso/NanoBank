@@ -265,6 +265,12 @@ public class RegistroUsuario extends ImagenFondo {
 		Conexion conexionDB = new Conexion();
 		try {
 
+			// Comprobar si el usuario ya existe
+			if (conexionDB.UsuarioExiste(DNI)) {
+				JOptionPane.showMessageDialog(this, "El usuario ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
 			conexionDB.addUser(DNI, contraseña, nombre, Integer.parseInt(telefono), email, iban);
 			JOptionPane.showMessageDialog(this, "¡ Cuenta creada correctamente !");
 

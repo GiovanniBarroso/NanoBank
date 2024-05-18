@@ -72,6 +72,21 @@ public class Conexion {
 	}
 
 
+	// Método para comprobar si un usuario ya existe en la base de datos
+	public boolean UsuarioExiste(String DNI) throws SQLException {
+		Connection conexion = conectar();
+		String query = "SELECT COUNT(*) FROM Usuario WHERE DNI = ?";
+		try (PreparedStatement statement = conexion.prepareStatement(query)) {
+			statement.setString(1, DNI);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getInt(1) > 0;
+				}
+			}
+		}
+		return false;
+	}
+
 
 
 	//Metodo para realizar la transferencia en la BD
