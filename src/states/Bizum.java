@@ -49,7 +49,6 @@ public class Bizum extends ImagenFondo {
 		setLayout(null);
 
 		//Declaramos JPanel, JFrame & JTextField
-
 		JPanel panelFondo = new JPanel();
 		panelFondo.setBounds(61, 164, 321, 500);
 		panelFondo.setBorder(new LineBorder(new Color(0, 0, 0), 3));
@@ -64,11 +63,11 @@ public class Bizum extends ImagenFondo {
 		lblTelefono.setBounds(72, 89, 177, 26);
 		lblTelefono.setFont(new Font("Impact", Font.PLAIN, 20));
 
+
 		txtTelefono = new JTextField(20);
 		txtTelefono.setBounds(56, 121, 211, 26);
 		txtTelefono.setHorizontalAlignment(JTextField.CENTER);
 		txtTelefono.setFont(new Font("Arial", Font.PLAIN, 16));
-
 
 
 		JLabel lblNombre = new JLabel("Nombre");
@@ -76,11 +75,11 @@ public class Bizum extends ImagenFondo {
 		lblNombre.setBounds(72, 157, 182, 26);
 		lblNombre.setFont(new Font("Impact", Font.PLAIN, 20));
 
+
 		txtNombre = new JTextField(20);
 		txtNombre.setBounds(56, 186, 211, 26);
 		txtNombre.setHorizontalAlignment(JTextField.CENTER);
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 16));
-
 
 
 		JLabel lblCantidad = new JLabel("Cantidad (500€ Max)");
@@ -88,17 +87,18 @@ public class Bizum extends ImagenFondo {
 		lblCantidad.setBounds(72, 222, 177, 26);
 		lblCantidad.setFont(new Font("Impact", Font.PLAIN, 20));
 
+
 		txtCantidad = new JTextField(20);
 		txtCantidad.setBounds(56, 251, 211, 26);
 		txtCantidad.setHorizontalAlignment(JTextField.CENTER);
 		txtCantidad.setFont(new Font("Arial", Font.PLAIN, 16));
 
 
-
 		JLabel lblConcepto = new JLabel("Concepto");
 		lblConcepto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConcepto.setBounds(72, 287, 177, 26);
 		lblConcepto.setFont(new Font("Impact", Font.PLAIN, 20));
+
 
 		txtConcepto = new JTextField(20);
 		txtConcepto.setBounds(56, 316, 211, 67);
@@ -112,13 +112,14 @@ public class Bizum extends ImagenFondo {
 		btnEnviarBizum.setIcon(FondobtnRealizarBizum);
 		btnEnviarBizum.setBounds(93, 398, 134, 26);
 
+
 		btnVolver = new JButton();
 		ImageIcon FondobtnBack2 = new ImageIcon(getClass().getResource("/img/back_btn2.png"));
 		btnVolver.setIcon(FondobtnBack2);
 		btnVolver.setBounds(93, 440, 134, 26);
-		
-		
-		
+
+
+		//Añadimos elementos al panel
 		panelFondo.setLayout(null);
 		panelFondo.add(lblTelefono);
 		panelFondo.add(txtTelefono);
@@ -144,13 +145,13 @@ public class Bizum extends ImagenFondo {
 
 
 
-
 		//Evento al pulsar boton realizar bizum
 		btnEnviarBizum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				saveBizum();
 			}
 		});
+
 
 
 		//Evento al pulsar boton volver atras
@@ -160,6 +161,7 @@ public class Bizum extends ImagenFondo {
 			}
 		});
 	}
+
 
 
 	//Metodo que verifica y realiza el Bizum
@@ -279,6 +281,4 @@ public class Bizum extends ImagenFondo {
 		txtCantidad.setText("");
 		txtConcepto.setText("");
 	}
-
-
 }

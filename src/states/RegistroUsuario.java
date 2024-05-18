@@ -50,8 +50,6 @@ public class RegistroUsuario extends ImagenFondo {
 		add(lblLogo);
 
 
-
-
 		//JLabel y JTextField
 		JLabel lblDNI = new JLabel("DNI:");
 		lblDNI.setBounds(168, 148, 42, 26);
@@ -196,7 +194,6 @@ public class RegistroUsuario extends ImagenFondo {
 
 
 
-
 		// Acción del botón Mostrar Contraseña
 		btnMostrarContraseña.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -217,9 +214,10 @@ public class RegistroUsuario extends ImagenFondo {
 				volverAIniciarSesion();
 			}
 		});
+
+
+
 	}
-
-
 
 
 	//Metodo para validad y registrar al usuario
@@ -287,7 +285,6 @@ public class RegistroUsuario extends ImagenFondo {
 
 
 
-
 	// Método para limpiar los campos de entrada
 	public void limpiarCampos() {
 		txtDNI.setText("");
@@ -297,7 +294,6 @@ public class RegistroUsuario extends ImagenFondo {
 		txtIBAN.setText("");
 		txtContraseña.setText("");
 	}
-
 
 
 
@@ -325,7 +321,6 @@ public class RegistroUsuario extends ImagenFondo {
 
 		return letra == letraCalculada;
 	}
-
 
 
 

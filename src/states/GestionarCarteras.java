@@ -33,13 +33,12 @@ public class GestionarCarteras extends ImagenFondo {
 		this.porcentajeRV = porcentajeRV;
 		this.cantidadInvertida = cantidadInvertida;
 
-
 		initUI();
 	}
 
+
 	//Metodo principal
 	private void initUI() {
-
 
 		double Rentabilidad = ObtenerRentabilidad();
 		double Beneficios = ObtenerBeneficios(Rentabilidad);
@@ -67,7 +66,6 @@ public class GestionarCarteras extends ImagenFondo {
 
 
 
-
 		// Boton de liquidar cartera
 		JButton btnLiquidarCartera = new JButton();
 
@@ -79,6 +77,7 @@ public class GestionarCarteras extends ImagenFondo {
 		gbc.gridy++;
 		gbc.weighty = 0.1;
 		add(btnLiquidarCartera, gbc);
+
 
 
 		// Botón para volver al menú
@@ -133,12 +132,8 @@ public class GestionarCarteras extends ImagenFondo {
 		panelCarteras.setPreferredSize(new Dimension(300, 200));
 		panelCarteras.setBackground(Color.GRAY);
 
-
-		// Crear un borde compuesto con un borde negro
 		Border border = BorderFactory.createLineBorder(Color.BLACK,3);
 
-
-		// Establecer el borde al panel principal
 		panelCarteras.setBorder(border);
 
 
@@ -158,6 +153,7 @@ public class GestionarCarteras extends ImagenFondo {
 		panelInfoCartera.setLayout(new GridLayout(3, 2, 10, 10));
 		panelInfoCartera.setBackground(Color.LIGHT_GRAY);
 		panelInfoCartera.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
 
 
 		// Componentes de información de la cartera
@@ -201,15 +197,16 @@ public class GestionarCarteras extends ImagenFondo {
 		panelEtiquetas.setBackground(Color.LIGHT_GRAY);
 
 
+
 		JLabel lblRentaVariable = new JLabel(porcentajeRV + "% RENTA VARIABLE");
 		lblRentaVariable.setFont(new Font("Impact", Font.PLAIN, 18));
+
 
 
 		JLabel lblRentaFija = new JLabel(porcentajeRF + "% RENTA FIJA");
 		lblRentaFija.setFont(new Font("Impact", Font.PLAIN, 18));
 		panelEtiquetas.add(lblRentaVariable);
 		panelEtiquetas.add(lblRentaFija);
-
 
 
 		// Añadir el panel de etiquetas a la izquierda
@@ -277,7 +274,7 @@ public class GestionarCarteras extends ImagenFondo {
 	}
 
 
-
+	//Metodo para volver al menú
 	private void volveraMenu() {
 		try {
 			Conexion conexion = new Conexion();
@@ -306,7 +303,7 @@ public class GestionarCarteras extends ImagenFondo {
 	}
 
 
-
+	//Metodo para calcular la rentabilidad
 	private int ObtenerRentabilidad() {
 		int Rentabilidad = 0;
 
@@ -332,6 +329,8 @@ public class GestionarCarteras extends ImagenFondo {
 		return Rentabilidad;
 	}
 
+
+	//Metodo para calcular el Beneficio
 	private double ObtenerBeneficios(double Rentabilidad) {
 
 		double Beneficio = cantidadInvertida * (Rentabilidad / 100);
@@ -342,6 +341,8 @@ public class GestionarCarteras extends ImagenFondo {
 		return Beneficio;
 	}
 
+
+	//Metodo para calcular el valor de mercado
 	private double ObtenerValorMercado (double Beneficios) {
 
 		double valorMercado = cantidadInvertida + Beneficios;
@@ -349,6 +350,8 @@ public class GestionarCarteras extends ImagenFondo {
 
 	}
 
+
+	//Metodo para calcular el Riesgo
 	private int ObtenerRiesgo() {
 		int Riesgo = 0;
 
@@ -374,6 +377,7 @@ public class GestionarCarteras extends ImagenFondo {
 	}
 
 
+	//Metodo para liquidar la cartera
 	private void LiquidarCartera() {
 		try {
 			Conexion conexion = new Conexion();
@@ -420,6 +424,4 @@ public class GestionarCarteras extends ImagenFondo {
 		this.porcentajeRV = 0.0;
 		this.cantidadInvertida = 0.0;
 	}
-
-
 }

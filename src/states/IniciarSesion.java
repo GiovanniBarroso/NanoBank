@@ -15,7 +15,6 @@ import javax.swing.border.LineBorder;
 public class IniciarSesion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
 	private JButton btnMostrarContraseña;
 	private boolean mostrarContraseña = false;
 
@@ -28,7 +27,7 @@ public class IniciarSesion extends JFrame {
 		setLocationRelativeTo(null);
 
 
-		// Cargar la imagen como fondo
+
 		try {
 			BufferedImage backgroundImage = ImageIO.read(getClass().getResource("/img/bg_img2.png")); 
 
@@ -53,7 +52,7 @@ public class IniciarSesion extends JFrame {
 		}
 	}
 
-
+	//Metodo principal
 	private void initComponents() {
 
 		JPanel panel = new JPanel();
@@ -98,6 +97,7 @@ public class IniciarSesion extends JFrame {
 		txtContraseña.setBounds(46, 324, 201, 26);
 		txtContraseña.setHorizontalAlignment(JPasswordField.CENTER);
 		txtContraseña.setFont(new Font("Arial", Font.PLAIN, 15));
+
 
 
 		// Botón de iniciar sesión
@@ -170,8 +170,6 @@ public class IniciarSesion extends JFrame {
 			}
 		});
 
-
-
 		setVisible(true);
 	}
 
@@ -205,7 +203,6 @@ public class IniciarSesion extends JFrame {
 			JOptionPane.showMessageDialog(this, "Error de conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
 
 
 

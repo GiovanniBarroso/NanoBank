@@ -39,7 +39,6 @@ public class Menu extends ImagenFondo {
 		this.cantidadInvertida = cantidadInvertida;
 
 
-
 		//Panel info Usuario
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
@@ -48,11 +47,15 @@ public class Menu extends ImagenFondo {
 		add(panel);
 		panel.setLayout(null);
 
+
+
 		JLabel lblnombreUsuario = new JLabel("¡Bienvenido " + nombreUsuario + "!");
 		lblnombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblnombreUsuario.setFont(new Font("Impact", Font.PLAIN, 25));
 		lblnombreUsuario.setBounds(22, 42, 270, 50);
 		panel.add(lblnombreUsuario);
+
+
 
 		JLabel lblSaldo = new JLabel("Saldo: " + saldo + " €");
 		lblSaldo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -69,11 +72,13 @@ public class Menu extends ImagenFondo {
 		add(panel_1);
 		panel_1.setLayout(null);
 
+
 		JButton btnTransferencia = new JButton();
 		ImageIcon FondobtnTransferencia = new ImageIcon(getClass().getResource("/img/transferencia_button.png"));
 		btnTransferencia.setIcon(FondobtnTransferencia);
 		btnTransferencia.setBounds(34, 38, 252, 53);
 		panel_1.add(btnTransferencia);
+
 
 		JButton btnBizum = new JButton();
 		ImageIcon FondobtnBizum = new ImageIcon(getClass().getResource("/img/bizum_button.png"));
@@ -81,11 +86,13 @@ public class Menu extends ImagenFondo {
 		btnBizum.setBounds(34, 102, 252, 53);
 		panel_1.add(btnBizum);
 
+
 		JButton btnCarteras = new JButton();
 		ImageIcon FondobtnCarteras = new ImageIcon(getClass().getResource("/img/carteras_button.png"));
 		btnCarteras.setIcon(FondobtnCarteras);
 		btnCarteras.setBounds(34, 166, 252, 53);
 		panel_1.add(btnCarteras);
+
 
 		JButton btnFormularioCarteras = new JButton();
 		ImageIcon FondobtnformCarteras = new ImageIcon(getClass().getResource("/img/formularioCarteras_button.png"));
@@ -93,11 +100,13 @@ public class Menu extends ImagenFondo {
 		btnFormularioCarteras.setBounds(34, 230, 252, 53);
 		panel_1.add(btnFormularioCarteras);
 
+
 		JButton btnConsultas = new JButton();
 		ImageIcon FondobtnConsultas = new ImageIcon(getClass().getResource("/img/Consultas_button.png"));
 		btnConsultas.setIcon(FondobtnConsultas);
 		btnConsultas.setBounds(34, 294, 252, 53);
 		panel_1.add(btnConsultas);
+
 
 		JButton btnCerrarSesion = new JButton();
 		btnCerrarSesion.setBounds(312, 11, 111, 32);
@@ -145,8 +154,8 @@ public class Menu extends ImagenFondo {
 		});
 
 
-	}
 
+	}
 
 
 	//Metodo para entrar en la clase Transferencia
@@ -199,7 +208,7 @@ public class Menu extends ImagenFondo {
 
 
 
-
+	//Metodo para entrar en la clase FormularioInversion
 	private void realizarTestIdoneidad() {
 		Container parent = getParent();
 
@@ -216,7 +225,7 @@ public class Menu extends ImagenFondo {
 
 
 
-
+	//Metodo para entrar en la clase Consultas
 	private void realizarConsultas() {
 
 		Container parent = getParent();
@@ -233,8 +242,7 @@ public class Menu extends ImagenFondo {
 	}
 
 
-
-
+	//Metodo para desloguearte
 	private void volverAIniciarSesion() {
 		// Cerrar la ventana actual de registro
 		SwingUtilities.getWindowAncestor(this).dispose();
@@ -243,9 +251,5 @@ public class Menu extends ImagenFondo {
 		SwingUtilities.invokeLater(() -> new IniciarSesion());
 
 	}
-
-
-
-
 
 }

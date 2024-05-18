@@ -120,8 +120,8 @@ public class Transferencia extends ImagenFondo {
 		ImageIcon FondobtnTransferir = new ImageIcon(getClass().getResource("/img/transferir_btn.png"));
 		btnEnviarTransferencia.setIcon(FondobtnTransferir);
 		btnEnviarTransferencia.setBounds(90, 404, 133, 25);
-		
-		
+
+
 		btnVolver = new JButton();
 		ImageIcon FondobtnBack2 = new ImageIcon(getClass().getResource("/img/back_btn2.png"));
 		btnVolver.setIcon(FondobtnBack2);
@@ -146,7 +146,6 @@ public class Transferencia extends ImagenFondo {
 
 
 
-
 		// Acción del botón Realizar Transferencia
 		btnEnviarTransferencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,7 +162,11 @@ public class Transferencia extends ImagenFondo {
 				volveraMenu();
 			}
 		});
+
+
+
 	}
+
 
 
 	//Metodo para validad y guardar la transferencia
@@ -182,6 +185,7 @@ public class Transferencia extends ImagenFondo {
 			return;
 		}
 
+
 		double cantidad = Double.parseDouble(Cantidad);
 
 		// Verificar que la cantidad sea mayor que cero
@@ -189,6 +193,7 @@ public class Transferencia extends ImagenFondo {
 			JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor que cero.", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+
 
 		Conexion conexionDB = new Conexion();
 		try {
@@ -229,46 +234,38 @@ public class Transferencia extends ImagenFondo {
 
 
 
-
 	// Método para volver a IniciarSesion
 	private void volveraMenu() {
 		Container parent = getParent();
 		if (parent != null) {
-			// Eliminar todos los componentes del padre
-			parent.removeAll();
 
-			// Crear una nueva instancia de Menu y agregarla al padre
+			parent.removeAll();
 			Menu menu = new Menu(id_usuario, nombreUsuario, saldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 
-			// Actualizar la interfaz de usuario
 			parent.revalidate();
 			parent.repaint();
+
 		} else {
-			// Manejar la situación donde getParent() devuelve null
 			System.out.println("El componente no tiene un padre [🆎].");
 		}
 	}
 
 
 
-
+	//Metodo para volver al menú con el saldo actualizado tras realizar una transferencia
 	private void volveraMenu2(double nuevoSaldo) {
 		Container parent = getParent();
 		if (parent != null) {
-			// Eliminar todos los componentes del padre
-			parent.removeAll();
 
-			// Crear una nueva instancia con el saldo actualizado
+			parent.removeAll();
 			Menu menu = new Menu(id_usuario, nombreUsuario, nuevoSaldo, dni, porcentajeRF, porcentajeRV, cantidadInvertida);
 			parent.add(menu);
 
-			// Actualizar la interfaz de usuario
 			parent.revalidate();
 			parent.repaint();
 
 		} else {
-			// Manejar la situación donde getParent() devuelve null
 			System.out.println("El componente no tiene un padre.");
 		}
 	}
@@ -284,55 +281,4 @@ public class Transferencia extends ImagenFondo {
 		txtConcepto.setText("");
 	}
 
-
-
-
-	//Metodo para validar IBAN
-	public static boolean validarIBAN(String cuenta) {
-
-		boolean esValido = false;
-		int i = 2;
-		int caracterASCII = 0; 
-		int resto = 0;
-		int dc = 0;
-		String cadenaDc = "";
-		BigInteger cuentaNumero = new BigInteger("0"); 
-		BigInteger modo = new BigInteger("97");
-
-
-		cuenta = cuenta.replaceAll(" ", "");
-
-
-		if(cuenta.length() == 24 && cuenta.substring(0,1).toUpperCase().equals("E") 
-				&& cuenta.substring(1,2).toUpperCase().equals("S")) {
-
-			do {
-				caracterASCII = cuenta.codePointAt(i);
-				esValido = (caracterASCII > 47 && caracterASCII < 58);
-				i++;
-			}
-			while(i < cuenta.length() && esValido); 
-
-
-			if(esValido) {
-				cuentaNumero = new BigInteger(cuenta.substring(4,24) + "142800");
-				resto = cuentaNumero.mod(modo).intValue();
-				dc = 98 - resto;
-				cadenaDc = String.valueOf(dc);
-			}	
-
-			if(dc < 10) {
-				cadenaDc = "0" + cadenaDc;
-			} 
-
-			// Comparamos los caracteres 2 y 3 de la cuenta (dígito de control IBAN) con cadenaDc
-			if(cuenta.substring(2,4).equals(cadenaDc)) {
-				esValido = true;
-			} else {
-				esValido = false;
-			}
-		}
-
-		return esValido;
-	}
 }

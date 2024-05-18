@@ -53,7 +53,6 @@ public class FormularioInversion extends JPanel {
 
 	private void setupUI() {
 
-
 		setPreferredSize(new Dimension(450, 600));
 		setLayout(new BorderLayout());
 
@@ -90,7 +89,7 @@ public class FormularioInversion extends JPanel {
 
 
 
-		// Nuevo JTextField con tamaño preferido y JLabel ajustado
+		//JTextField con tamaño preferido y JLabel ajustado
 		cantidadInversionLabel = new JLabel("Cantidad a invertir:");
 		cantidadInversionLabel.setFont(new Font("Impact", Font.PLAIN, 18));
 		cantidadInversionLabel.setHorizontalAlignment(SwingConstants.CENTER); 
@@ -110,9 +109,11 @@ public class FormularioInversion extends JPanel {
 		contentPanel.add(createQuestionPanel("¿Considerar factores ESG en la cartera?:", considerarESGComboBox));
 		contentPanel.add(createQuestionPanel("¿Invertir al 100% en renta variable?:", invertirRentaVariableComboBox));
 
+
 		// Agregar JTextField y JLabel al panel
 		contentPanel.add(cantidadInversionLabel);
 		contentPanel.add(cantidadInversionTextField);
+
 
 		// Botones
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -138,7 +139,7 @@ public class FormularioInversion extends JPanel {
 
 
 
-		// Agregar eventos a los botones
+		//Eventos de Botones
 		confirmButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -148,13 +149,13 @@ public class FormularioInversion extends JPanel {
 		});
 
 
-
-		// Acción del botón Volver atrás
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				volveraMenu(porcentajeRF, porcentajeRV, cantidadInvertida);
 			}
 		});
+
+
 
 	}
 
@@ -176,7 +177,7 @@ public class FormularioInversion extends JPanel {
 
 
 
-
+	//Metodo para registrar formulario
 	private void sendFormulario(double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
 		String perfilRiesgo = (String) perfilRiesgoComboBox.getSelectedItem();
@@ -228,8 +229,8 @@ public class FormularioInversion extends JPanel {
 			porcentajeRF += 10.0;
 			porcentajeRV += 0.0;
 		} else if (plazoInversion.equals("Largo plazo")) {
-			porcentajeRF += 0.0;
-			porcentajeRV += 10.0;
+			porcentajeRF += 10.0;
+			porcentajeRV += 0.0;
 		}
 
 
@@ -303,9 +304,7 @@ public class FormularioInversion extends JPanel {
 
 
 
-		// Calcular el porcentaje restante para que la suma sea 100%
 		double porcentajeRestante = 100.0 - (porcentajeRF + porcentajeRV);
-
 
 		// Asignar el porcentaje restante al porcentaje más bajo entre porcentajeRF y porcentajeRV
 		if (porcentajeRestante > 0) {
@@ -323,7 +322,7 @@ public class FormularioInversion extends JPanel {
 
 			java.sql.Date fechaLiquidacion = conexion.obtenerFechaLiquidacion(id_usuario);
 
-			// Verificar si han pasado al menos 30 días
+			// Verificar si han pasado 30 días desde una liquidación para poder registrar formulario
 			if (fechaLiquidacion != null) {
 				java.util.Date fechaActual = new java.util.Date();
 				long diferencia = fechaActual.getTime() - fechaLiquidacion.getTime();
@@ -353,7 +352,7 @@ public class FormularioInversion extends JPanel {
 
 
 
-	// Método para validar el formulario antes de enviarlo
+	// Método para validar el saldo disponible del usuario
 	private void validarFormulario() {
 		try {
 			double cantidadInversion = Double.parseDouble(cantidadInversionTextField.getText());
@@ -392,7 +391,7 @@ public class FormularioInversion extends JPanel {
 
 
 
-	// Método para volver a Menu
+	// Método para volver a Menu si se realiza el formulario
 	private void volveraMenu2(double nuevoSaldo, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 		Container parent = getParent();
 		if (parent != null) {
@@ -408,7 +407,4 @@ public class FormularioInversion extends JPanel {
 			System.out.println("El componente no tiene un padre [🆎].");
 		}
 	}
-
-
-
 }

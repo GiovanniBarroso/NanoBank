@@ -22,6 +22,7 @@ public class GenerarPDFCarteras {
 	private static final String OUTPUT_PDF_FILE = "Registro_Cartera ";
 
 	public static void generarPDFCartera(int id_usuario, String nombreUsuario) {
+		
 		String outputFileName = OUTPUT_PDF_FILE + nombreUsuario + ".pdf";
 		Document document = new Document(PageSize.A4);
 
@@ -31,42 +32,41 @@ public class GenerarPDFCarteras {
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 			document.open();
 
-			// Encabezado del documento
 			Paragraph header = new Paragraph("NANOBANK\nCARTERA", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 40));
 			header.setAlignment(Element.ALIGN_LEFT);
 
-			// Añadir logo
 			Image logo = Image.getInstance("src/img/foto_7.png");
 			logo.scaleToFit(100, 100);  
 
 
-			// Crear una tabla para alinear el título y el logo
+
 			PdfPTable titleTable = new PdfPTable(2);
 			titleTable.setWidthPercentage(100);
 
 			// Ancho de las celdas (ajustar según sea necesario)
-			float[] columnWidths = {80f, 20f}; // 70% para el título y 30% para el logo
+			float[] columnWidths = {80f, 20f}; 
 			titleTable.setWidths(columnWidths);
 
 
 			PdfPCell titleCell = new PdfPCell(header);
 			PdfPCell logoCell = new PdfPCell(logo);
 
-			// Ajustar las celdas para que no tengan bordes
+
 			titleCell.setBorder(PdfPCell.NO_BORDER);
 			logoCell.setBorder(PdfPCell.NO_BORDER);
 
-			// Alinear el contenido de las celdas al centro verticalmente
+
 			titleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			logoCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
-			// Añadir las celdas a la tabla
+
 			titleTable.addCell(titleCell);
 			titleTable.addCell(logoCell);
 
-			// Añadir la tabla al documento
+
 			document.add(titleTable);
 
+			
 			// Información del usuario
 			Paragraph userInfo = new Paragraph("\nID_USUARIO: " + id_usuario + "\nUSUARIO: " + nombreUsuario, new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 15));
 			document.add(userInfo);
@@ -76,10 +76,11 @@ public class GenerarPDFCarteras {
 
 			PdfPTable table = createCarterasTable();
 			fillCarterasTable(table, id_usuario);
-
 			document.add(table);
 
 			System.out.println("\nRegistro_Cartera.pdf generado correctamente.");
+			
+			
 		} catch (Exception e) {
 			System.err.println("Error al generar el PDF de CARTERAS: " + e.getMessage());
 		} finally {
@@ -89,6 +90,8 @@ public class GenerarPDFCarteras {
 		}
 	}
 
+	
+	
 	private static PdfPTable createCarterasTable() {
 		PdfPTable table = new PdfPTable(4);
 		table.setWidthPercentage(100);
@@ -102,7 +105,6 @@ public class GenerarPDFCarteras {
 
 		return table;
 	}
-
 
 
 

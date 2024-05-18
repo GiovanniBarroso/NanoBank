@@ -11,7 +11,6 @@ import bgimg.ImagenFondo;
 
 public class Consultas extends ImagenFondo {
 
-
 	//Atributos
 	private static final long serialVersionUID = 1L;
 
@@ -22,6 +21,7 @@ public class Consultas extends ImagenFondo {
 	private double porcentajeRF; 
 	private double porcentajeRV;
 	private double cantidadInvertida;
+
 
 	public Consultas(int id_usuario, String nombreUsuario, double saldo, String dni, double porcentajeRF, double porcentajeRV, double cantidadInvertida) {
 
@@ -40,7 +40,7 @@ public class Consultas extends ImagenFondo {
 		setLayout(null);
 
 
-
+		//Panel
 		JPanel panelFondo = new JPanel();
 		panelFondo.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		panelFondo.setBounds(37, 128, 358, 132);
@@ -108,7 +108,7 @@ public class Consultas extends ImagenFondo {
 
 
 
-
+		//Eventos de Botones
 		btnBizum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				generarPDFBizum();
@@ -143,7 +143,7 @@ public class Consultas extends ImagenFondo {
 
 	}
 
-
+	//Metodo para volver al menú
 	private void volveraMenu() {
 		Container parent = getParent();
 		if (parent != null) {
@@ -158,16 +158,19 @@ public class Consultas extends ImagenFondo {
 		}
 	}
 
+
+
 	private void generarPDFBizum() {
 		GenerarPDFBizum.generarPDFBizum(id_usuario, nombreUsuario);
 	}
+
 
 	private void generarPDFTransferencias() {
 		GenerarPDFTransferencias.generarPDFTransferencias(id_usuario, nombreUsuario);
 	}
 
+
 	private void generarPDFCarteras() {
 		GenerarPDFCarteras.generarPDFCartera(id_usuario, nombreUsuario);
 	}
-
 }
