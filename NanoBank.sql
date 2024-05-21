@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Transferencia (
 
 -- TABLA BIZUM
 CREATE TABLE IF NOT EXISTS Bizum (
-    id_transaciones INT PRIMARY KEY AUTO_INCREMENT,
+    id_bizum INT PRIMARY KEY AUTO_INCREMENT,
     cuentaOrigen VARCHAR(50) NOT NULL,
     telefono VARCHAR(15) NOT NULL, -- Cambiado a VARCHAR para manejar códigos de país
     nombreDestino VARCHAR(50) NOT NULL,

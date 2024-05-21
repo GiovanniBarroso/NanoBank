@@ -21,6 +21,10 @@ public class IniciarSesion extends JFrame {
 
 	public IniciarSesion() {
 		setTitle("NanoBank");
+		
+		ImageIcon icono = new ImageIcon(getClass().getResource("/img/favicon.jpg"));
+		setIconImage(icono.getImage());
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(450, 800);
 		setResizable(false);
